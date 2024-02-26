@@ -17,36 +17,83 @@ class MasterPriceController extends Controller
 
     public function search(Request $request)
     {
-        $keyword = $request->search;
+
         $user = Auth::id();
 
-        $master_price = MasterPrice::where('user_id', $user)
-        ->where(function ($query) use ($keyword) {
-            $query->where('part_number_ori_sto', 'like', "%{$keyword}%")
-                ->orWhere('part_number_mpl', 'like', "%{$keyword}%")
-                ->orWhere('buppin', 'like', "%{$keyword}%")
-                ->orWhere('price_per_pcs', 'like', "%{$keyword}%");
-        })->paginate(10000);
-        $count = $master_price->count();
-        $countPartNumb = $master_price->where('part_number_ori_sto', 'like', "%{$keyword}%")->count();
-        $countNumbmpl = $master_price->where('part_number_mpl', 'like', "%{$keyword}%")->count();
-        $countBuppin = $master_price->where('buppin', 'like', "%{$keyword}%")->count();
-        $countPrice = $master_price->where('price_per_pcs', 'like', "%{$keyword}%")->count();
-        return view('master_price.index', compact('master_price', 'count'));
+        $searchTerm = $request->input('master_price');
+
+        $count = MasterPrice::count();
+
+        $query = MasterPrice::query();
+
+        $query->where('user_id', $user);
+
+        $master_price = MasterPrice::where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('part_number_ori_sto', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('part_number_mpl', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('buppin', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('price_per_pcs', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $master_price = $query->paginate(10000);
+
+        return view('master_price.partial.master_price', ['master_price' => $master_price, 'count' => $count, 'user' => $user]);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function getCount(Request $request)
+    {
+        $user = Auth::id();
+
+        $searchTerm = $request->input('master_price');
+
+        $query = MasterPrice::query();
+
+        $query->where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('part_number_ori_sto', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('part_number_mpl', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('buppin', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('price_per_pcs', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        return response()->json($count);
+    }
+
     public function index(Request $request)
     {
         set_time_limit(0);
         $keyword = $request->pilih;
         $user = Auth::id();
-        $master_price = MasterPrice::where('user_id', $user)->orderBy('id', 'asc')->paginate(10000);
-        $count = $master_price->count();
+
+        $query = MasterPrice::where('user_id', $user)->orderBy('id', 'asc');
+
+        if ($keyword) {
+            $query->where('part_number_ori_sto', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('part_number_mpl', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('buppin', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('price_per_pcs', 'LIKE', '%' . $keyword . '%');
+            $count = $query->count();
+        } else {
+            $count = $query->count();
+        }
+
+        $master_price = $query->get();
+
         $data = $master_price->all();
+
+        $master_price = $query->paginate(10000);
+        
         return view('master_price.index', compact('master_price', 'count', 'data'));
     }
 
@@ -73,7 +120,6 @@ class MasterPriceController extends Controller
         Storage::delete($path);
 
         return back()->with('success', "Data berhasil diimport!");
-
     }
 
     /**
@@ -208,11 +254,11 @@ class MasterPriceController extends Controller
         if (empty($ids)) {
             return response()->json(['error' => 'No items selected.'], 400);
         }
-    
+
         $idArray = explode(",", $ids);
-    
+
         $deleted = MasterPrice::where('user_id', $user)->whereIn('id', $idArray)->delete();
-    
+
         if ($deleted) {
             return response()->json(['success' => 'Deleted successfully.']);
         } else {

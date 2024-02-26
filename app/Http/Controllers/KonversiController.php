@@ -16,40 +16,82 @@ class KonversiController extends Controller
 {
     public function cari_dk(Request $request)
     {
-        $keyword = $request->cari_dk;
         $user = Auth::id();
 
-        $database_konversi = DatabaseKonversi::where('user_id', $user)
-        ->where(function ($query) use ($keyword) {
-            $query->orWhere('part_no', 'like', "%{$keyword}%")
-                ->orWhere('buppin', 'like', "%{$keyword}%")
-                ->orWhere('part_name', 'like', "%{$keyword}%")
-                ->orWhere('uom', 'like', "%{$keyword}%")
-                ->orWhere('inner_packing', 'like', "%{$keyword}%");
-        })->get();
-        
-        $count = $database_konversi->count();
-        $countPartNo = $database_konversi->where('part_no', 'like', "%{$keyword}%")->count();
-        $countBuppin = $database_konversi->where('buppin', 'like', "%{$keyword}%")->count();
-        $countPartName = $database_konversi->where('part_name', 'like', "%{$keyword}%")->count();
-        $countUOM = $database_konversi->where('uom', 'like', "%{$keyword}%")->count();
-        $countInner = $database_konversi->where('inner_packing', 'like', "%{$keyword}%")->count();
-        
-        return view('database_konversi.index', compact('database_konversi', 'count'));
+        $searchTerm = $request->input('database_konversi');
+
+        $count = DatabaseKonversi::count();
+
+        $query = DatabaseKonversi::query();
+
+        $query->where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->orWhere('part_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('buppin', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('part_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('uom', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('inner_packing', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $database_konversi = $query->paginate(5000);
+
+        return view('database_konversi.partial.database_konversi', ['database_konversi' => $database_konversi, 'count' => $count, 'user' => $user]);
     }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function getCount(Request $request)
+    {
+        $user = Auth::id();
+
+        $searchTerm = $request->input('database_konversi');
+
+        $query = DatabaseKonversi::query();
+
+        $query->where('user_id', $user);
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->orWhere('part_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('buppin', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('part_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('uom', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('inner_packing', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $database_konversi = $query->paginate(8000);
+
+        return response()->json($count);
+    }
+
     public function index(Request $request)
     {
+        set_time_limit(0);
         $keyword = $request->cari;
         $user = Auth::id();
-        $database_konversi = DatabaseKonversi::where('user_id', $user)->orderBy('id', 'asc')->get();
-        $count = $database_konversi->count();
+        $query = DatabaseKonversi::where('user_id', $user)->orderBy('id', 'asc');
+        
+        if ($keyword) {
+            $query->where('part_no', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('buppin', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('part_name', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('uom', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('inner_packing', 'LIKE', '%' . $keyword . '%');
+
+            $count = $query->count();
+        } else {
+            $count = $query->count();
+        }
+
+        $database_konversi = $query->get();
+
         $data = $database_konversi->all();
+
 
         return view('database_konversi.index', compact('database_konversi', 'count', 'data'));
     }
@@ -77,7 +119,6 @@ class KonversiController extends Controller
         Storage::delete($path);
 
         return back()->with('success', "Data berhasil diimport!");
-
     }
     /**
      * Show the form for creating a new resource.

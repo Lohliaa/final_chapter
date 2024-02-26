@@ -3,7 +3,8 @@
 
 <head>
 
-    <link rel="stylesheet" href="{{ asset('assets/js/maxcdn.bootstrapcdn.com_bootstrap_3.3.7_css_bootstrap.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/js/maxcdn.bootstrapcdn.com_bootstrap_3.3.7_css_bootstrap.min.css') }}">
     <script src="{{ asset('assets/js/cdnjs.cloudflare.com_ajax_libs_jquery_3.2.1_jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/cdnjs.cloudflare.com_ajax_libs_twitter-bootstrap_3.3.7_js_bootstrap.min.js') }}">
     </script>
@@ -17,7 +18,8 @@
 <body style="background: lightgray">
     <figure class="text-center">
         <blockquote class="blockquote" style="font-size: 24px; font-family: Cambria;">
-            <p>Material<p>
+            <p>Material
+            <p>
         </blockquote>
     </figure>
     <div class="container mt-6">
@@ -44,13 +46,15 @@
                                 <strong>{{ $sukses }}</strong>
                             </div>
                             @endif
-                            <div class="form-group col-12">
-                                <button id="reset-material-button" class="btn btn-danger">Reset</button>
+                            <div class="form-group col-12 d-flex align-items-center">
+                                <button id="reset-material-button" class="btn btn-danger mr-2">Reset</button>
 
                                 <a href="{{ route('material.create') }}"
-                                    class="btn btn-md btn-md btn-default mb-6">Tambah</a>
+                                    class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
+                                <button type="button" class="btn btn-default mr-2"
+                                    onclick="handleEditClick()">Edit</button>
 
-                                <button type="button" class="btn btn-default " data-toggle="modal"
+                                <button type="button" class="btn btn-default mr-2" data-toggle="modal"
                                     data-target="#import_excel_material">
                                     Upload Excel
                                 </button>
@@ -86,39 +90,24 @@
                                 </div>
 
                                 <!-- Export Excel -->
-                                <a href="{{ url('export_excel_material') }}" class="btn btn-default " target="_blank">Download Excel</a>
+                                <a href="{{ url('export_excel_material') }}" class="btn btn-default mr-2"
+                                    target="_blank">Download Excel</a>
 
-                                <button style="margin-bottom: 0px" class="btn btn-default delete_all"
+                                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
                                     data-url="{{ url('DeleteAll_material') }}">Delete</button>
-                                <button type="button" class="btn btn-default" onclick="handleEditClick()">Edit</button>
-                                <a href="{{ url('proses_material') }}" class="btn btn-default">Proses</a>
-                                <a href="{{ url('material') }}" class="btn btn-default">Refresh</a>
-                            </div>
+                                <a href="{{ url('proses_material') }}" class="btn btn-default mr-2">Proses</a>
+                                <a href="{{ url('material') }}" class="btn btn-default mr-2">Refresh</a>
 
-                            <div class="form-group">
-                                <form class="form" method="get" action="{{ route('material.cari_material') }}">
-                                    <input type="text" name="cari_material" class="form-control w-75 d-inline" id="cari_material"
-                                        placeholder=" ">
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                </form>
-                            </div>
 
-                            <div class="form-group col-6">
-                                <form action="{{ route('material.cari_material') }}" method="get">
-                                    @csrf
-                                    <select name="cari_material" class="form-control w-50 d-inline" placeholder="">
-                                        <option value="" disabled selected hidden> </option>
-                                        @foreach($material->unique('partnumber') as $c)
-                                        <option value="{{ $c->partnumber }}">{{ $c->partnumber }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                    <span>Jumlah Data {{ $count }}</span>
-                                </form>
+                                <input type="text" name="search" id="searchm" class="form-control w-25 mr-2"
+                                    placeholder="Cari disini ...">
+
+                                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
                             </div>
 
                             <div class="table-responsive" style="margin: 0 auto;">
-                                <table border="1" style="display: block; overflow: scroll; height: 500px; width: 1060px; text-align: center; margin: 0 auto;">
+                                <table border="1" id="materialTableBody"
+                                    style="display: block; overflow: scroll; height: 500px; width: 1060px; text-align: center; margin: 0 auto;">
                                     <thead style="height:40px">
                                         <tr class="table-secondary" style=" position: sticky; top: 0;">
                                             <th style="width: 50px; text-align:center" scope="col"><input
@@ -162,7 +151,39 @@
                 </div>
             </div>
         </div>
+    </div>
 </body>
+
+<script>
+    function cari_material() {
+        const selected = document.getElementById('searchm').value;
+    
+        fetch(`{{ route('search.material') }}?material=${selected}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('materialTableBody').innerHTML = data;
+
+                // Memperbarui jumlah data langsung dari respons server
+                fetch(`{{ route('get.count.material') }}?material=${selected}`)
+                    .then(response => response.text())
+                    .then(countData => {
+                        document.getElementById('count').innerText = 'Jumlah Data ' + countData;
+                    });
+            });
+    }
+
+    // Menambahkan event listener untuk input pencarian
+    document.getElementById('searchm').addEventListener('input', function() {
+        cari_material();
+    });
+
+    // Fungsi yang akan dipanggil ketika checkbox berubah
+    function handleCheckboxChange(id) {
+        // Tambahkan logika yang sesuai untuk menangani perubahan checkbox di sini
+        console.log('Checkbox with ID ' + id + ' changed.');
+    }
+</script>
+
 <script>
     var itemsToEdit = [];
 

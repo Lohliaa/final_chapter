@@ -16,41 +16,86 @@ class MaterialController extends Controller
 
     public function cari_material(Request $request)
     {
-        $keyword = $request->cari_material;
         $user = Auth::id();
 
-        $material = Material::where('user_id', $user)
-            ->where(function ($query) use ($keyword) {
-                $query->where('factory', 'like', "%{$keyword}%")
-                    ->orWhere('carcode', 'like', "%{$keyword}%")
-                    ->orWhere('area', 'like', "%{$keyword}%")
-                    ->orWhere('cavity', 'like', "%{$keyword}%")
-                    ->orWhere('partnumber', 'like', "%{$keyword}%")
-                    ->orWhere('part_name', 'like', "%{$keyword}%")
-                    ->orWhere('qty_total', 'like', "%{$keyword}%");
-            })->get();
+        $searchTerm = $request->input('material');
 
-        $count = $material->count();
-        $countFactory = $material->where('factory', 'like', "%{$keyword}%")->count();
-        $countCarcode = $material->where('carcode', 'like', "%{$keyword}%")->count();
-        $countArea = $material->where('area', 'like', "%{$keyword}%")->count();
-        $countCavity = $material->where('cavity', 'like', "%{$keyword}%")->count();
-        $countPartnumber = $material->where('partnumber', 'like', "%{$keyword}%")->count();
-        $countPartname = $material->where('part_name', 'like', "%{$keyword}%")->count();
-        $countQTY = $material->where('qty_total', 'like', "%{$keyword}%")->count();
-        return view('material.index', compact('material', 'count'));
+        $count = Material::count();
+
+        $query = Material::query();
+
+        $query->where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('factory', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('carcode', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('area', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cavity', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('partnumber', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('part_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('qty_total', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $material = $query->paginate(5000);
+
+        return view('material.partial.material', ['material' => $material, 'count' => $count, 'user' => $user]);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function getCount(Request $request)
+    {
+        $user = Auth::id();
+
+        $searchTerm = $request->input('material');
+
+        $query = Material::query();
+
+        $query->where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('factory', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('carcode', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('area', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cavity', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('partnumber', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('part_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('qty_total', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $material = $query->paginate(8000);
+
+        return response()->json($count);
+    }
+
     public function index(Request $request)
     {
+        set_time_limit(0);
         $keyword = $request->cari;
         $user = Auth::id();
-        $material = Material::where('user_id', $user)->orderBy('id', 'asc')->get();
-        $count = $material->count();
+        $query = Material::where('user_id', $user)->orderBy('id', 'asc');
+        
+        if ($keyword) {
+            $query->where('factory', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('carcode', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('area', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('cavity', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('partnumber', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('part_name', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('qty_total', 'LIKE', '%' . $keyword . '%');            
+            $count = $query->count();
+        } else {
+            $count = $query->count();
+        }
+        
+        $material = $query->get();
+
         $data = $material->all();
 
         return view('material.index', compact('material', 'count', 'data'));

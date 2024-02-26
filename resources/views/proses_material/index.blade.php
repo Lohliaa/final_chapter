@@ -3,7 +3,8 @@
 
 <head>
 
-    <link rel="stylesheet" href="{{ asset('assets/js/maxcdn.bootstrapcdn.com_bootstrap_3.3.7_css_bootstrap.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/js/maxcdn.bootstrapcdn.com_bootstrap_3.3.7_css_bootstrap.min.css') }}">
     <script src="{{ asset('assets/js/cdnjs.cloudflare.com_ajax_libs_jquery_3.2.1_jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/cdnjs.cloudflare.com_ajax_libs_twitter-bootstrap_3.3.7_js_bootstrap.min.js') }}">
     </script>
@@ -17,7 +18,8 @@
 <body style="background: lightgray">
     <figure class="text-center">
         <blockquote class="blockquote" style="font-size: 24px; font-family: Cambria;">
-            <p>Proses Material<p>
+            <p>Proses Material
+            <p>
         </blockquote>
     </figure>
     <div class="container mt-6">
@@ -44,44 +46,27 @@
                                 <strong>{{ $sukses }}</strong>
                             </div>
                             @endif
-                            <div class="form-group">
+                            <div class="form-group col-12 d-flex align-items-center">
 
                                 <!-- Export Excel -->
-                                <a href="{{ url('export_excel_prosesMaterial') }}" class="btn btn-default " target="_blank">Download Excel</a>
+                                <a href="{{ url('export_excel_prosesMaterial') }}" class="btn btn-default mr-2"
+                                    target="_blank">Download Excel</a>
 
-                                {{--  <button style="margin-bottom: 0px" class="btn btn-default delete_all"
-                                    data-url="{{ url('DeleteAll_prosesMaterial') }}">Delete</button>  --}}
-                                <a href="{{ url('proses_material') }}" class="btn btn-default">Refresh</a>
-                            </div>
+                                <a href="{{ url('proses_material') }}" class="btn btn-default mr-2">Refresh</a>
 
-                            <div class="form-group col-3">
-                                <form class="form" method="get" action="{{ route('proses_material.pilih_proses_material') }}">
-                                    <input type="text" name="pilih_proses_material" class="form-control w-75 d-inline" id="pilih_proses_material"
-                                        placeholder=" ">
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                </form>
-                            </div>
+                                <input type="text" name="search" id="searchpm" class="form-control w-25 mr-2"
+                                    placeholder="Cari disini ...">
 
-                            <div class="form-group col-5">
-                                <form action="{{ route('proses_material.pilih_proses_material') }}" method="get">
-                                    @csrf
-                                    <select name="pilih_proses_material" class="form-control w-50 d-inline" placeholder="">
-                                        <option value="" disabled selected hidden> </option>
-                                        @foreach($proses_material->unique('partnumber') as $c)
-                                        <option value="{{ $c->partnumber }}">{{ $c->partnumber }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                    <span>Jumlah Data {{ $count }}</span>
-                                </form>
+                                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
                             </div>
 
                             <div class="table-responsive" style="margin: 0 auto;">
-                                <table border="1" style="display: block; overflow: scroll; height: 500px; width: 1500px; text-align: center; margin: 0 auto;">
+                                <table border="1" id="pmTableBody"
+                                    style="display: block; overflow: scroll; height: 500px; width: 1500px; text-align: center; margin: 0 auto;">
                                     <thead style="height:40px">
                                         <tr class="table-secondary" style=" position: sticky; top: 0;">
-                                            {{--  <th style="width: 50px; text-align:center" scope="col"><input
-                                                    type="checkbox" class="sub_chk" id="master"></th>  --}}
+                                            {{-- <th style="width: 50px; text-align:center" scope="col"><input
+                                                    type="checkbox" class="sub_chk" id="master"></th> --}}
                                             <th style="width: 50px; text-align:center" scope="col">No</th>
                                             <th style="width: 100px; text-align:center" scope="col">Factory</th>
                                             <th style="width: 100px; text-align:center" scope="col">Carcode</th>
@@ -92,7 +77,8 @@
                                             <th style="width: 150px; text-align:center" scope="col">Qty total</th>
                                             <th style="width: 150px; text-align:center" scope="col">Length</th>
                                             <th style="width: 150px; text-align:center" scope="col">Konversi</th>
-                                            <th style="width: 150px; text-align:center" scope="col">QTY After Konversi</th>
+                                            <th style="width: 150px; text-align:center" scope="col">QTY After Konversi
+                                            </th>
                                             <th style="width: 150px; text-align:center" scope="col">Cek</th>
                                             <th style="width: 150px; text-align:center" scope="col">Price</th>
                                             <th style="width: 150px; text-align:center" scope="col">Amount</th>
@@ -103,8 +89,8 @@
                                         <?php $no=1 ?>
                                         @forelse ($proses_material as $data)
                                         <tr id="tr_{{ $data->id }}">
-                                            {{--  <td><input type="checkbox" class="sub_chk" data-id="{{$data->id}}"
-                                                    onclick="handleCheckboxChange({{ $data->id }})"></td>  --}}
+                                            {{-- <td><input type="checkbox" class="sub_chk" data-id="{{$data->id}}"
+                                                    onclick="handleCheckboxChange({{ $data->id }})"></td> --}}
                                             <td>{{$no++}}</td>
                                             <td>{{ $data->factory }}</td>
                                             <td>{{ $data->carcode }}</td>
@@ -134,7 +120,39 @@
                 </div>
             </div>
         </div>
+    </div>
 </body>
+
+<script>
+    function pilih_proses_material() {
+        const selected = document.getElementById('searchpm').value;
+    
+        fetch(`{{ route('search.proses_material') }}?proses_material=${selected}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('pmTableBody').innerHTML = data;
+
+                // Memperbarui jumlah data langsung dari respons server
+                fetch(`{{ route('get.count.proses_material') }}?proses_material=${selected}`)
+                    .then(response => response.text())
+                    .then(countData => {
+                        document.getElementById('count').innerText = 'Jumlah Data ' + countData;
+                    });
+            });
+    }
+
+    // Menambahkan event listener untuk input pencarian
+    document.getElementById('searchpm').addEventListener('input', function() {
+        pilih_proses_material();
+    });
+
+    // Fungsi yang akan dipanggil ketika checkbox berubah
+    function handleCheckboxChange(id) {
+        // Tambahkan logika yang sesuai untuk menangani perubahan checkbox di sini
+        console.log('Checkbox with ID ' + id + ' changed.');
+    }
+</script>
+
 <script>
     var itemsToEdit = [];
 

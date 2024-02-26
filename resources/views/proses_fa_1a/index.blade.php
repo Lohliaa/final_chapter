@@ -45,43 +45,24 @@
                                 <strong>{{ $sukses }}</strong>
                             </div>
                             @endif
-                            <div class="form-group">
+                            <div class="form-group col-12 d-flex align-items-center">
 
                                 <!-- Export Excel -->
-                                <a href="{{ url('export-excel-proses-fa-1a') }}" class="btn btn-default "
+                                <a href="{{ url('export-excel-proses-fa-1a') }}" class="btn btn-default mr-2"
                                     target="_blank">Download Excel</a>
 
-                                <button style="margin-bottom: 0px" class="btn btn-default delete_all"
+                                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
                                     data-url="{{ url('deleteAll_proses_pa') }}">Delete</button>
-                                {{--  <a href="{{ url('proses-pa-841w?calculate=true') }}" class="btn btn-default">Hitung</a>  --}}
-                                <a href="{{ url('proses-pa-841w') }}" class="btn btn-default">Refresh</a>
-                            </div>
+                                <a href="{{ url('proses-pa-841w') }}" class="btn btn-default mr-2">Refresh</a>
+                                <input type="text" name="search" id="searchproses_pa" class="form-control w-25 mr-2"
+                                placeholder="Cari disini ...">
 
-                            <div class="form-group col-3">
-                                <form class="form" method="get" action="{{ route('proses_fa_1a.pilih_proses_pa') }}">
-                                    {{-- <label for="inputCity">City</label> --}}
-                                    <input type="text" name="pilih_proses_pa" class="form-control w-75 d-inline"
-                                        id="pilih_proses_pa" placeholder=" ">
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                </form>
-                            </div>
+                            <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
 
-                            <div class="form-group col-5">
-                                <form action="{{ route('proses_fa_1a.pilih_proses_pa') }}" method="get">
-                                    @csrf
-                                    <select name="pilih_proses_pa" class="form-control w-50 d-inline" placeholder="">
-                                        <option value="" disabled selected hidden> </option>
-                                        @foreach($proses_fa_1a->unique('ctrl_no') as $c)
-                                        <option value="{{ $c->ctrl_no }}">{{ $c->ctrl_no }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                    <span>Jumlah Data {{ $count }}</span>
-                                </form>
                             </div>
 
                             <div class="table-responsive">
-                                <table border="1"
+                                <table border="1" id="proses_paTableBody"
                                     style="display: block; overflow:scroll; height: 500px; width:3000px; text-align:center">
                                     <thead style="height:40px">
                                         <tr class="table-secondary" style=" position: sticky; top: 0;">
@@ -179,8 +160,37 @@
             </div>
         </div>
     </div>
-    
 </body>
+
+<script>
+    function pilih_proses_pa() {
+        const selected = document.getElementById('searchproses_pa').value;
+    
+        fetch(`{{ route('search.proses_fa_1a') }}?proses_fa_1a=${selected}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('proses_paTableBody').innerHTML = data;
+
+                // Memperbarui jumlah data langsung dari respons server
+                fetch(`{{ route('get.count.proses_fa_1a') }}?proses_fa_1a=${selected}`)
+                    .then(response => response.text())
+                    .then(countData => {
+                        document.getElementById('count').innerText = 'Jumlah Data ' + countData;
+                    });
+            });
+    }
+
+    // Menambahkan event listener untuk input pencarian
+    document.getElementById('searchproses_pa').addEventListener('input', function() {
+        pilih_proses_pa();
+    });
+
+    // Fungsi yang akan dipanggil ketika checkbox berubah
+    function handleCheckboxChange(id) {
+        // Tambahkan logika yang sesuai untuk menangani perubahan checkbox di sini
+        console.log('Checkbox with ID ' + id + ' changed.');
+    }
+</script>
 
 <script type="text/javascript">
     $(document).ready(function () {

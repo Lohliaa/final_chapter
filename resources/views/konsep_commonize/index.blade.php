@@ -38,25 +38,21 @@
                                 <strong>{{ $errors->first('file') }}</strong>
                             </span>
                             @endif
-                            {{-- notifikasi sukses --}}
-                            {{-- @if ($sukses = Session::get('sukses'))
-                            <div class="alert alert-success" style="width: 1050px;">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                <strong>{{ $sukses }}</strong>
-                            </div>
-                            @endif --}}
-                            <div class="form-group col-12">
-                                <button id="reset-kc-button" class="btn btn-danger">Reset</button>
+                    
+                            <div class="form-group col-12 d-flex align-items-center">
+                                <button id="reset-kc-button" class="btn btn-danger mr-2">Reset</button>
 
                                 <a href="{{ route('konsep_commonize.create') }}"
-                                    class="btn btn-md btn-md btn-default mb-6">Tambah</a>
-                                <button type="button" class="btn btn-default" onclick="handleEditClick()">Edit</button>
+                                    class="btn btn-md btn-default mb-6 mr-2">Tambah</a>
+                                <button type="button" class="btn btn-default mr-2"
+                                    onclick="handleEditClick()">Edit</button>
 
-                                <button type="button" class="btn btn-default " data-toggle="modal"
+                                <button type="button" class="btn btn-default mr-2" data-toggle="modal"
                                     data-target="#import_excel_kc">
                                     Upload Excel
                                 </button>
 
+                                <!-- Import Excel Modal -->
                                 <div class="modal fade" id="import_excel_kc" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -67,51 +63,16 @@
                                                     <h5 class="modal-title" id="exampleModalLabel">Upload</h5>
                                                 </div>
                                                 <div class="modal-body">
-
                                                     {{ csrf_field() }}
-
                                                     <label>Pilih file excel</label>
                                                     <div class="form-group">
                                                         <input type="file" name="file" required="required">
                                                     </div>
-
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger"
                                                         data-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-default ">Import</button>
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <!-- Import Excel -->
-                                <div class="modal fade" id="update_excel_kc" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <form method="post" action="{{ url('update_excel_kc') }}"
-                                            enctype="multipart/form-data">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Import</h5>
-                                                </div>
-                                                <div class="modal-body">
-
-                                                    {{ csrf_field() }}
-
-                                                    <label>Pilih file excel</label>
-                                                    <div class="form-group">
-                                                        <input type="file" name="file" required="required">
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-default ">Import</button>
-                                                    <br>
                                                 </div>
                                             </div>
                                         </form>
@@ -119,39 +80,22 @@
                                 </div>
 
                                 <!-- Export Excel -->
-                                <a href="{{ url('export_excel_kc') }}" class="btn btn-default " target="_blank">Download
-                                    Excel</a>
-                                <button style="margin-bottom: 0px" class="btn btn-default delete_all"
-                                    data-url="{{ url('DeleteAll_konsep') }}">Delete</button>
-                                    <a href="{{ url('konsep_commonize') }}" class="btn btn-default">Refresh</a>
+                                <a href="{{ url('export_excel_kc') }}" class="btn btn-default mr-2"
+                                    target="_blank">Download Excel</a>
+                                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
+                                    data-url="{{ url('DeleteAll_konsep') }}">
+                                    Delete
+                                </button>
+                                <a href="{{ url('konsep_commonize') }}" class="btn btn-default mr-2">Refresh</a>
 
-                            </div>
-                            <div class="form-group col-3">
-                                <form class="form" method="get" action="{{ url('cari_konsep') }}">
-                                    {{-- <label for="inputCity">City</label> --}}
-                                    <input type="text" name="cari_konsep" class="form-control w-75 d-inline"
-                                        id="cari_konsep" placeholder=" ">
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                </form>
-                            </div>
-                            <div class="form-group col-5">
-                                <form action="{{ url('cari_konsep') }}" method="get">
-                                    @csrf
-                                    <select name="cari_konsep" class="form-control w-50 d-inline" placeholder="">
-                                        <option value="" disabled selected hidden> </option>
-                                        @foreach($konsep_commonize->unique('ctrl_no') as $c)
-                                        <option value="{{ $c->ctrl_no }}">{{ $c->ctrl_no }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                    <span>Jumlah Data {{ $count }}</span>
-                                </form>
+                                <input type="text" name="search" id="searchk" class="form-control w-25 mr-2"
+                                    placeholder="Cari disini ...">
 
+                                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
                             </div>
-
 
                             <div class="table-responsive">
-                                <table border="1"
+                                <table border="1" id="konsepTableBody"
                                     style="display: block; overflow:scroll; height: 500px; width:1350px; text-align:center">
                                     <thead style="height:40px">
                                         <tr class="table-secondary" style=" position: sticky; top: 0;">
@@ -211,6 +155,36 @@
 
 </body>
 <script src="{{ asset('assets/js/code.jquery.com_jquery-3.6.0.min.js') }}"></script>
+
+<script>
+    function cari_konsep() {
+        const selected = document.getElementById('searchk').value;
+    
+        fetch(`{{ route('search.konsep_commonize') }}?konsep_commonize=${selected}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('konsepTableBody').innerHTML = data;
+
+                // Memperbarui jumlah data langsung dari respons server
+                fetch(`{{ route('get.count.konsep_commonize') }}?konsep_commonize=${selected}`)
+                    .then(response => response.text())
+                    .then(countData => {
+                        document.getElementById('count').innerText = 'Jumlah Data ' + countData;
+                    });
+            });
+    }
+
+    // Menambahkan event listener untuk input pencarian
+    document.getElementById('searchk').addEventListener('input', function() {
+        cari_konsep();
+    });
+
+    // Fungsi yang akan dipanggil ketika checkbox berubah
+    function handleCheckboxChange(id) {
+        // Tambahkan logika yang sesuai untuk menangani perubahan checkbox di sini
+        console.log('Checkbox with ID ' + id + ' changed.');
+    }
+</script>
 
 <script>
     @if ($errors->any())

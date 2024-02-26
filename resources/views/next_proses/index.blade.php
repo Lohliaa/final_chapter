@@ -38,19 +38,13 @@
                                 <strong>{{ $errors->first('file') }}</strong>
                             </span>
                             @endif
-                            {{-- notifikasi sukses --}}
-                            {{-- @if ($sukses = Session::get('sukses'))
-                            <div class="alert alert-success" style="width: 1050px;">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                <strong>{{ $sukses }}</strong>
-                            </div>
-                            @endif --}}
-                            <div class="form-group col-12">
-                                <button id="reset-np-button" class="btn btn-danger">Reset</button>
-                                <a href="{{ route('next_proses.create') }}"
-                                    class="btn btn-md btn-md btn-default mb-6">Tambah</a>
 
-                                <button type="button" class="btn btn-default " data-toggle="modal"
+                            <div class="form-group col-12 d-flex align-items-center">
+                                <button id="reset-np-button" class="btn btn-danger mr-2">Reset</button>
+                                <a href="{{ route('next_proses.create') }}"
+                                    class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
+
+                                <button type="button" class="btn btn-default mr-2" data-toggle="modal"
                                     data-target="#import_excel_np">
                                     Upload Excel
                                 </button>
@@ -85,72 +79,25 @@
                                     </div>
                                 </div>
 
-                                <!-- Import Excel -->
-                                <div class="modal fade" id="update_excel_np" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <form method="post" action="{{ url('update_excel_np') }}"
-                                            enctype="multipart/form-data">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Import</h5>
-                                                </div>
-                                                <div class="modal-body">
-
-                                                    {{ csrf_field() }}
-
-                                                    <label>Pilih file excel</label>
-                                                    <div class="form-group">
-                                                        <input type="file" name="file" required="required">
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-default ">Import</button>
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                    
 
                                 <!-- Export Excel -->
-                                <a href="{{ url('export_excel_np') }}" class="btn btn-default " target="_blank">Download
-                                    Excel</a>
+                                <a href="{{ url('export_excel_np') }}" class="btn btn-default mr-2" 
+                                target="_blank">Download Excel</a>
 
-                                <button style="margin-bottom: 0px" class="btn btn-default delete_all"
+                                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
                                     data-url="{{ url('DeleteAll_Next_Proses') }}">Delete</button>
-                                <button type="button" class="btn btn-default" onclick="handleEditClick()">Edit</button>
-                                <a href="{{ url('next_proses') }}" class="btn btn-default">Refresh</a>
-                            </div>
+                                <button type="button" class="btn btn-default mr-2" onclick="handleEditClick()">Edit</button>
+                                <a href="{{ url('next_proses') }}" class="btn btn-default mr-2">Refresh</a>
+                                <input type="text" name="search" id="searchnp" class="form-control w-25 mr-2"
+                                    placeholder="Cari disini ...">
 
-                            <div class="form-group col-3">
-                                <form class="form" method="get" action="{{ route('next_proses.cari_next_proses') }}">
-                                    {{-- <label for="inputCity">City</label> --}}
-                                    <input type="text" name="cari_next_proses" class="form-control w-75 d-inline"
-                                        id="cari_next_proses" placeholder=" ">
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                </form>
-                            </div>
+                                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
 
-                            <div class="form-group col-5">
-                                <form action="{{ route('next_proses.cari_next_proses') }}" method="get">
-                                    @csrf
-                                    <select name="cari_next_proses" class="form-control w-50 d-inline" placeholder="">
-                                        <option value="" disabled selected hidden> </option>
-                                        @foreach($next_proses->unique('jenis') as $c)
-                                        <option value="{{ $c->jenis }}">{{ $c->jenis }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                    <span>Jumlah Data {{ $count }}</span>
-                                </form>
                             </div>
 
                             <div class="table-responsive">
-                                <table border="1"
+                                <table border="1" id="nextProsesTableBody"
                                     style="display: block; overflow:scroll; height: 500px; width:2300px; text-align:center">
                                     <thead style="height:40px">
                                         <tr class="table-secondary" style=" position: sticky; top: 0;">
@@ -215,7 +162,6 @@
                                         @endforelse
                                     </tbody>
                                 </table>
-                                {{ $next_proses->links() }}
                             </div>
                         </div>
                     </div>
@@ -224,6 +170,36 @@
         </div>
 </body>
 <script src="{{ asset('assets/js/code.jquery.com_jquery-3.6.0.min.js') }}"></script>
+
+<script>
+    function cari_next_proses() {
+        const selected = document.getElementById('searchnp').value;
+    
+        fetch(`{{ route('search.next_proses') }}?next_proses=${selected}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('nextProsesTableBody').innerHTML = data;
+
+                // Memperbarui jumlah data langsung dari respons server
+                fetch(`{{ route('get.count.next_proses') }}?next_proses=${selected}`)
+                    .then(response => response.text())
+                    .then(countData => {
+                        document.getElementById('count').innerText = 'Jumlah Data ' + countData;
+                    });
+            });
+    }
+
+    // Menambahkan event listener untuk input pencarian
+    document.getElementById('searchnp').addEventListener('input', function() {
+        cari_next_proses();
+    });
+
+    // Fungsi yang akan dipanggil ketika checkbox berubah
+    function handleCheckboxChange(id) {
+        // Tambahkan logika yang sesuai untuk menangani perubahan checkbox di sini
+        console.log('Checkbox with ID ' + id + ' changed.');
+    }
+</script>
 
 <script>
     @if ($errors->any())

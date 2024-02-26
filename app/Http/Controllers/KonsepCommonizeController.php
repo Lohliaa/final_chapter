@@ -17,53 +17,103 @@ class KonsepCommonizeController extends Controller
 
     public function cari_konsep(Request $request)
     {
-        $keyword = $request->cari_konsep;
         $user = Auth::id();
 
-        $konsep_commonize = Konsep_Commonize::where('user_id', $user)
-            ->where(function ($query) use ($keyword) {
-                $query->where('ctrl_no', 'like', "%{$keyword}%")
-                    ->orWhere('size_new', 'like', "%{$keyword}%")
-                    ->orWhere('col_new', 'like', "%{$keyword}%")
-                    ->orWhere('cl_28', 'like', "%{$keyword}%")
-                    ->orWhere('acc_b1_new', 'like', "%{$keyword}%")
-                    ->orWhere('acc_b2', 'like', "%{$keyword}%")
-                    ->orWhere('tube_b_new', 'like', "%{$keyword}%")
-                    ->orWhere('term_a_new', 'like', "%{$keyword}%")
-                    ->orWhere('acc_a1_new', 'like', "%{$keyword}%")
-                    ->orWhere('acc_a2', 'like', "%{$keyword}%")
-                    ->orWhere('tube_a_new', 'like', "%{$keyword}%")
-                    ->orWhere('term_b_new', 'like', "%{$keyword}%")
-                    ->orWhere('kind_new', 'like', "%{$keyword}%");
-            })->get();
-        $count = $konsep_commonize->count();
-        $countCtrlNo = $konsep_commonize->where('ctrl_no', 'like', "%{$keyword}%")->count();
-        $countSize = $konsep_commonize->where('size_new', 'like', "%{$keyword}%")->count();
-        $countCol = $konsep_commonize->where('col_new', 'like', "%{$keyword}%")->count();
-        $countCl = $konsep_commonize->where('cl_28', 'like', "%{$keyword}%")->count();
-        $countTermb = $konsep_commonize->where('term_b_new', 'like', "%{$keyword}%")->count();
-        $countAccb1 = $konsep_commonize->where('acc_b1_new', 'like', "%{$keyword}%")->count();
-        $countAccb2 = $konsep_commonize->where('acc_b2', 'like', "%{$keyword}%")->count();
-        $countTubeb = $konsep_commonize->where('tube_b_new', 'like', "%{$keyword}%")->count();
-        $countTerma = $konsep_commonize->where('term_a_new', 'like', "%{$keyword}%")->count();
-        $countAcca1 = $konsep_commonize->where('acc_a1_new', 'like', "%{$keyword}%")->count();
-        $countAcca2 = $konsep_commonize->where('acc_a2', 'like', "%{$keyword}%")->count();
-        $countTubea = $konsep_commonize->where('tube_a_new', 'like', "%{$keyword}%")->count();
-        $countKind = $konsep_commonize->where('kind_new', 'like', "%{$keyword}%")->count();
-        return view('konsep_commonize.index', compact('konsep_commonize', 'count'));
+        $searchTerm = $request->input('konsep_commonize');
+
+        $count = Konsep_Commonize::count();
+
+        $query = Konsep_Commonize::query();
+
+        $query->where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('ctrl_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kind_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('size_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('col_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cl_28', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('term_b_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_b1_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_b2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tube_b_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('term_a_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_a1_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_a2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tube_a_new', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $konsep_commonize = $query->paginate(5000);
+
+        return view('konsep_commonize.partial.konsep_commonize', ['konsep_commonize' => $konsep_commonize, 'count' => $count, 'user' => $user]);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function getCount(Request $request)
+    {
+        $user = Auth::id();
+
+        $searchTerm = $request->input('konsep_commonize');
+
+        $query = Konsep_Commonize::query();
+
+        $query->where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('ctrl_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kind_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('size_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('col_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cl_28', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('term_b_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_b1_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_b2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tube_b_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('term_a_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_a1_new', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_a2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tube_a_new', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        return response()->json($count);
+    }
+
     public function index(Request $request)
     {
         set_time_limit(0);
         $keyword = $request->cari;
         $user = Auth::id();
-        $konsep_commonize = Konsep_Commonize::where('user_id', $user)->orderBy('id', 'asc')->get();
-        $count = $konsep_commonize->count();
+
+        $query = Konsep_Commonize::where('user_id', $user)->orderBy('id', 'asc');
+
+        if ($keyword) {
+            $query->where('ctrl_no', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('kind_new', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('size_new', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('col_new', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('cl_28', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('term_b_new', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('acc_b1_new', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('acc_b2', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('tube_b_new', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('term_a_new', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('acc_a1_new', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('acc_a2', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('tube_a_new', 'LIKE', '%' . $keyword . '%');
+            $count = $query->count();
+        } else {
+            $count = $query->count();
+        }
+
+        $konsep_commonize = $query->get();
+
         $data = $konsep_commonize->all();
 
         return view('konsep_commonize.index', compact('konsep_commonize', 'count', 'data'));

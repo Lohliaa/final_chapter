@@ -20,52 +20,106 @@ class FA_1CController extends Controller
 
     public function cari_fa(Request $request)
     {
-        $keyword = $request->cari_fa;
+
         $user = Auth::id();
 
-        $fa_1c = Fa_1C::where('user_id', $user)
-            ->where(function ($query) use ($keyword) {
-                $query->where('ctrl_no', 'like', "%{$keyword}%")
-                    ->orWhere('addressing_store', 'like', "%{$keyword}%")
-                    ->orWhere('colour', 'like', "%{$keyword}%")
-                    ->orWhere('qty_kbn', 'like', "%{$keyword}%")
-                    ->orWhere('issue', 'like', "%{$keyword}%")
-                    ->orWhere('total_qty', 'like', "%{$keyword}%")
-                    ->orWhere('housing', 'like', "%{$keyword}%")
-                    ->orWhere('conveyor', 'like', "%{$keyword}%")
-                    ->orWhere('car_line', 'like', "%{$keyword}%")
-                    ->orWhere('month', 'like', "%{$keyword}%")
-                    ->orWhere('year', 'like', "%{$keyword}%")
-                    ->orWhere('sai', 'like', "%{$keyword}%");
-            })->get();
+        $searchTerm = $request->input('fa_1c');
 
-        $count = $fa_1c->count();
-        $countCtrlNo = $fa_1c->where('ctrl_no', 'like', "%{$keyword}%")->count();
-        $countConveyor = $fa_1c->where('conveyor', 'like', "%{$keyword}%")->count();
-        $countCarLine = $fa_1c->where('car_line', 'like', "%{$keyword}%")->count();
-        $countAS = $fa_1c->where('addressing_store', 'like', "%{$keyword}%")->count();
-        $countColour = $fa_1c->where('colour', 'like', "%{$keyword}%")->count();
-        $countKbn = $fa_1c->where('qty_kbn', 'like', "%{$keyword}%")->count();
-        $countIssue = $fa_1c->where('issue', 'like', "%{$keyword}%")->count();
-        $countTotal = $fa_1c->where('total_qty', 'like', "%{$keyword}%")->count();
-        $countHousing = $fa_1c->where('housing', 'like', "%{$keyword}%")->count();
-        $countMonth = $fa_1c->where('month', 'like', "%{$keyword}%")->count();
-        $countYear = $fa_1c->where('year', 'like', "%{$keyword}%")->count();
-        $countSai = $fa_1c->where('sai', 'like', "%{$keyword}%")->count();
-        return view('fa_1c.index', compact('fa_1c', 'count'));
+        $count = Fa_1C::count();
+
+        $query = Fa_1C::query();
+
+        $query->where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('ctrl_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('addressing_store', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('colour', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('qty_kbn', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('issue', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('total_qty', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('housing', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('conveyor', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('car_line', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('month', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('year', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('sai', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $fa_1c = $query->paginate(5000);
+
+        return view('fa_1c.partial.fa_1c', ['fa_1c' => $fa_1c, 'count' => $count, 'user' => $user]);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
+    public function getCount(Request $request)
+    {
+        $user = Auth::id();
+
+        $searchTerm = $request->input('fa_1c');
+
+        $query = Fa_1C::query();
+
+        $query->where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('ctrl_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('addressing_store', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('colour', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('qty_kbn', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('issue', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('total_qty', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('housing', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('conveyor', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('car_line', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('month', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('year', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('sai', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $fa_1c = $query->paginate(8000);
+
+        return response()->json($count);
+    }
+
     public function index(Request $request)
     {
+        set_time_limit(0);
         $keyword = $request->cari;
         $user = Auth::id();
-        $fa_1c = Fa_1C::where('user_id', $user)->orderBy('id', 'asc')->get();
-        $count = $fa_1c->count();
+        $query = Fa_1C::where('user_id', $user)->orderBy('id', 'asc');
+       
+        if ($keyword) {
+            $query->where('ctrl_no', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('addressing_store', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('colour', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('qty_kbn', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('issue', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('total_qty', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('housing', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('conveyor', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('car_line', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('month', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('year', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('sai', 'LIKE', '%' . $keyword . '%');
+            $count = $query->count();
+        } else {
+            $count = $query->count();
+        }
+
+        $fa_1c = $query->get();
+
         $data = $fa_1c->all();
+
+        $fa_1c = $query->paginate(8000);
 
         return view('fa_1c.index', compact('fa_1c', 'count', 'data'));
     }

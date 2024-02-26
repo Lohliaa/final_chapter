@@ -14,70 +14,104 @@ class ProsesMaterialController extends Controller
 {
     public function pilih_proses_material(Request $request)
     {
-        $keyword = $request->pilih_proses_material;
         $user = Auth::id();
 
-        $proses_material = ProsesMaterial::where('user_id', $user)
-            ->where(function ($query) use ($keyword) {
-                $query->where('factory', 'like', "%" . $keyword . "%")
-                    ->orWhere('carcode', 'like', "%" . $keyword . "%")
-                    ->orWhere('area', 'like', "%" . $keyword . "%")
-                    ->orWhere('cavity', 'like', "%" . $keyword . "%")
-                    ->orWhere('partnumber', 'like', "%" . $keyword . "%")
-                    ->orWhere('part_name', 'like', "%" . $keyword . "%")
-                    ->orWhere('qty_total', 'like', "%" . $keyword . "%")
-                    ->orWhere('length', 'like', "%" . $keyword . "%")
-                    ->orWhere('konversi', 'like', "%" . $keyword . "%")
-                    ->orWhere('qty_after_konversi', 'like', "%" . $keyword . "%")
-                    ->orWhere('cek', 'like', "%" . $keyword . "%")
-                    ->orWhere('price', 'like', "%" . $keyword . "%")
-                    ->orWhere('amount', 'like', "%" . $keyword . "%");
-            })->get();
-        $columnsToSearch = [
-            'factory', 'carcode', 'area', 'cavity', 'partnumber', 'part_name', 'qty_total', 'length',
-            'konversi', 'qty_after_konversi', 'cek', 'price', 'amount'
-        ];
+        $searchTerm = $request->input('proses_material');
 
-        $count = $proses_material->filter(function ($item) use ($keyword, $columnsToSearch) {
-            foreach ($columnsToSearch as $column) {
-                if (stripos($item->{$column}, $keyword) !== false) {
-                    return true;
-                }
-            }
-            return false;
-        })->count();
-        $calculate = $request->query('calculate');
+        $count = ProsesMaterial::count();
 
-        return view('proses_material.index', compact('count', 'proses_material', 'calculate'));
+        $query = ProsesMaterial::query();
+
+        $query->where('user_id', $user);
+
+        if($searchTerm){
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('factory', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('carcode', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('area', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cavity', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('partnumber', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('part_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('qty_total', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('length', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('konversi', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('qty_after_konversi', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cek', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('price', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('amount', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $proses_material = $query->paginate(5000);
+
+        return view('proses_material.partial.proses_material', ['proses_material' => $proses_material, 'count' => $count, 'user' => $user]);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function getCount(Request $request)
+    {
+        $user = Auth::id();
+
+        $searchTerm = $request->input('proses_material');
+
+        $query = ProsesMaterial::query();
+
+        $query->where('user_id', $user);
+
+        if($searchTerm){
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('factory', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('carcode', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('area', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cavity', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('partnumber', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('part_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('qty_total', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('length', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('konversi', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('qty_after_konversi', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cek', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('price', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('amount', 'LIKE', '%' . $searchTerm . '%');
+            });
+
+        }
+
+        $count = $query->count();
+
+        $proses_material = $query->paginate(8000);
+
+        return response()->json($count);
+    }
 
     public function index(Request $request)
     {
         set_time_limit(0);
         $keyword = $request->pilih_proses_material;
         $user = Auth::id();
-        $proses_material = ProsesMaterial::where('user_id', $user)
-            ->where(function ($query) use ($keyword) {
-                $query->where('factory', 'like', "%" . $keyword . "%")
-                    ->orWhere('carcode', 'like', "%" . $keyword . "%")
-                    ->orWhere('area', 'like', "%" . $keyword . "%")
-                    ->orWhere('cavity', 'like', "%" . $keyword . "%")
-                    ->orWhere('partnumber', 'like', "%" . $keyword . "%")
-                    ->orWhere('part_name', 'like', "%" . $keyword . "%")
-                    ->orWhere('qty_total', 'like', "%" . $keyword . "%")
-                    ->orWhere('length', 'like', "%" . $keyword . "%")
-                    ->orWhere('konversi', 'like', "%" . $keyword . "%")
-                    ->orWhere('qty_after_konversi', 'like', "%" . $keyword . "%")
-                    ->orWhere('cek', 'like', "%" . $keyword . "%")
-                    ->orWhere('price', 'like', "%" . $keyword . "%")
-                    ->orWhere('amount', 'like', "%" . $keyword . "%");
-            })->get();
-        $calculate = $request->query('calculate');
+
+        $query = ProsesMaterial::where('user_id', $user)->orderBy('id', 'asc');
+
+        if($keyword){
+            $query->where('factory', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('carcode', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('area', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('cavity', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('partnumber', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('part_name', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('qty_total', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('length', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('konversi', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('qty_after_konversi', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('cek', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('price', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('amount', 'LIKE', '%' . $keyword . '%');
+            $count = $query->count();
+        } else {
+            $count = $query->count();
+        }
+
         $dataMaterial = DB::table('material')->select('factory', 'carcode', 'area', 'cavity', 'partnumber', 'part_name', 'qty_total')
             ->where('user_id', $user)
             ->get();
@@ -139,10 +173,11 @@ class ProsesMaterialController extends Controller
 
         $proses_material = ProsesMaterial::where('user_id', $user)->get();
 
-        $count = $proses_material->count();
+        $proses_material = $query->get();
+
         $data = $proses_material->all();
 
-        return view('proses_material.index', compact('count', 'proses_material', 'calculate', 'data'));
+        return view('proses_material.index', compact('count', 'proses_material', 'data'));
     }
 
     public function export_excel_prosesMaterial()

@@ -28,12 +28,12 @@
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <div style="display: flex; align-items: center; justify-content: center;">
+                {{--  <div style="display: flex; align-items: center; justify-content: center;">
                     <img style="height: 25px; margin-right: 0px; margin-top: 10px" src="dist/img/SAI transparent.png">
                     <div style="height: 40px; border-left: 1px solid black; margin: 0 10px;"></div>
                     <img style="height: 25px; margin-left: 0px; margin-top: 5px" src="dist/img/sai_transparent.png">
-                </div>
-                <h1 style="text-align: center; margin-top:30px;"><a href="{{ route('login') }}"><b>SAI WIP SYSTEM</b></a></h1>
+                </div>  --}}
+                <h1 style="text-align: center;"><a href="{{ route('login') }}"><b>WIP SYSTEM</b></a></h1>
                 <p class="login-box-msg pb-4">Sign in to start your session</p>
                 <form action="{{ route('loginaksi') }}" method="post">
                     @csrf

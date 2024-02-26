@@ -44,13 +44,13 @@
                                 <strong>{{ $sukses }}</strong>
                             </div>
                             @endif
-                            <div class="form-group col-12">
-                                <button id="reset-umh-button" class="btn btn-danger">Reset</button>
+                            <div class="form-group col-12 d-flex align-items-center">
+                                <button id="reset-umh-button" class="btn btn-danger mr-2">Reset</button>
                                 <a href="{{ route('umh_master.create') }}"
-                                    class="btn btn-md btn-md btn-default mb-6">Tambah</a>
-                                <button type="button" class="btn btn-default" onclick="handleEditClick()">Edit</button>
+                                    class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
+                                <button type="button" class="btn btn-default mr-2" onclick="handleEditClick()">Edit</button>
 
-                                <button type="button" class="btn btn-default " data-toggle="modal"
+                                <button type="button" class="btn btn-default mr-2" data-toggle="modal"
                                     data-target="#import_excel_umh">
                                     Upload Excel
                                 </button>
@@ -85,72 +85,22 @@
                                     </div>
                                 </div>
 
-                                <!-- Import Excel -->
-                                <div class="modal fade" id="update_excel_umh" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <form method="post" action="{{ url('update_excel_umh') }}"
-                                            enctype="multipart/form-data">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Import</h5>
-                                                </div>
-                                                <div class="modal-body">
-
-                                                    {{ csrf_field() }}
-
-                                                    <label>Pilih file excel</label>
-                                                    <div class="form-group">
-                                                        <input type="file" name="file" required="required">
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-default ">Import</button>
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-
                                 <!-- Export Excel -->
-                                <a href="{{ url('export_excel_umh') }}" class="btn btn-default "
+                                <a href="{{ url('export_excel_umh') }}" class="btn btn-default mr-2"
                                     target="_blank">Download Excel</a>
 
-                                <button style="margin-bottom: 0px" class="btn btn-default delete_all"
+                                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
                                     data-url="{{ url('DeleteAll_umh') }}">Delete</button>
-                                <a href="{{ url('umh_master') }}" class="btn btn-default">Refresh</a>
-                            </div>
+                                <a href="{{ url('umh_master') }}" class="btn btn-default mr-2">Refresh</a>
 
-                            <div class="form-group col-3">
-                                <!-- Topbar Search -->
-                                <form class="form" method="get" action="{{ url('cari_umh') }}">
-                                    {{-- <label for="inputCity">City</label> --}}
-                                    <input type="text" name="cari_umh" class="form-control w-75 d-inline" id="cari_umh"
-                                        placeholder=" ">
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                </form>
-                            </div>
+                                <input type="text" name="search" id="searchumh" class="form-control w-25 mr-2"
+                                    placeholder="Cari disini ...">
 
-                            <div class="form-group col-6">
-                                <form action="{{ url('cari_umh') }}" method="get">
-                                    @csrf
-                                    <select name="cari_umh" class="form-control w-50 d-inline" placeholder="">
-                                        <option value="" disabled selected hidden> </option>
-                                        @foreach($umh_master->unique('car_line') as $c)
-                                        <option value="{{ $c->car_line }}">{{ $c->car_line }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                    <span>Jumlah Data {{ $count }}</span>
-                                </form>
+                                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
                             </div>
 
                             <div class="table-responsive" style="margin: 0 auto;">
-                                <table border="1" style="display: block; overflow: scroll; height: 500px; width: 1060px; text-align: center; margin: 0 auto;">
+                                <table border="1" id="umhTableBody" style="display: block; overflow: scroll; height: 500px; width: 1060px; text-align: center; margin: 0 auto;">
                                     <thead style="height:40px">
                                         <tr class="table-secondary" style=" position: sticky; top: 0;">
                                             <th style="width: 50px; text-align:center" scope="col"><input
@@ -207,6 +157,36 @@
         </div>
 </body>
 <script src="{{ asset('assets/js/code.jquery.com_jquery-3.6.0.min.js') }}"></script>
+
+<script>
+    function cari_umh() {
+        const selected = document.getElementById('searchumh').value;
+    
+        fetch(`{{ route('search.umh_master') }}?umh_master=${selected}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('umhTableBody').innerHTML = data;
+
+                // Memperbarui jumlah data langsung dari respons server
+                fetch(`{{ route('get.count.umh_master') }}?umh_master=${selected}`)
+                    .then(response => response.text())
+                    .then(countData => {
+                        document.getElementById('count').innerText = 'Jumlah Data ' + countData;
+                    });
+            });
+    }
+
+    // Menambahkan event listener untuk input pencarian
+    document.getElementById('searchumh').addEventListener('input', function() {
+        cari_umh();
+    });
+
+    // Fungsi yang akan dipanggil ketika checkbox berubah
+    function handleCheckboxChange(id) {
+        // Tambahkan logika yang sesuai untuk menangani perubahan checkbox di sini
+        console.log('Checkbox with ID ' + id + ' changed.');
+    }
+</script>
 
 <script>
     @if ($errors->any())

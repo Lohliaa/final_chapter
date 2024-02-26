@@ -19,67 +19,126 @@ class Next_ProsesController extends Controller
 
     public function cari_next_proses(Request $request)
     {
-        $keyword = $request->cari_next_proses;
         $user = Auth::id();
 
-        $next_proses = Next_Proses::where('user_id', $user)
-        ->where(function ($query) use ($keyword) {
-            $query->where('jenis', 'like', "%{$keyword}%")
-                ->orWhere('carline', 'like', "%{$keyword}%")
-                ->orWhere('type', 'like', "%{$keyword}%")
-                ->orWhere('ctrl_no', 'like', "%{$keyword}%")
-                ->orWhere('kind', 'like', "%{$keyword}%")
-                ->orWhere('size', 'like', "%{$keyword}%")
-                ->orWhere('color', 'like', "%{$keyword}%")
-                ->orWhere('cl', 'like', "%{$keyword}%")
-                ->orWhere('term_b', 'like', "%{$keyword}%")
-                ->orWhere('accb1', 'like', "%{$keyword}%")
-                ->orWhere('accb2', 'like', "%{$keyword}%")
-                ->orWhere('tubeb', 'like', "%{$keyword}%")
-                ->orWhere('term_a', 'like', "%{$keyword}%")
-                ->orWhere('acca1', 'like', "%{$keyword}%")
-                ->orWhere('acca2', 'like', "%{$keyword}%")
-                ->orWhere('tubea', 'like', "%{$keyword}%")
-                ->orWhere('jenis_ctrl_no', 'like', "%{$keyword}%")
-                ->orWhere('ctrl_no_cct', 'like', "%{$keyword}%")
-                ->orWhere('kind_size_color', 'like', "%{$keyword}%")
-                ->orWhere('cust_part_no', 'like', "%{$keyword}%");
-        })->paginate(10000);
-        $count = $next_proses->count();
-        $countJenis = $next_proses->where('jenis', 'like', "%{$keyword}%")->count();
-        $countCarline = $next_proses->where('carline', 'like', "%{$keyword}%")->count();
-        $countType = $next_proses->where('type', 'like', "%{$keyword}%")->count();
-        $countCtrlno = $next_proses->where('ctrl_no', 'like', "%{$keyword}%")->count();
-        $countKind = $next_proses->where('kind', 'like', "%{$keyword}%")->count();
-        $countSize = $next_proses->where('size', 'like', "%{$keyword}%")->count();
-        $countColor = $next_proses->where('color', 'like', "%{$keyword}%")->count();
-        $countCl = $next_proses->where('cl', 'like', "%{$keyword}%")->count();
-        $countTermb = $next_proses->where('term_b', 'like', "%{$keyword}%")->count();
-        $countAccb1 = $next_proses->where('accb1', 'like', "%{$keyword}%")->count();
-        $countAccb2 = $next_proses->where('accb2', 'like', "%{$keyword}%")->count();
-        $countTubeb = $next_proses->where('tubeb', 'like', "%{$keyword}%")->count();
-        $countTerma = $next_proses->where('term_a', 'like', "%{$keyword}%")->count();
-        $countAcca1 = $next_proses->where('acca1', 'like', "%{$keyword}%")->count();
-        $countAcca2 = $next_proses->where('acca2', 'like', "%{$keyword}%")->count();
-        $countTubea = $next_proses->where('tubea', 'like', "%{$keyword}%")->count();
-        $countJctrl = $next_proses->where('jenis_ctrl_no', 'like', "%{$keyword}%")->count();
-        $countCtrl = $next_proses->where('ctrl_no_cct', 'like', "%{$keyword}%")->count();
-        $countKind = $next_proses->where('kind_size_color', 'like', "%{$keyword}%")->count();
-        $countCust = $next_proses->where('cust_part_no', 'like', "%{$keyword}%")->count();
-        return view('next_proses.index', compact('next_proses', 'count'));
+        $searchTerm = $request->input('next_proses');
+
+        $count = Next_Proses::count();
+
+        $query = Next_Proses::query();
+
+        $query->where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('jenis', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('carline', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('type', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('ctrl_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kind', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('size', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('color', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cl', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('term_b', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('accb1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('accb2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tubeb', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('term_a', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acca1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acca2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tubea', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('jenis_ctrl_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('ctrl_no_cct', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kind_size_color', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cust_part_no', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $next_proses = $query->paginate(5000);
+
+        return view('next_proses.partial.next_proses', ['next_proses' => $next_proses, 'count' => $count, 'user' => $user]);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function getCount(Request $request)
+    {
+        $user = Auth::id();
+
+        $searchTerm = $request->input('next_proses');
+
+        $query = Next_Proses::query();
+
+        $query->where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('jenis', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('carline', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('type', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('ctrl_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kind', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('size', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('color', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cl', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('term_b', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('accb1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('accb2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tubeb', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('term_a', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acca1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acca2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tubea', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('jenis_ctrl_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('ctrl_no_cct', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kind_size_color', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cust_part_no', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        return response()->json($count);
+    }
+
     public function index(Request $request)
     {
+        set_time_limit(0);
         $keyword = $request->cari;
         $user = Auth::id();
-        $next_proses = Next_Proses::where('user_id', $user)->orderBy('id', 'asc')->paginate(10000);
-        $count = $next_proses->count();
+
+        $query = Next_Proses::where('user_id', $user)->orderBy('id', 'asc');
+
+        if ($keyword) {
+            $query->where('jenis', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('carline', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('type', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('ctrl_no', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('kind', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('size', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('color', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('cl', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('term_b', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('accb1', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('accb2', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('tubeb', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('term_a', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('acca1', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('acca2', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('tubea', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('jenis_ctrl_no', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('ctrl_no_cct', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('kind_size_color', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('cust_part_no', 'LIKE', '%' . $keyword . '%');
+            $count = $query->count();
+        } else {
+            $count = $query->count();
+        }
+
+        $next_proses = $query->get();
+
         $data = $next_proses->all();
+
         return view('next_proses.index', compact('next_proses', 'count', 'data'));
     }
 
@@ -106,7 +165,6 @@ class Next_ProsesController extends Controller
         Storage::delete($path);
 
         return back()->with('success', "Data berhasil diimport!");
-
     }
     /**
      * Show the form for creating a new resource.

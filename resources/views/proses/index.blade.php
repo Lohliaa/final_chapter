@@ -2,7 +2,8 @@
 @section('layouts.content')
 
 <head>
-    <link rel="stylesheet" href="{{ asset('assets/js/maxcdn.bootstrapcdn.com_bootstrap_3.3.7_css_bootstrap.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/js/maxcdn.bootstrapcdn.com_bootstrap_3.3.7_css_bootstrap.min.css') }}">
     <script src="{{ asset('assets/js/cdnjs.cloudflare.com_ajax_libs_jquery_3.2.1_jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/cdnjs.cloudflare.com_ajax_libs_twitter-bootstrap_3.3.7_js_bootstrap.min.js') }}">
     </script>
@@ -44,43 +45,25 @@
                                 <strong>{{ $sukses }}</strong>
                             </div>
                             @endif
-                            <div class="form-group">
+                            <div class="form-group col-12 d-flex align-items-center">
 
                                 <!-- Export Excel -->
-                                <a href="{{ url('export_excel_proses') }}" class="btn btn-default "
+                                <a href="{{ url('export_excel_proses') }}" class="btn btn-default mr-2"
                                     target="_blank">Download Excel</a>
 
-                                <button style="margin-bottom: 0px" class="btn btn-default delete_all"
+                                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
                                     data-url="{{ url('DeleteAll_proses') }}">Delete</button>
-                                {{--  <a href="{{ url('proses?calculate=true') }}" class="btn btn-default">Hitung</a>  --}}
-                                <a href="{{ url('proses') }}" class="btn btn-default">Refresh</a>
-                            </div>
+                                <a href="{{ url('proses') }}" class="btn btn-default mr-2">Refresh</a>
 
-                            <div class="form-group col-3">
-                                <form class="form" method="get" action="{{ route('proses.pilih_proses') }}">
-                                    {{-- <label for="inputCity">City</label> --}}
-                                    <input type="text" name="pilih_proses" class="form-control w-75 d-inline"
-                                        id="pilih_proses" placeholder=" ">
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                </form>
-                            </div>
+                                <input type="text" name="search" id="searchproses" class="form-control w-25 mr-2"
+                                    placeholder="Cari disini ...">
 
-                            <div class="form-group col-5">
-                                <form action="{{ route('proses.pilih_proses') }}" method="get">
-                                    @csrf
-                                    <select name="pilih_proses" class="form-control w-50 d-inline" placeholder="">
-                                        <option value="" disabled selected hidden> </option>
-                                        @foreach($proses->unique('ctrl_no') as $c)
-                                        <option value="{{ $c->ctrl_no }}">{{ $c->ctrl_no }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                    <span>Jumlah Data {{ $count }}</span>
-                                </form>
+                                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
+
                             </div>
 
                             <div class="table-responsive">
-                                <table border="1"
+                                <table border="1" id="prosesTableBody"
                                     style="display: block; overflow:scroll; height: 500px; width:3000px; text-align:center">
                                     <thead style="height:40px">
                                         <tr class="table-secondary" style=" position: sticky; top: 0;">
@@ -113,13 +96,16 @@
                                             <th style="width: 100px; text-align:center" scope="col">wire_cost</th>
                                             <th style="width: 130px; text-align:center" scope="col">component_cost</th>
                                             <th style="width: 130px; text-align:center" scope="col">material cost</th>
-                                            <th style="width: 130px; text-align:center" scope="col">material cost amount</th>
+                                            <th style="width: 130px; text-align:center" scope="col">material cost amount
+                                            </th>
                                             <th style="width: 100px; text-align:center" scope="col">process</th>
                                             <th style="width: 100px; text-align:center" scope="col">UMH</th>
                                             <th style="width: 100px; text-align:center" scope="col">charge</th>
                                             <th style="width: 100px; text-align:center" scope="col">process cost</th>
-                                            <th style="width: 100px; text-align:center" scope="col">process cost amount</th>
-                                            <th style="width: 100px; text-align:center" scope="col">Total Cost Amount</th>
+                                            <th style="width: 100px; text-align:center" scope="col">process cost amount
+                                            </th>
+                                            <th style="width: 100px; text-align:center" scope="col">Total Cost Amount
+                                            </th>
                                             <th style="width: 100px; text-align:center" scope="col">keterangan</th>
                                         </tr>
                                     </thead>
@@ -177,7 +163,38 @@
                 </div>
             </div>
         </div>
+    </div>
 </body>
+
+<script>
+    function pilih_proses() {
+        const selected = document.getElementById('searchproses').value;
+    
+        fetch(`{{ route('search.proses') }}?proses=${selected}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('prosesTableBody').innerHTML = data;
+
+                // Memperbarui jumlah data langsung dari respons server
+                fetch(`{{ route('get.count.proses') }}?proses=${selected}`)
+                    .then(response => response.text())
+                    .then(countData => {
+                        document.getElementById('count').innerText = 'Jumlah Data ' + countData;
+                    });
+            });
+    }
+
+    // Menambahkan event listener untuk input pencarian
+    document.getElementById('searchproses').addEventListener('input', function() {
+        pilih_proses();
+    });
+
+    // Fungsi yang akan dipanggil ketika checkbox berubah
+    function handleCheckboxChange(id) {
+        // Tambahkan logika yang sesuai untuk menangani perubahan checkbox di sini
+        console.log('Checkbox with ID ' + id + ' changed.');
+    }
+</script>
 
 <script type="text/javascript">
     $(document).ready(function () {

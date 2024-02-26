@@ -17,117 +17,170 @@ use Illuminate\Support\Facades\DB;
 
 class ProsesController extends Controller
 {
-
     public function pilih_proses(Request $request)
     {
 
-        $keyword = $request->pilih_proses;
         $user = Auth::id();
 
-        $proses = Proses::where('user_id', $user)
-        ->where(function ($query) use ($keyword) {
-            $query->where('ctrl_no', 'like', "%" . $keyword . "%")
-                ->orWhere('kind', 'like', "%" . $keyword . "%")
-                ->orWhere('size', 'like', "%" . $keyword . "%")
-                ->orWhere('color', 'like', "%" . $keyword . "%")
-                ->orWhere('month', 'like', "%" . $keyword . "%")
-                ->orWhere('car_line', 'like', "%" . $keyword . "%")
-                ->orWhere('conveyor', 'like', "%" . $keyword . "%")
-                ->orWhere('addressing_store', 'like', "%" . $keyword . "%")
-                ->orWhere('ctrlno', 'like', "%" . $keyword . "%")
-                ->orWhere('kind_size_color', 'like', "%" . $keyword . "%")
-                ->orWhere('cust_part_no', 'like', "%" . $keyword . "%")
-                ->orWhere('cl', 'like', "%" . $keyword . "%")
-                ->orWhere('term_b', 'like', "%" . $keyword . "%")
-                ->orWhere('accb1', 'like', "%" . $keyword . "%")
-                ->orWhere('accb2', 'like', "%" . $keyword . "%")
-                ->orWhere('tubeb', 'like', "%" . $keyword . "%")
-                ->orWhere('term_a', 'like', "%" . $keyword . "%")
-                ->orWhere('acca1', 'like', "%" . $keyword . "%")
-                ->orWhere('acca2', 'like', "%" . $keyword . "%")
-                ->orWhere('tubea', 'like', "%" . $keyword . "%")
-                ->orWhere('total_qty', 'like', "%" . $keyword . "%")
-                ->orWhere('wire_cost', 'like', "%" . $keyword . "%")
-                ->orWhere('component_cost', 'like', "%" . $keyword . "%")
-                ->orWhere('material_cost', 'like', "%" . $keyword . "%")
-                ->orWhere('process', 'like', "%" . $keyword . "%")
-                ->orWhere('umh', 'like', "%" . $keyword . "%")
-                ->orWhere('charge', 'like', "%" . $keyword . "%")
-                ->orWhere('process_cost', 'like', "%" . $keyword . "%")
-                ->orWhere('process_cost_amount', 'like', "%" . $keyword . "%")
-                ->orWhere('total_amount', 'like', "%" . $keyword . "%")
-                ->orWhere('price_sum', 'like', "%" . $keyword . "%");
-        })
-            ->get();
-        $columnsToSearch = [
-            'month', 'car_line', 'conveyor', 'addressing_store', 'ctrl_no', 'ctrlno', 'kind', 'size', 'color',
-            'kind_size_color', 'cust_part_no', 'cl', 'term_b', 'accb1', 'accb2', 'tubeb', 'term_a', 'acca1', 'acca2', 'tubea', 'total_qty',
-            'price_sum', 'wire_cost', 'component_cost', 'material_cost', 'process', 'umh', 'charge', 'process_cost', 'process_cost_amount', 'total_amount'
-        ];
+        $searchTerm = $request->input('proses');
 
-        $count = $proses->filter(function ($item) use ($keyword, $columnsToSearch) {
-            foreach ($columnsToSearch as $column) {
-                if (stripos($item->{$column}, $keyword) !== false) {
-                    return true;
-                }
-            }
-            return false;
-        })->count();
+        $count = Proses::count();
 
-        return view('proses.index', compact('count', 'proses'));
+        $query = Proses::query();
+        
+        $query->where('user_id', $user);
+
+        if($searchTerm){
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('ctrl_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kind', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('size', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('color', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('month', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('car_line', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('conveyor', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('addressing_store', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('ctrlno', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kind_size_color', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cust_part_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cl', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('term_b', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('accb1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('accb2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tubeb', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('term_a', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acca1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acca2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tubea', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('total_qty', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('wire_cost', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('component_cost', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('material_cost', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('material_cost_amount', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('process', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('umh', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('charge', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('process_cost', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('process_cost_amount', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('total_amount', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('price_sum', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $proses = $query->paginate(5000);
+
+        return view('proses.partial.proses', ['proses' => $proses, 'count' => $count, 'user' => $user]);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function getCount(Request $request)
+    {
+        $user = Auth::id();
+
+        $searchTerm = $request->input('proses');
+
+        $query = Proses::query();
+
+        $query->where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('ctrl_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kind', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('size', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('color', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('month', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('car_line', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('conveyor', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('addressing_store', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('ctrlno', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kind_size_color', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cust_part_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cl', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('term_b', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('accb1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('accb2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tubeb', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('term_a', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acca1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acca2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tubea', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('total_qty', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('wire_cost', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('component_cost', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('material_cost', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('material_cost_amount', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('process', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('umh', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('charge', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('process_cost', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('process_cost_amount', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('total_amount', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('price_sum', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $proses = $query->paginate(8000);
+
+        return response()->json($count);
+    }
 
     public function index(Request $request)
     {
         set_time_limit(0);
         $keyword = $request->pilih_proses;
         $user = Auth::id();
-        $proses = Proses::where('user_id', $user)
-        ->where(function ($query) use ($keyword) {
+        $query = Proses::where('user_id', $user)->orderBy('id', 'asc');
+
+        if($keyword){
             $query->where('ctrl_no', 'like', "%" . $keyword . "%")
-                ->orWhere('kind', 'like', "%" . $keyword . "%")
-                ->orWhere('size', 'like', "%" . $keyword . "%")
-                ->orWhere('color', 'like', "%" . $keyword . "%")
-                ->orWhere('month', 'like', "%" . $keyword . "%")
-                ->orWhere('car_line', 'like', "%" . $keyword . "%")
-                ->orWhere('conveyor', 'like', "%" . $keyword . "%")
-                ->orWhere('addressing_store', 'like', "%" . $keyword . "%")
-                ->orWhere('ctrlno', 'like', "%" . $keyword . "%")
-                ->orWhere('kind_size_color', 'like', "%" . $keyword . "%")
-                ->orWhere('cust_part_no', 'like', "%" . $keyword . "%")
-                ->orWhere('term_b', 'like', "%" . $keyword . "%")
-                ->orWhere('accb1', 'like', "%" . $keyword . "%")
-                ->orWhere('accb2', 'like', "%" . $keyword . "%")
-                ->orWhere('tubeb', 'like', "%" . $keyword . "%")
-                ->orWhere('term_a', 'like', "%" . $keyword . "%")
-                ->orWhere('acca1', 'like', "%" . $keyword . "%")
-                ->orWhere('acca2', 'like', "%" . $keyword . "%")
-                ->orWhere('tubea', 'like', "%" . $keyword . "%")
-                ->orWhere('total_qty', 'like', "%" . $keyword . "%")
-                ->orWhere('wire_cost', 'like', "%" . $keyword . "%")
-                ->orWhere('component_cost', 'like', "%" . $keyword . "%")
-                ->orWhere('material_cost', 'like', "%" . $keyword . "%")
-                ->orWhere('process', 'like', "%" . $keyword . "%")
-                ->orWhere('umh', 'like', "%" . $keyword . "%")
-                ->orWhere('charge', 'like', "%" . $keyword . "%")
-                ->orWhere('process_cost', 'like', "%" . $keyword . "%")
-                ->orWhere('process_cost_amount', 'like', "%" . $keyword . "%")
-                ->orWhere('total_amount', 'like', "%" . $keyword . "%")
-                ->orWhere('price_sum', 'like', "%" . $keyword . "%");
-        })
-            ->get();
+            ->orWhere('kind', 'like', "%" . $keyword . "%")
+            ->orWhere('size', 'like', "%" . $keyword . "%")
+            ->orWhere('color', 'like', "%" . $keyword . "%")
+            ->orWhere('month', 'like', "%" . $keyword . "%")
+            ->orWhere('car_line', 'like', "%" . $keyword . "%")
+            ->orWhere('conveyor', 'like', "%" . $keyword . "%")
+            ->orWhere('addressing_store', 'like', "%" . $keyword . "%")
+            ->orWhere('ctrlno', 'like', "%" . $keyword . "%")
+            ->orWhere('kind_size_color', 'like', "%" . $keyword . "%")
+            ->orWhere('cust_part_no', 'like', "%" . $keyword . "%")
+            ->orWhere('term_b', 'like', "%" . $keyword . "%")
+            ->orWhere('accb1', 'like', "%" . $keyword . "%")
+            ->orWhere('accb2', 'like', "%" . $keyword . "%")
+            ->orWhere('tubeb', 'like', "%" . $keyword . "%")
+            ->orWhere('term_a', 'like', "%" . $keyword . "%")
+            ->orWhere('acca1', 'like', "%" . $keyword . "%")
+            ->orWhere('acca2', 'like', "%" . $keyword . "%")
+            ->orWhere('tubea', 'like', "%" . $keyword . "%")
+            ->orWhere('total_qty', 'like', "%" . $keyword . "%")
+            ->orWhere('wire_cost', 'like', "%" . $keyword . "%")
+            ->orWhere('component_cost', 'like', "%" . $keyword . "%")
+            ->orWhere('material_cost', 'like', "%" . $keyword . "%")
+            ->orWhere('material_cost_amount', 'like', "%" . $keyword . "%")
+            ->orWhere('process', 'like', "%" . $keyword . "%")
+            ->orWhere('umh', 'like', "%" . $keyword . "%")
+            ->orWhere('charge', 'like', "%" . $keyword . "%")
+            ->orWhere('process_cost', 'like', "%" . $keyword . "%")
+            ->orWhere('process_cost_amount', 'like', "%" . $keyword . "%")
+            ->orWhere('total_amount', 'like', "%" . $keyword . "%")
+            ->orWhere('price_sum', 'like', "%" . $keyword . "%");
+            $count = $query->count();
+        } else {
+            $count = $query->count();
+        }
+  
         $dataFa1c = DB::table('fa_1c')->select('car_line', 'month', 'conveyor', 'addressing_store', 'ctrl_no', 'total_qty')
         ->where('user_id', $user)
         ->get();
         Proses::where('user_id', $user)->delete();
+        
+        $proses = $query->get();
 
-        $count = $proses->count();
         $data = $proses->all();
+
         $dataToInsert = [];
 
         foreach ($dataFa1c as $data) {

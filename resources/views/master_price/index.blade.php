@@ -27,11 +27,6 @@
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
                         <div class="form-row justify-content-start">
-                            {{-- @if ($message = Session::get('success'))
-                            <div class="alert alert-success" style="width: 1050px;">
-                                <p>{{ $message }}</p>
-                            </div>
-                            @endif --}}
                             {{-- notifikasi form validasi --}}
                             @if ($errors->has('file'))
                             <span class="invalid-feedback" role="alert">
@@ -41,19 +36,12 @@
                             </span>
                             @endif
 
-                            {{-- notifikasi sukses --}}
-                            {{-- @if ($sukses = Session::get('sukses'))
-                            <div class="alert alert-success" style="width: 1050px;">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                <strong>{{ $sukses }}</strong>
-                            </div>
-                            @endif --}}
-                            <div class="form-group col-12">
-                                <button id="reset-mp-button" class="btn btn-danger">Reset</button>
+                            <div class="form-group col-12 d-flex align-items-center">
+                                <button id="reset-mp-button" class="btn btn-danger mr-2">Reset</button>
                                 <a href="{{ route('master_price.create') }}"
-                                    class="btn btn-md btn-md btn-default mb-6">Tambah</a>
+                                    class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
 
-                                <button type="button" class="btn btn-default " data-toggle="modal"
+                                <button type="button" class="btn btn-default mr-2" data-toggle="modal"
                                     data-target="#import_excel_mp">
                                     Upload Excel
                                 </button>
@@ -88,73 +76,22 @@
                                     </div>
                                 </div>
 
-                                <!-- Import Excel -->
-                                <div class="modal fade" id="update_excel_mp" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <form method="post" action="{{ url('update_excel_mp') }}"
-                                            enctype="multipart/form-data">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Import</h5>
-                                                </div>
-                                                <div class="modal-body">
-
-                                                    {{ csrf_field() }}
-
-                                                    <label>Pilih file excel</label>
-                                                    <div class="form-group">
-                                                        <input type="file" name="file" required="required">
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-default ">Import</button>
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-
                                 <!-- Export Excel -->
-                                <a href="{{ url('export_excel_mp') }}" class="btn btn-default " target="_blank">Download
+                                <a href="{{ url('export_excel_mp') }}" class="btn btn-default mr-2" target="_blank">Download
                                     Excel</a>
-                                <button style="margin-bottom: 0px" class="btn btn-default delete_all"
+                                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
                                     data-url="{{ url('deleteAll') }}">Delete</button>
-                                <a href="{{ url('master_price') }}" class="btn btn-default ">Refresh</a>
-                            </div>
+                                <a href="{{ url('master_price') }}" class="btn btn-default mr-2">Refresh</a>
+                            
+                                <input type="text" name="search" id="searchmp" class="form-control w-25 mr-2"
+                                    placeholder="Cari disini ...">
 
-                            <div class="form-group col-3">
-                                <!-- Topbar Search -->
-                                <form class="form" method="get" action="{{ route('master_price.search') }}">
-                                    {{-- <label for="inputCity">City</label> --}}
-                                    <input type="text" name="search" class="form-control w-75 d-inline" id="search"
-                                        placeholder=" ">
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                </form>
-                            </div>
-
-                            <div class="form-group col-6">
-                                <form action="{{ route('master_price.search') }}" method="get">
-                                    @csrf
-                                    <select name="search" class="form-control w-50 d-inline" placeholder="">
-                                        <option value="" disabled selected hidden> </option>
-                                        @foreach($master_price->unique('part_number_ori_sto') as $mp)
-                                        <option value="{{ $mp->part_number_ori_sto }}">{{ $mp->part_number_ori_sto }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                    <button type="submit" class="btn btn-default ">Cari</button>
-                                    <span>Jumlah Data {{ $count }}</span>
-                                </form>
+                                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
                             </div>
 
                             <div class="table-responsive">
                                 <div class="table-responsive" style="margin: 0 auto;">
-                                    <table border="1"
+                                    <table border="1" id="mpTableBody"
                                         style="display: block; overflow: scroll; height: 500px; width: 1060px; text-align: center; margin: 0 auto;">
                                         <thead style="height:40px">
                                             <tr class="table-secondary" style=" position: sticky; top: 0;">
@@ -207,6 +144,36 @@
             </div>
 </body>
 <script src="{{ asset('assets/js/code.jquery.com_jquery-3.6.0.min.js') }}"></script>
+
+<script>
+    function search() {
+        const selected = document.getElementById('searchmp').value;
+    
+        fetch(`{{ route('search.master_price') }}?master_price=${selected}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('mpTableBody').innerHTML = data;
+
+                // Memperbarui jumlah data langsung dari respons server
+                fetch(`{{ route('get.count.master_price') }}?master_price=${selected}`)
+                    .then(response => response.text())
+                    .then(countData => {
+                        document.getElementById('count').innerText = 'Jumlah Data ' + countData;
+                    });
+            });
+    }
+
+    // Menambahkan event listener untuk input pencarian
+    document.getElementById('searchmp').addEventListener('input', function() {
+        search();
+    });
+
+    // Fungsi yang akan dipanggil ketika checkbox berubah
+    function handleCheckboxChange(id) {
+        // Tambahkan logika yang sesuai untuk menangani perubahan checkbox di sini
+        console.log('Checkbox with ID ' + id + ' changed.');
+    }
+</script>
 
 <script>
     @if ($errors->any())

@@ -15,50 +15,97 @@ class UMHController extends Controller
 {
     public function cari_umh(Request $request)
     {
-        $keyword = $request->cari_umh;
+
         $user = Auth::id();
 
-        $umh_master = UMH_Master::where('user_id', $user)
-        ->where(function ($query) use ($keyword) {
-            $query->orWhere('car_line', 'like', "%{$keyword}%")
-                ->orWhere('code_umh1', 'like', "%{$keyword}%")
-                ->orWhere('code_umh2', 'like', "%{$keyword}%")
-                ->orWhere('code_umh3', 'like', "%{$keyword}%")
-                ->orWhere('kode_umh1', 'like', "%{$keyword}%")
-                ->orWhere('kode_umh2', 'like', "%{$keyword}%")
-                ->orWhere('kode_umh3', 'like', "%{$keyword}%");
-        })->get();
+        $searchTerm = $request->input('umh_master');
+
+        $count = UMH_Master::count();
+
+        $query = UMH_Master::query();
+
+        $query->where('user_id', $user);
         
-        $count = $umh_master->count();
-        $countCarline = $umh_master->where('car_line', 'like', "%{$keyword}%")->count();
-        $countCode1 = $umh_master->where('code_umh1', 'like', "%{$keyword}%")->count();
-        $countCode2 = $umh_master->where('code_umh2', 'like', "%{$keyword}%")->count();
-        $countCode3 = $umh_master->where('code_umh3', 'like', "%{$keyword}%")->count();
-        $countKode1 = $umh_master->where('kode_umh1', 'like', "%{$keyword}%")->count();
-        $countKode2 = $umh_master->where('kode_umh2', 'like', "%{$keyword}%")->count();
-        $countKode3 = $umh_master->where('kode_umh3', 'like', "%{$keyword}%")->count();
+        if($searchTerm){
+            $query->where(function ($query) use ($searchTerm) {
+                $query->orWhere('car_line', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('code_umh1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('code_umh2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('code_umh3', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kode_umh1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kode_umh2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kode_umh3', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('charge', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
         
-        return view('umh_master.index', compact('umh_master', 'count'));
+        $count = $query->count();
+
+        $umh_master = $query->paginate(5000);
+
+        return view('umh_master.partial.umh_master', ['umh_master' => $umh_master, 'count' => $count, 'user' => $user]);
     }
     
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function getCount(Request $request)
+    {
+        $user = Auth::id();
+
+        $searchTerm = $request->input('umh_master');
+
+        $query = UMH_Master::query();
+
+        $query->where('user_id', $user);
+
+        if($searchTerm){
+            $query->where(function ($query) use ($searchTerm) {
+                $query->orWhere('car_line', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('code_umh1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('code_umh2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('code_umh3', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kode_umh1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kode_umh2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kode_umh3', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('charge', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $umh_master = $query->paginate(8000);
+
+        return response()->json($count);
+    }
+
     public function index(Request $request)
     {
+        set_time_limit(0);
         $keyword = $request->cari;
         $user = Auth::id();
-        $umh_master = UMH_Master::where('user_id', $user)->orderBy('id', 'asc')->get();
-        $count = $umh_master->count();
+        $query = UMH_Master::where('user_id', $user)->orderBy('id', 'asc');
+        
+        if ($keyword) {
+            $query->orWhere('car_line', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('code_umh1', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('code_umh2', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('code_umh3', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('kode_umh1', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('kode_umh2', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('kode_umh3', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('charge', 'LIKE', '%' . $keyword . '%');
+            $count = $query->count();
+        } else {
+            $count = $query->count();
+        }
+
+        $umh_master = $query->get();
+
         $data = $umh_master->all();
 
         $totalKodeUMH1 = 0;
         $totalKodeUMH2 = 0;
         $totalKodeUMH3 = 0;
 
-        foreach ($data as $umh) {
+        foreach ($umh_master as $umh) {
             $totalKodeUMH1 += $umh->code_umh1;
 
             $totalKodeUMH2 += $umh->code_umh1 + $umh->code_umh2;
@@ -66,7 +113,7 @@ class UMHController extends Controller
             $totalKodeUMH3 += $umh->code_umh1 + $umh->code_umh2 + $umh->code_umh3;
         }
 
-        return view('umh_master.index', compact('umh_master', 'count', 'data', 'totalKodeUMH1', 'totalKodeUMH2', 'totalKodeUMH3'));
+        return view('umh_master.index', compact('umh_master', 'data', 'count', 'totalKodeUMH1', 'totalKodeUMH2', 'totalKodeUMH3'));
     }
 
     public function export_excel_umh()

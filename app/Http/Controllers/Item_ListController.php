@@ -17,33 +17,79 @@ class Item_ListController extends Controller
 
     public function cari(Request $request)
     {
-        $keyword = $request->cari;
+
         $user = Auth::id();
 
-        $item_list = Item_List::where('user_id', $user)
-        ->where(function ($query) use ($keyword) {
-            $query->where('part_no', 'like', "%{$keyword}%")
-                ->orWhere('cust_pno', 'like', "%{$keyword}%")
-                ->orWhere('part_name', 'like', "%{$keyword}%");
-        })->paginate(8000);
-        $count = $item_list->count();
-        $countPartNo = $item_list->where('part_no', 'like', "%{$keyword}%")->count();
-        $countCustPno = $item_list->where('cust_pno', 'like', "%{$keyword}%")->count();
-        $countPartName = $item_list->where('part_name', 'like', "%{$keyword}%")->count();
-        return view('item_list.index', compact('item_list', 'count'));
+        $searchTerm = $request->input('item_list');
+
+        $count = Item_List::count();
+
+        $query = Item_List::query();
+
+        $query->where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('part_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cust_pno', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('part_name', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $item_list = $query->paginate(5000);
+
+        return view('item_list.partial.item_list', ['item_list' => $item_list, 'count' => $count, 'user' => $user]);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
+    public function getCount(Request $request)
+    {
+        $user = Auth::id();
+
+        $searchTerm = $request->input('item_list');
+
+        $query = Item_List::query();
+
+        $query->where('user_id', $user);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('part_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('cust_pno', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('part_name', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $count = $query->count();
+
+        $item_list = $query->paginate(8000);
+
+        return response()->json($count);
+    }
+  
     public function index(Request $request)
     {
+        set_time_limit(0);
         $keyword = $request->cari;
         $user = Auth::id();
-        $item_list = Item_List::where('user_id', $user)->orderBy('id', 'asc')->paginate(8000);
-        $count = $item_list->count();
-        $data = $item_list->all();  
+        $query = Item_List::where('user_id', $user)->orderBy('id', 'asc');
+        
+        if ($keyword) {
+            $query->where('part_no', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('cust_pno', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('part_name', 'LIKE', '%' . $keyword . '%');
+            $count = $query->count();
+        } else {
+            $count = $query->count();
+        }
+
+        $item_list = $query->get();
+
+        $data = $item_list->all();
+
+        $item_list = $query->paginate(8000);
+
         return view('item_list.index', compact('item_list', 'count', 'data'));
     }
 
@@ -70,7 +116,6 @@ class Item_ListController extends Controller
         Storage::delete($path);
 
         return back()->with('success', "Data berhasil diimport!");
-
     }
 
     /**
@@ -196,17 +241,17 @@ class Item_ListController extends Controller
         if (empty($ids)) {
             return response()->json(['error' => 'No items selected.'], 400);
         }
-    
+
         $idArray = explode(",", $ids);
         $batchSize = 1000; // Ukuran batch yang Anda inginkan
-    
+
         while (!empty($idArray)) {
             $batchIds = array_splice($idArray, 0, $batchSize);
-    
+
             try {
                 // Hapus data dalam batch
                 $deleted = Item_List::where('user_id', $user)->whereIn('id', $batchIds)->delete();
-    
+
                 if (!$deleted) {
                     // Handle jika batch gagal dihapus
                     return response()->json(['error' => 'Failed to delete items.'], 500);
@@ -216,7 +261,7 @@ class Item_ListController extends Controller
                 return response()->json(['error' => 'An error occurred during batch deletion.'], 500);
             }
         }
-    
+
         return response()->json(['success' => 'Deleted successfully.']);
     }
 
@@ -226,5 +271,4 @@ class Item_ListController extends Controller
         Item_List::where('user_id', $user)->delete();
         return response()->json(['success' => "Deleted successfully."]);
     }
-
 }
