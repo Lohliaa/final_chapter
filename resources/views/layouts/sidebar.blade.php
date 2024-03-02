@@ -21,33 +21,7 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-item has-treeview {{ Request::is('material', 'database_konversi') ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link {{ Request::is('material', 'database_konversi') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-copy"></i>
-            <p>
-              Material
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item has-treeview">
-              <a href="{{ url('database_konversi') }}" class="nav-link {{ Request::is('database_konversi') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>
-                  Database Konversi
-                </p>
-              </a>
-            </li>
-            <li class="nav-item has-treeview">
-              <a href="{{ url('material') }}" class="nav-link {{ Request::is('material') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>
-                  Proses Material
-                </p>
-              </a>
-            </li>
-          </ul>
-        </li>
+
         <li
           class="nav-item has-treeview {{ Request::is('konsep_commonize', 'next_proses', 'item_list', 'master_price', 'umh_master') ? 'menu-open' : '' }}">
           <a href="#"
@@ -80,7 +54,7 @@
               <a href="{{ url('item_list') }}" class="nav-link {{ Request::is('item_list') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
-                  Data Buppin
+                  Data Item
                 </p>
               </a>
             </li>
@@ -88,7 +62,7 @@
               <a href="{{ url('master_price') }}" class="nav-link {{ Request::is('master_price') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
-                  Master Price
+                  Daftar Harga
                 </p>
               </a>
             </li>
@@ -96,7 +70,35 @@
               <a href="{{ url('umh_master') }}" class="nav-link {{ Request::is('umh_master') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
-                  Master UMH
+                  Daftar UMH
+                </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item has-treeview {{ Request::is('material', 'database_konversi') ? 'menu-open' : '' }}">
+          <a href="#" class="nav-link {{ Request::is('material', 'database_konversi') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+              Material
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item has-treeview">
+              <a href="{{ url('database_konversi') }}" class="nav-link {{ Request::is('database_konversi') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>
+                  Database Konversi
+                </p>
+              </a>
+            </li>
+            <li class="nav-item has-treeview">
+              <a href="{{ url('material') }}" class="nav-link {{ Request::is('material') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>
+                  Proses Material
                 </p>
               </a>
             </li>
@@ -116,7 +118,7 @@
               <a href="{{ url('data-fa-841w') }}" class="nav-link {{ Request::is('data-fa-841w') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
-                  Final Assy
+                  Area Final
                 </p>
               </a>
             </li>
@@ -124,7 +126,7 @@
               <a href="{{ url('data-pa-841w') }}" class="nav-link {{ Request::is('data-pa-841w') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
-                  Pre Assy
+                  Area Preparation
                 </p>
               </a>
             </li>
