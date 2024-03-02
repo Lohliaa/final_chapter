@@ -87,26 +87,26 @@
                         <tr class="table-secondary" style=" position: sticky; top: 0;">
                             <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
                             <th scope="col">No</th>
-                            <th scope="col">Carline</th>
-                            <th scope="col">Type</th>
+                            <th scope="col">Line</th>
+                            <th scope="col">Tipe</th>
                             <th scope="col">Jenis</th>
-                            <th scope="col">Ctrl_no</th>
-                            <th scope="col">jenis_ctrl_no</th>
-                            <th scope="col">ctrl_no_cct</th>
-                            <th scope="col">kind</th>
-                            <th scope="col">size</th>
-                            <th scope="col">color</th>
-                            <th scope="col">kind_size_color</th>
-                            <th scope="col">cust_part_no</th>
-                            <th scope="col">cl</th>
-                            <th scope="col">term_b</th>
-                            <th scope="col">accb1</th>
-                            <th scope="col">accb2</th>
-                            <th scope="col">tubeb</th>
-                            <th scope="col">term_a</th>
-                            <th scope="col">acca1</th>
-                            <th scope="col">acca2</th>
-                            <th scope="col">tubea</th>
+                            <th scope="col">Material</th>
+                            <th scope="col">Jenis Material</th>
+                            <th scope="col">Material Properties</th>
+                            <th scope="col">Model</th>
+                            <th scope="col">Ukuran</th>
+                            <th scope="col">Warna</th>
+                            <th scope="col">Model Ukuran Warna</th>
+                            <th scope="col">Specific Part Numb</th>
+                            <th scope="col">CL</th>
+                            <th scope="col">Terminal B</th>
+                            <th scope="col">Acc bag b1</th>
+                            <th scope="col">Acc bag b2</th>
+                            <th scope="col">Tube B</th>
+                            <th scope="col">Terminal A</th>
+                            <th scope="col">Acc bag a1</th>
+                            <th scope="col">Acc bag a2</th>
+                            <th scope="col">Tube A</th>
                         </tr>
                     </thead>
                     <tbody>

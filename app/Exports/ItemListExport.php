@@ -28,9 +28,9 @@ class ItemListExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
     public function headings(): array
     {
         return [
-            'part_no',
-            'cust_pno',
-            'part_name',
+            'Part Number',
+            'Specific Part Number',
+            'Part Name',
         ];
     }
 

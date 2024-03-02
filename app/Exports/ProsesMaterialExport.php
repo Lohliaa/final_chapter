@@ -43,19 +43,19 @@ class ProsesMaterialExport implements FromCollection, WithHeadings, ShouldAutoSi
     public function headings(): array
     {
         return [
-            'factory',
-                'carcode',
-                'area',
-                'cavity',
-                'partnumber',
-                'part_name',
-                'qty_total',
-                'length',
-                'konversi',
-                'qty_after_konversi',
-                'cek',
-                'price',
-                'amount'
+            'Factory',
+            'Code',
+            'Area',
+            'Cavity',
+            'Part Number',
+            'Part Name',
+            'Qty Total',
+            'Length',
+            'Konversi',
+            'Qty After Konversi',
+            'Cek',
+            'Harga',
+            'Total'
         ];
     }
 
@@ -111,7 +111,7 @@ class ProsesMaterialSheet implements FromCollection, WithHeadings, ShouldAutoSiz
             )
             ->where('user_id', $this->userId)
             ->get();
-    
+
         // Manipulasi nilai cek menjadi 0 hanya jika nilainya 0
         $data = $data->map(function ($item) {
             if ($item->cek === 0) {
@@ -119,27 +119,27 @@ class ProsesMaterialSheet implements FromCollection, WithHeadings, ShouldAutoSiz
             }
             return $item;
         });
-    
+
         return $data;
     }
-    
+
 
     public function headings(): array
     {
         return [
-            'factory',
-            'carcode',
-            'area',
-            'cavity',
-            'partnumber',
-            'part_name',
-            'qty_total',
-            'length',
-            'konversi',
-            'qty_after_konversi',
-            'cek',
-            'price',
-            'amount'
+            'Factory',
+            'Code',
+            'Area',
+            'Cavity',
+            'Part Number',
+            'Part Name',
+            'Qty Total',
+            'Length',
+            'Konversi',
+            'Qty After Konversi',
+            'Cek',
+            'Harga',
+            'Total'
         ];
     }
 
@@ -177,7 +177,7 @@ class SummarySheet implements FromCollection, WithHeadings, ShouldAutoSize
     public function headings(): array
     {
         return [
-            'carcode',
+            'Code',
             'Total Qty Total',
             'Total Amount'
         ];
@@ -208,7 +208,7 @@ class PartNumberSummarySheet implements FromCollection, WithHeadings, ShouldAuto
     public function headings(): array
     {
         return [
-            'partnumber',
+            'Part Number',
             'Total Qty Total'
         ];
     }
@@ -239,8 +239,8 @@ class PartNumberByCarcodeSummarySheet implements FromCollection, WithHeadings, S
     public function headings(): array
     {
         return [
-            'carcode',
-            'partnumber',
+            'Code',
+            'Part Number',
             'Total Qty Total'
         ];
     }

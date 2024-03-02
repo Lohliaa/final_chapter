@@ -31,13 +31,13 @@ class MaterialExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
     public function headings(): array
     {
         return [
-            'factory',
-            'carcode',
-            'area',
-            'cavity',
-            'partnumber',
-            'part_name',
-            'qty_total'
+            'Factory',
+            'Code',
+            'Area',
+            'Cavity',
+            'Part Number',
+            'Part Name',
+            'Qty Total'
         ];
     }
 

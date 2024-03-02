@@ -61,18 +61,18 @@
                                     type="checkbox" class="sub_chk" id="master"></th> --}}
                             <th scope="col">No</th>
                             <th scope="col">Factory</th>
-                            <th scope="col">Carcode</th>
+                            <th scope="col">Code</th>
                             <th scope="col">Area</th>
                             <th scope="col">Cavity</th>
-                            <th scope="col">Partnumber</th>
-                            <th scope="col">Part name</th>
-                            <th scope="col">Qty total</th>
+                            <th scope="col">Part Number</th>
+                            <th scope="col">Part Name</th>
+                            <th scope="col">Qty Total</th>
                             <th scope="col">Length</th>
                             <th scope="col">Konversi</th>
                             <th scope="col">QTY After Konversi</th>
                             <th scope="col">Cek</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Amount</th>
+                            <th scope="col">Harga</th>
+                            <th scope="col">Total</th>
 
                         </tr>
                     </thead>

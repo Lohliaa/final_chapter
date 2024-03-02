@@ -101,10 +101,10 @@
                         <tr class="table-secondary" style=" position: sticky; top: 0;">
                             <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
                             <th scope="col">No</th>
-                            <th scope="col">Part No</th>
-                            <th scope="col">Buppin</th>
+                            <th scope="col">Part Number</th>
+                            <th scope="col">Item</th>
                             <th scope="col">Part Name</th>
-                            <th scope="col">UOM</th>
+                            <th scope="col">Satuan</th>
                             <th scope="col">Inner Packing</th>
                         </tr>
                     </thead>

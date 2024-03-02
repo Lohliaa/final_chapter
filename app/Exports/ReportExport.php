@@ -69,19 +69,19 @@ class FirstSheet implements FromCollection, WithTitle, WithHeadings, WithStyles,
     public function headings(): array
     {
         return [
-            'month',
-            'car_line',
-            'conveyor',
-            'ctrl_no',
-            'total_qty',
-            'wire_cost',
-            'component_cost',
-            'material_cost',
-            'material_cost_amount',
-            'process_cost',
+            'Month',
+            'Line',
+            'Bagian',
+            'Material',
+            'Total QTY',
+            'Wire Cost',
+            'Component Cost',
+            'Material Cost',
+            'Material Cost Amount',
+            'Process Cost',
             // 'total_cost', 
-            'process_cost_amount',
-            'total_cost_amount',
+            'Process Cost Amount',
+            'Total Cost Amount',
                        
         ];
     }
@@ -123,8 +123,8 @@ class SecondSheet implements FromCollection, WithTitle, WithStyles, ShouldAutoSi
 
                     $row = [
                         'Month' => $dataRow->month,
-                        'Carline' => $carLine,
-                        'Conveyor' => $dataRow->conveyor,
+                        'line' => $carLine,
+                        'Bagian' => $dataRow->conveyor,
                         'Total Qty' => $preAssaySums['pre_assay_total_qty'],
                         'Total Cost Amount' => $preAssaySums['pre_assay_total_cost_amount'],                        
                     ];
@@ -139,8 +139,8 @@ class SecondSheet implements FromCollection, WithTitle, WithStyles, ShouldAutoSi
         // Insert the heading row at the beginning
         array_unshift($data, [
             'Month',
-            'Carline',
-            'Conveyor',
+            'Line',
+            'Bagian',
             'Total Qty',
             'Total Cost Amount'
         ]);

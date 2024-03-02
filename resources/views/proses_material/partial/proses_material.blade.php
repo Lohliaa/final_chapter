@@ -1,22 +1,22 @@
-<table class="table table-bordered" style="width: 200%;" id="pmTableBody">
+<table class="table table-bordered" style="width: 100%;" id="pmTableBody">
     <thead style="height:40px">
         <tr class="table-secondary" style=" position: sticky; top: 0;">
             {{-- <th style="width: 50px; text-align:center" scope="col"><input
                     type="checkbox" class="sub_chk" id="master"></th> --}}
-            <th style="white-space: nowrap; text-align:center" scope="col">No</th>
-            <th style="white-space: nowrap; text-align:center" scope="col">Factory</th>
-            <th style="white-space: nowrap; text-align:center" scope="col">Carcode</th>
-            <th style="white-space: nowrap; text-align:center" scope="col">Area</th>
-            <th style="white-space: nowrap; text-align:center" scope="col">Cavity</th>
-            <th style="white-space: nowrap; text-align:center" scope="col">Partnumber</th>
-            <th style="white-space: nowrap; text-align:center" scope="col">Part name</th>
-            <th style="white-space: nowrap; text-align:center" scope="col">Qty total</th>
-            <th style="white-space: nowrap; text-align:center" scope="col">Length</th>
-            <th style="white-space: nowrap; text-align:center" scope="col">Konversi</th>
-            <th style="white-space: nowrap; text-align:center" scope="col">QTY After Konversi</th>
-            <th style="white-space: nowrap; text-align:center" scope="col">Cek</th>
-            <th style="white-space: nowrap; text-align:center" scope="col">Price</th>
-            <th style="white-space: nowrap; text-align:center" scope="col">Amount</th>
+            <th scope="col">No</th>
+            <th scope="col">Factory</th>
+            <th scope="col">Code</th>
+            <th scope="col">Area</th>
+            <th scope="col">Cavity</th>
+            <th scope="col">Part Number</th>
+            <th scope="col">Part Name</th>
+            <th scope="col">Qty Total</th>
+            <th scope="col">Length</th>
+            <th scope="col">Konversi</th>
+            <th scope="col">QTY After Konversi</th>
+            <th scope="col">Cek</th>
+            <th scope="col">Harga</th>
+            <th scope="col">Total</th>
 
         </tr>
     </thead>
@@ -26,20 +26,20 @@
         <tr id="tr_{{ $data->id }}">
             {{-- <td><input type="checkbox" class="sub_chk" data-id="{{$data->id}}"
                     onclick="handleCheckboxChange({{ $data->id }})"></td> --}}
-            <td style="white-space: nowrap; text-align:center">{{$no++}}</td>
-            <td style="white-space: nowrap; text-align:center">{{ $data->factory }}</td>
-            <td style="white-space: nowrap; text-align:center">{{ $data->carcode }}</td>
-            <td style="white-space: nowrap; text-align:center">{{ $data->area }}</td>
-            <td style="white-space: nowrap; text-align:center">{{ $data->cavity }}</td>
-            <td style="white-space: nowrap; text-align:center">{{ $data->partnumber }}</td>
-            <td style="white-space: nowrap; text-align:center">{{ $data->part_name }}</td>
-            <td style="white-space: nowrap; text-align:center">{{ $data->qty_total }}</td>
-            <td style="white-space: nowrap; text-align:center">{{ $data->length }}</td>
-            <td style="white-space: nowrap; text-align:center">{{ $data->konversi }}</td>
-            <td style="white-space: nowrap; text-align:center">{{ $data->qty_after_konversi }}</td>
-            <td style="white-space: nowrap; text-align:center">{{ $data->cek }}</td>
-            <td style="white-space: nowrap; text-align:center">{{ $data->price }}</td>
-            <td style="white-space: nowrap; text-align:center">{{ $data->amount }}</td>
+            <td>{{$no++}}</td>
+            <td>{{ $data->factory }}</td>
+            <td>{{ $data->carcode }}</td>
+            <td>{{ $data->area }}</td>
+            <td>{{ $data->cavity }}</td>
+            <td>{{ $data->partnumber }}</td>
+            <td>{{ $data->part_name }}</td>
+            <td>{{ $data->qty_total }}</td>
+            <td>{{ $data->length }}</td>
+            <td>{{ $data->konversi }}</td>
+            <td>{{ $data->qty_after_konversi }}</td>
+            <td>{{ $data->cek }}</td>
+            <td>{{ $data->price }}</td>
+            <td>{{ $data->amount }}</td>
         </tr>
         @empty
         <br>

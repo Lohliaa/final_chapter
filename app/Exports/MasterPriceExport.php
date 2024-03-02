@@ -28,10 +28,10 @@ class MasterPriceExport implements FromCollection, WithHeadings, ShouldAutoSize,
     public function headings(): array
     {
         return [
-            'part_number_ori_sto',
-            'part_number_mpl',
-            'buppin',
-            'price_per_pcs'
+            'Part Number Ori',
+            'Part Number',
+            'Item',
+            'Price Per PCS'
         ];
     }
 

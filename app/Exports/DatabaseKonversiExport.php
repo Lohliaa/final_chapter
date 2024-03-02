@@ -29,11 +29,11 @@ class DatabaseKonversiExport implements FromCollection, WithHeadings, ShouldAuto
     public function headings(): array
     {
         return [
-            'part_no',
-            'buppin', 
-            'part_name', 
-            'uom', 
-            'inner_packing',
+            'Part Number',
+            'Item', 
+            'Part Name', 
+            'Satuan', 
+            'Inner Packing',
         ];
     }
 

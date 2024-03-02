@@ -32,14 +32,14 @@ class UMHExport implements FromCollection, WithHeadings, ShouldAutoSize, WithSty
     public function headings(): array
     {
         return [
-            'car_line',
-            'code_umh1',
-            'code_umh2',
-            'code_umh3',
-            'kode_umh1',
-            'kode_umh2',
-            'kode_umh3',
-            'charge',
+            'Line',
+            'Code 10',
+            'Code 20',
+            'Code 30',
+            'Proses 10',
+            'Proses 20',
+            'Proses 30',
+            'Charge',
         ];
     }
 

@@ -98,9 +98,9 @@
                             <th scope="col"><input type="checkbox"
                                     class="sub_chk" id="master"></th>
                             <th scope="col">No</th>
-                            <th scope="col">PART_NO</th>
-                            <th scope="col">CUST_PNO</th>
-                            <th scope="col">PART_NAME</th>
+                            <th scope="col">Part Number</th>
+                            <th scope="col">Specific Part Number</th>
+                            <th scope="col">Part Name</th>
                         </tr>
                     </thead>
                     <tbody>

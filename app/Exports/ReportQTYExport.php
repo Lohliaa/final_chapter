@@ -176,7 +176,7 @@ class ReportQTYExport implements FromCollection, WithHeadings, ShouldAutoSize, W
     {
         return [
             'Material',
-            'Buppin',
+            'Item',
             'QTY',
         ];
     }

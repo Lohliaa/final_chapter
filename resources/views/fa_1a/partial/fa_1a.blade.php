@@ -3,18 +3,18 @@
         <tr class="table-secondary" style=" position: sticky; top: 0;">
             <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
             <th scope="col">No</th>
-            <th scope="col">Carline</th>
-            <th scope="col">Conveyor</th>
-            <th scope="col">Addressing Store</th>
-            <th scope="col">Ctrl No</th>
-            <th scope="col">Colour</th>
-            <th scope="col">Qty Kbn</th>
+            <th scope="col">Line</th>
+            <th scope="col">Bagian</th>
+            <th scope="col">Area Store</th>
+            <th scope="col">Material</th>
+            <th scope="col">Warna</th>
+            <th scope="col">Qty Board</th>
             <th scope="col">Issue</th>
             <th scope="col">Total Qty</th>
-            <th scope="col">Housing</th>
+            <th scope="col">Area</th>
             <th scope="col">Month</th>
             <th scope="col">Year</th>
-            <th scope="col">SAI</th>
+            <th scope="col">Factory</th>
         </tr>
     </thead>
     <tbody>

@@ -98,13 +98,13 @@
                         <tr class="table-secondary" style=" position: sticky; top: 0;">
                             <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
                             <th scope="col">No</th>
-                            <th scope="col">Carline</th>
-                            <th scope="col">code 10</th>
-                            <th scope="col">code 20</th>
-                            <th scope="col">code 30</th>
-                            <th scope="col">process 10</th>
-                            <th scope="col">process 20</th>
-                            <th scope="col">process 30</th>
+                            <th scope="col">Line</th>
+                            <th scope="col">Code 10</th>
+                            <th scope="col">Code 20</th>
+                            <th scope="col">Code 30</th>
+                            <th scope="col">Process 10</th>
+                            <th scope="col">Process 20</th>
+                            <th scope="col">Process 30</th>
                             <th scope="col">Charge</th>
                         </tr>
                     </thead>

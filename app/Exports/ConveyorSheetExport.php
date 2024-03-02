@@ -174,9 +174,9 @@ class ConveyorSheetExport implements FromCollection, WithHeadings, ShouldAutoSiz
     public function headings(): array
     {
         return [
-            'Conveyor',
+            'Bagian',
             'Material',
-            'Buppin',
+            'Item',
             'QTY',
         ];
     }

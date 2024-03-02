@@ -36,18 +36,18 @@ class FA_1CExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
     public function headings(): array
     {
         return [
-            'carline',
-            'conveyor',
-            'addressing_store',
-            'ctrl_no',
-            'colour',
-            'qty_kbn',
-            'issue',
-            'total_qty',
-            'housing',
-            'month',
-            'year',
-            'sai',
+            'Line',
+            'Bagian',
+            'Area Store',
+            'Material',
+            'Warna',
+            'Qty Board',
+            'Issue',
+            'Total Qty',
+            'Area',
+            'Month',
+            'Year',
+            'Factory',
         ];
     }
 

@@ -24,7 +24,7 @@
                 <div class="small-box bg-info"
                     style="height: 200px; position: relative; display: flex; justify-content: center; align-items: center;">
                     <div class="inner">
-                        <h3 style="margin: 0;">QTY CONVEYOR</h3>
+                        <h3 style="margin: 0;">QTY PERBAGIAN</h3>
                     </div>
                     <a href="{{ url('export_cv') }}" class="small-box-footer"
                         style="position: absolute; bottom: 0; left: 0; width: 100%; color: #fff; padding: 5px; text-align: center; text-decoration: none;">Download

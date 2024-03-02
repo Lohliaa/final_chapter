@@ -85,10 +85,10 @@
                             <th scope="col"><input type="checkbox"
                                     class="sub_chk" id="master"></th>
                             <th scope="col">No</th>
-                            <th scope="col">part_number_ori_sto</th>
-                            <th scope="col">part_number_mpl</th>
-                            <th scope="col">buppin</th>
-                            <th scope="col">price_per_pcs</th>
+                            <th scope="col">Part Number Ori</th>
+                            <th scope="col">Part Number</th>
+                            <th scope="col">Item</th>
+                            <th scope="col">Price Per PCS</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>

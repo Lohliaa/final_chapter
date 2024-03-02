@@ -89,19 +89,19 @@
                             <th scope="col"><input type="checkbox"
                                     class="sub_chk" id="master"></th>
                             <th scope="col">No</th>
-                            <th scope="col">Ctrl No</th>
-                            <th scope="col">Kind New</th>
-                            <th scope="col">Size New</th>
-                            <th scope="col">Col New</th>
-                            <th scope="col">C/L-28</th>
-                            <th scope="col">Term B New</th>
-                            <th scope="col">Acc B1 New</th>
-                            <th scope="col">Acc B2</th>
-                            <th scope="col">Tube B New</th>
-                            <th scope="col">Term A New</th>
-                            <th scope="col">Acc A1 New</th>
-                            <th scope="col">Acc A2</th>
-                            <th scope="col">Tube A New</th>
+                            <th scope="col">Material Properties</th>
+                            <th scope="col">Model</th>
+                            <th scope="col">Ukuran</th>
+                            <th scope="col">Warna</th>
+                            <th scope="col">CL</th>
+                            <th scope="col">Terminal B</th>
+                            <th scope="col">Acc bag b1</th>
+                            <th scope="col">Acc bag b2</th>
+                            <th scope="col">Tube B</th>
+                            <th scope="col">Terminal A</th>
+                            <th scope="col">Acc bag a1</th>
+                            <th scope="col">Acc bag a2</th>
+                            <th scope="col">Tube A</th>
                         </tr>
                     </thead>
                     <tbody>
