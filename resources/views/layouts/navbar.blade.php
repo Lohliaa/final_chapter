@@ -7,14 +7,17 @@
   </ul>
 
   <!-- Right navbar links -->
-  <ul class="navbar-nav ml-auto mb-0">
+  <ul class="navbar-nav ml-auto">
     @auth
-    <h4 class="mr-2 mt-4 d-md-inline text-gray-300">{{ Auth::user()->name }}</h4>
-    @endauth
+    <div class="d-flex align-items-center">
+      <h4 class="mt-3 text-gray-200">{{ Auth::user()->name }}</h4>
 
-    <form action="{{ route('logout') }}" method="POST">
-      @csrf
-      <button class="mt-3 btn btn-danger" style="margin-right: 10pt; margin-left: 5pt;">Logout</button>
-    </form>
+      <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button class="mt-2 mb-1 btn btn-danger ml-2 mr-5">Logout</button>
+      </form>
+    </div>
+    @endauth
   </ul>
+
 </nav>
