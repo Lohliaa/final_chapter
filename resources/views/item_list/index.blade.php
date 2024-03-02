@@ -2,7 +2,8 @@
 @section('layouts.content')
 
 <head>
-    <link rel="stylesheet" href="{{ asset('assets/js/maxcdn.bootstrapcdn.com_bootstrap_3.3.7_css_bootstrap.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/js/maxcdn.bootstrapcdn.com_bootstrap_3.3.7_css_bootstrap.min.css') }}">
     <script src="{{ asset('assets/js/cdnjs.cloudflare.com_ajax_libs_jquery_3.2.1_jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/cdnjs.cloudflare.com_ajax_libs_twitter-bootstrap_3.3.7_js_bootstrap.min.js') }}">
     </script>
@@ -13,137 +14,120 @@
 
 </head>
 
-<body style="background: lightgray">
-    <figure class="text-center">
-        <blockquote class="blockquote" style="font-size: 24px; font-family: Cambria;">
-            <p>DATA BUPPIN<p>
-        </blockquote>
-    </figure>
+<body>
+    <div class="card shadow mt-3">
+        <div class="card-header py-6 mb-5">
+            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">DATA ITEM</h2>
+        </div>
+        <div class="form-row" style="margin-left: 2%; margin-right: 2%;">
+            @if ($message = Session::get('success'))
+            <div class="alert alert-success" style="width: 1600px;">
+                <p>{{ $message }}</p>
+            </div>
+            @endif
+            {{-- notifikasi form validasi --}}
+            @if ($errors->has('file'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('file') }}</strong>
+            </span>
+            @endif
+            {{-- notifikasi sukses --}}
+            @if ($sukses = Session::get('sukses'))
+            <div class="alert alert-success" style="width: 1050px;">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ $sukses }}</strong>
+            </div>
+            @endif
+            <div class="form-group col-12 d-flex flex-wrap align-items-center">
+                <button id="reset-il-button" class="btn btn-danger mr-2">Reset</button>
+                <a href="{{ route('item_list.create') }}" class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
 
-    <div class="container mt-6">
-        <div class="row" style="width: 1100px">
-            <div class="col">
-                <div class="card border-0 shadow rounded">
-                    <div class="card-body">
-                        <div class="form-row justify-content-start">
-                            @if ($message = Session::get('success'))
-                            <div class="alert alert-success" style="width: 1050px;">
-                                <p>{{ $message }}</p>
-                            </div>
-                            @endif
-                            {{-- notifikasi form validasi --}}
-                            @if ($errors->has('file'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('file') }}</strong>
-                            </span>
-                            @endif
-                            {{-- notifikasi sukses --}}
-                            @if ($sukses = Session::get('sukses'))
-                            <div class="alert alert-success" style="width: 1050px;">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                <strong>{{ $sukses }}</strong>
-                            </div>
-                            @endif
-                            <div class="form-group col-12 d-flex align-items-center">
-                                <button id="reset-il-button" class="btn btn-danger mr-2">Reset</button>
-                                <a href="{{ route('item_list.create') }}"
-                                    class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
-                                
-                                <button type="button" class="btn btn-default mr-2"
-                                    onclick="handleEditClick()">Edit</button>
+                <button type="button" class="btn btn-default mr-2" onclick="handleEditClick()">Edit</button>
 
-                                <button type="button" class="btn btn-default mr-2" data-toggle="modal"
-                                    data-target="#import_excel_il">
-                                    Upload Excel
-                                </button>
+                <button type="button" class="btn btn-default mr-2" data-toggle="modal" data-target="#import_excel_il">
+                    Upload Excel
+                </button>
 
-                                <div class="modal fade" id="import_excel_il" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <form method="post" action="{{ url('import_excel_il') }}"
-                                            enctype="multipart/form-data">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Import</h5>
-                                                </div>
-                                                <div class="modal-body">
+                <div class="modal fade" id="import_excel_il" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <form method="post" action="{{ url('import_excel_il') }}" enctype="multipart/form-data">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Import</h5>
+                                </div>
+                                <div class="modal-body">
 
-                                                    {{ csrf_field() }}
+                                    {{ csrf_field() }}
 
-                                                    <label>Pilih file excel</label>
-                                                    <div class="form-group">
-                                                        <input type="file" name="file" required="required">
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-default ">Import</button>
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </form>
+                                    <label>Pilih file excel</label>
+                                    <div class="form-group">
+                                        <input type="file" name="file" required="required">
                                     </div>
+
                                 </div>
-
-                                <!-- Export Excel -->
-                                <a href="{{ url('export_excel_il') }}" class="btn btn-default mr-2"
-                                    target="_blank">Download Excel</a>
-
-                                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
-                                    data-url="{{ url('DeleteAll_Item_List') }}">Delete</button>
-
-                                <a href="{{ url('item_list') }}" class="btn btn-default mr-2">Refresh</a>
-
-                                <input type="text" name="search" id="searchil" class="form-control w-25 mr-2"
-                                    placeholder="Cari disini ...">
-
-                                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
-
-                            </div>
-
-                            <div class="table-responsive">
-                                <div class="table-responsive" style="margin: 0 auto;">
-                                    <table border="1" id="itemTableBody"
-                                        style="display: block; overflow: scroll; height: 500px; width: 1060px; text-align: center; margin: 0 auto;">
-                                        <thead style="height:40px">
-                                            <tr class="table-secondary" style=" position: sticky; top: 0;">
-                                                <th style="width: 50px; text-align:center" scope="col"><input
-                                                        type="checkbox" class="sub_chk" id="master"></th>
-                                                <th style="width: 50px; text-align:center" scope="col">No</th>
-                                                <th style="width: 350px; text-align:center" scope="col">PART_NO</th>
-                                                <th style="width: 300px; text-align:center" scope="col">CUST_PNO</th>
-                                                <th style="width: 300px; text-align:center" scope="col">PART_NAME</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $no=1 ?>
-                                            @forelse ($item_list as $c)
-                                            <tr id="tr_{{ $c->id }}">
-                                                <td><input type="checkbox" class="sub_chk" data-id="{{$c->id}}"
-                                                        onclick="handleCheckboxChange({{ $c->id }})"></td>
-                                                <td>{{$no++}}</td>
-                                                <td>{{ $c->part_no }}</td>
-                                                <td>{{ $c->cust_pno }}</td>
-                                                <td>{{ $c->part_name }}</td>
-                                            </tr>
-                                            @empty
-                                            <br>
-                                            <div class="alert alert-danger">
-                                                Data belum Tersedia.
-                                            </div>
-                                            @endforelse
-                                        </tbody>
-                                    </table>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-default ">Import</button>
+                                    <br>
                                 </div>
-                                {{ $item_list->links() }}
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
+
+                <!-- Export Excel -->
+                <a href="{{ url('export_excel_il') }}" class="btn btn-default mr-2" target="_blank">Download Excel</a>
+
+                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
+                    data-url="{{ url('DeleteAll_Item_List') }}">Delete</button>
+
+                <a href="{{ url('item_list') }}" class="btn btn-default mr-2">Refresh</a>
+
+                <input type="text" name="search" id="searchil" class="form-control w-25 mr-2"
+                    placeholder="Cari disini ...">
+
+                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
+
             </div>
+
+            <div class="table-responsive" style="max-height: 800px; overflow-y: auto;">
+                <table class="table table-bordered" style="width: 100%;" id="itemTableBody">
+                    <thead style="height:40px">
+                        <tr class="table-secondary" style=" position: sticky; top: 0;">
+                            <th scope="col"><input type="checkbox"
+                                    class="sub_chk" id="master"></th>
+                            <th scope="col">No</th>
+                            <th scope="col">PART_NO</th>
+                            <th scope="col">CUST_PNO</th>
+                            <th scope="col">PART_NAME</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $no=1 ?>
+                        @forelse ($item_list as $c)
+                        <tr id="tr_{{ $c->id }}">
+                            <td><input type="checkbox" class="sub_chk" data-id="{{$c->id}}"
+                                    onclick="handleCheckboxChange({{ $c->id }})"></td>
+                            <td>{{$no++}}</td>
+                            <td>{{ $c->part_no }}</td>
+                            <td>{{ $c->cust_pno }}</td>
+                            <td>{{ $c->part_name }}</td>
+                        </tr>
+                        @empty
+                        <br>
+                        <div class="alert alert-danger">
+                            Data belum Tersedia.
+                        </div>
+                        @endforelse
+                    </tbody>
+                </table>
+                {{ $item_list->links() }}
+            </div>
+        </div>
+    </div>
 </body>
+
 <script src="{{ asset('assets/js/code.jquery.com_jquery-3.6.0.min.js') }}"></script>
 
 <script>
@@ -291,12 +275,12 @@
             }  
         });
 
-        $('[data-toggle=confirmation]').confirmation({
+        {{--  $('[data-toggle=confirmation]').confirmation({
             rootSelector: '[data-toggle=confirmation]',
             onConfirm: function (event, element) {
                 element.trigger('confirm');
             }
-        });
+        });  --}}
 
         $(document).on('confirm', function (e) {
             var ele = e.target;

@@ -1,21 +1,20 @@
-<table border="1" id="fa_1aTableBody" style="display: block; overflow: scroll; height: 500px; width: 1060px; text-align: center; margin: 0 auto;">
+<table class="table table-bordered" style="width: 100%;" id="fa_1aTableBody">
     <thead style="height:40px">
         <tr class="table-secondary" style=" position: sticky; top: 0;">
-            <th style="width: 50px; text-align:center" scope="col"><input
-                    type="checkbox" class="sub_chk" id="master"></th>
-            <th style="width: 50px; text-align:center" scope="col">No</th>
-            <th style="width: 100px; text-align:center" scope="col">Carline</th>
-            <th style="width: 100px; text-align:center" scope="col">Conveyor</th>
-            <th style="width: 150px; text-align:center" scope="col">Addressing Store</th>
-            <th style="width: 100px; text-align:center" scope="col">Ctrl No</th>
-            <th style="width: 70px; text-align:center" scope="col">Colour</th>
-            <th style="width: 70px; text-align:center" scope="col">Qty Kbn</th>
-            <th style="width: 50px; text-align:center" scope="col">Issue</th>
-            <th style="width: 70px; text-align:center" scope="col">Total Qty</th>
-            <th style="width: 80px; text-align:center" scope="col">Housing</th>
-            <th style="width: 100px; text-align:center" scope="col">Month</th>
-            <th style="width: 100px; text-align:center" scope="col">Year</th>
-            <th style="width: 100px; text-align:center" scope="col">SAI</th>
+            <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
+            <th scope="col">No</th>
+            <th scope="col">Carline</th>
+            <th scope="col">Conveyor</th>
+            <th scope="col">Addressing Store</th>
+            <th scope="col">Ctrl No</th>
+            <th scope="col">Colour</th>
+            <th scope="col">Qty Kbn</th>
+            <th scope="col">Issue</th>
+            <th scope="col">Total Qty</th>
+            <th scope="col">Housing</th>
+            <th scope="col">Month</th>
+            <th scope="col">Year</th>
+            <th scope="col">SAI</th>
         </tr>
     </thead>
     <tbody>

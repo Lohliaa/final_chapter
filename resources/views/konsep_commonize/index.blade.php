@@ -14,146 +14,130 @@
 
 </head>
 
-<body style="background: lightgray">
-    <figure class="text-center">
-        <blockquote class="blockquote" style="font-size: 24px; font-family: Cambria;">
-            <p>CIRCUIT SINGLE
-            <p>
-        </blockquote>
-    </figure>
-    <div class="container mt-6">
-        <div class="row" style="width: 1100px">
-            <div class="col">
-                <div class="card border-0 shadow rounded">
-                    <div class="card-body">
-                        <div class="form-row justify-content-start">
-                            @if ($message = Session::get('success'))
-                            <div class="alert alert-success" style="width: 1050px;">
-                                <p>{{ $message }}</p>
-                            </div>
-                            @endif
-                            {{-- notifikasi form validasi --}}
-                            @if ($errors->has('file'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('file') }}</strong>
-                            </span>
-                            @endif
-                    
-                            <div class="form-group col-12 d-flex align-items-center">
-                                <button id="reset-kc-button" class="btn btn-danger mr-2">Reset</button>
-
-                                <a href="{{ route('konsep_commonize.create') }}"
-                                    class="btn btn-md btn-default mb-6 mr-2">Tambah</a>
-                                <button type="button" class="btn btn-default mr-2"
-                                    onclick="handleEditClick()">Edit</button>
-
-                                <button type="button" class="btn btn-default mr-2" data-toggle="modal"
-                                    data-target="#import_excel_kc">
-                                    Upload Excel
-                                </button>
-
-                                <!-- Import Excel Modal -->
-                                <div class="modal fade" id="import_excel_kc" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <form method="post" action="{{ url('import_excel_kc') }}"
-                                            enctype="multipart/form-data">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Upload</h5>
-                                                </div>
-                                                <div class="modal-body">
-                                                    {{ csrf_field() }}
-                                                    <label>Pilih file excel</label>
-                                                    <div class="form-group">
-                                                        <input type="file" name="file" required="required">
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-default ">Import</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <!-- Export Excel -->
-                                <a href="{{ url('export_excel_kc') }}" class="btn btn-default mr-2"
-                                    target="_blank">Download Excel</a>
-                                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
-                                    data-url="{{ url('DeleteAll_konsep') }}">
-                                    Delete
-                                </button>
-                                <a href="{{ url('konsep_commonize') }}" class="btn btn-default mr-2">Refresh</a>
-
-                                <input type="text" name="search" id="searchk" class="form-control w-25 mr-2"
-                                    placeholder="Cari disini ...">
-
-                                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
-                            </div>
-
-                            <div class="table-responsive">
-                                <table border="1" id="konsepTableBody"
-                                    style="display: block; overflow:scroll; height: 500px; width:1350px; text-align:center">
-                                    <thead style="height:40px">
-                                        <tr class="table-secondary" style=" position: sticky; top: 0;">
-                                            <th style="width: 50px; text-align:center" scope="col"><input
-                                                    type="checkbox" class="sub_chk" id="master"></th>
-                                            <th style="width: 50px; text-align:center" scope="col">No</th>
-                                            <th style="width: 60px; text-align:center" scope="col">Ctrl No</th>
-                                            <th style="width: 100px; text-align:center" scope="col">Kind New</th>
-                                            <th style="width: 80px; text-align:center" scope="col">Size New</th>
-                                            <th style="width: 80px; text-align:center" scope="col">Col New</th>
-                                            <th style="width: 60px; text-align:center" scope="col">C/L-28</th>
-                                            <th style="width: 100px; text-align:center" scope="col">Term B New</th>
-                                            <th style="width: 110px; text-align:center" scope="col">Acc B1 New</th>
-                                            <th style="width: 100px; text-align:center" scope="col">Acc B2</th>
-                                            <th style="width: 120px; text-align:center" scope="col">Tube B New</th>
-                                            <th style="width: 100px; text-align:center" scope="col">Term A New</th>
-                                            <th style="width: 110px; text-align:center" scope="col">Acc A1 New</th>
-                                            <th style="width: 110px; text-align:center" scope="col">Acc A2</th>
-                                            <th style="width: 120px; text-align:center" scope="col">Tube A New</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $no=1 ?>
-                                        @forelse ($konsep_commonize as $c)
-                                        <tr id="tr_{{ $c->id }}">
-                                            <td><input type="checkbox" class="sub_chk" data-id="{{$c->id}}"
-                                                    onclick="handleCheckboxChange({{ $c->id }})"></td>
-                                            <td>{{$no++}}</td>
-                                            <td>{{ $c->ctrl_no }}</td>
-                                            <td>{{ $c->kind_new }}</td>
-                                            <td>{{ $c->size_new }}</td>
-                                            <td>{{ $c->col_new }}</td>
-                                            <td>{{ $c->cl_28 }}</td>
-                                            <td>{{ $c->term_b_new }}</td>
-                                            <td>{{ $c->acc_b1_new }}</td>
-                                            <td>{{ $c->acc_b2 }}</td>
-                                            <td>{{ $c->tube_b_new }}</td>
-                                            <td>{{ $c->term_a_new }}</td>
-                                            <td>{{ $c->acc_a1_new }}</td>
-                                            <td>{{ $c->acc_a2 }}</td>
-                                            <td>{{ $c->tube_a_new }}</td>
-                                        </tr>
-                                        @empty
-                                        <br>
-                                        <div class="alert alert-danger">
-                                            Data belum Tersedia.
-                                        </div>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<body>
+    <div class="card shadow mt-3">
+        <div class="card-header py-6 mb-5">
+            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">CIRCUIT SINGLE</h2>
         </div>
 
+        <div class="form-row" style="margin-left: 2%; margin-right: 2%;">
+            @if ($message = Session::get('success'))
+            <div class="alert alert-success" style="width: 1600px;">
+                <p>{{ $message }}</p>
+            </div>
+            @endif
+            {{-- notifikasi form validasi --}}
+            @if ($errors->has('file'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('file') }}</strong>
+            </span>
+            @endif
+
+            <div class="form-group col-12 d-flex flex-wrap align-items-center">
+                <button id="reset-kc-button" class="btn btn-danger mr-2">Reset</button>
+
+                <a href="{{ route('konsep_commonize.create') }}" class="btn btn-md btn-default mb-6 mr-2">Tambah</a>
+                <button type="button" class="btn btn-default mr-2" onclick="handleEditClick()">Edit</button>
+
+                <button type="button" class="btn btn-default mr-2" data-toggle="modal" data-target="#import_excel_kc">
+                    Upload Excel
+                </button>
+
+                <!-- Import Excel Modal -->
+                <div class="modal fade" id="import_excel_kc" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <form method="post" action="{{ url('import_excel_kc') }}" enctype="multipart/form-data">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Upload</h5>
+                                </div>
+                                <div class="modal-body">
+                                    {{ csrf_field() }}
+                                    <label>Pilih file excel</label>
+                                    <div class="form-group">
+                                        <input type="file" name="file" required="required">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-default ">Import</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Export Excel -->
+                <a href="{{ url('export_excel_kc') }}" class="btn btn-default mr-2" target="_blank">Download Excel</a>
+                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
+                    data-url="{{ url('DeleteAll_konsep') }}">
+                    Delete
+                </button>
+                <a href="{{ url('konsep_commonize') }}" class="btn btn-default mr-2">Refresh</a>
+
+                <input type="text" name="search" id="searchk" class="form-control w-25 mr-2"
+                    placeholder="Cari disini ...">
+
+                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
+            </div>
+
+            <div class="table-responsive" style="max-height: 800px; overflow-y: auto;">
+                <table class="table table-bordered" style="width: 100%;" id="konsepTableBody">
+                    <thead style="height:40px">
+                        <tr class="table-secondary" style=" position: sticky; top: 0;">
+                            <th scope="col"><input type="checkbox"
+                                    class="sub_chk" id="master"></th>
+                            <th scope="col">No</th>
+                            <th scope="col">Ctrl No</th>
+                            <th scope="col">Kind New</th>
+                            <th scope="col">Size New</th>
+                            <th scope="col">Col New</th>
+                            <th scope="col">C/L-28</th>
+                            <th scope="col">Term B New</th>
+                            <th scope="col">Acc B1 New</th>
+                            <th scope="col">Acc B2</th>
+                            <th scope="col">Tube B New</th>
+                            <th scope="col">Term A New</th>
+                            <th scope="col">Acc A1 New</th>
+                            <th scope="col">Acc A2</th>
+                            <th scope="col">Tube A New</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $no=1 ?>
+                        @forelse ($konsep_commonize as $c)
+                        <tr id="tr_{{ $c->id }}">
+                            <td><input type="checkbox" class="sub_chk" data-id="{{$c->id}}"
+                                    onclick="handleCheckboxChange({{ $c->id }})"></td>
+                            <td>{{$no++}}</td>
+                            <td>{{ $c->ctrl_no }}</td>
+                            <td>{{ $c->kind_new }}</td>
+                            <td>{{ $c->size_new }}</td>
+                            <td>{{ $c->col_new }}</td>
+                            <td>{{ $c->cl_28 }}</td>
+                            <td>{{ $c->term_b_new }}</td>
+                            <td>{{ $c->acc_b1_new }}</td>
+                            <td>{{ $c->acc_b2 }}</td>
+                            <td>{{ $c->tube_b_new }}</td>
+                            <td>{{ $c->term_a_new }}</td>
+                            <td>{{ $c->acc_a1_new }}</td>
+                            <td>{{ $c->acc_a2 }}</td>
+                            <td>{{ $c->tube_a_new }}</td>
+                        </tr>
+                        @empty
+                        <br>
+                        <div class="alert alert-danger">
+                            Data belum Tersedia.
+                        </div>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
+
 <script src="{{ asset('assets/js/code.jquery.com_jquery-3.6.0.min.js') }}"></script>
 
 <script>
@@ -299,12 +283,12 @@
             }  
         });
 
-        $('[data-toggle=confirmation]').confirmation({
+        {{--  $('[data-toggle=confirmation]').confirmation({
             rootSelector: '[data-toggle=confirmation]',
             onConfirm: function (event, element) {
                 element.trigger('confirm');
             }
-        });
+        });  --}}
 
         $(document).on('confirm', function (e) {
             var ele = e.target;

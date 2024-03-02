@@ -15,109 +15,96 @@
 
 </head>
 
-<body style="background: lightgray">
-    <figure class="text-center">
-        <blockquote class="blockquote" style="font-size: 24px; font-family: Cambria;">
-            <p>Proses Material
-            <p>
-        </blockquote>
-    </figure>
-    <div class="container mt-6">
-        <div class="row" style="width: 1100px">
-            <div class="col">
-                <div class="card border-0 shadow rounded">
-                    <div class="card-body">
-                        <div class="form-row justify-content-start">
-                            @if ($message = Session::get('success'))
-                            <div class="alert alert-success" style="width: 1050px;">
-                                <p>{{ $message }}</p>
-                            </div>
-                            @endif
-                            {{-- notifikasi form validasi --}}
-                            @if ($errors->has('file'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('file') }}</strong>
-                            </span>
-                            @endif
-                            {{-- notifikasi sukses --}}
-                            @if ($sukses = Session::get('sukses'))
-                            <div class="alert alert-success" style="width: 1050px;">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                <strong>{{ $sukses }}</strong>
-                            </div>
-                            @endif
-                            <div class="form-group col-12 d-flex align-items-center">
+<body>
+    <div class="card shadow mt-3">
+        <div class="card-header py-6 mb-5">
+            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">PROSES MATERIAL</h2>
+        </div>
+        <div class="form-row" style="margin-left: 2%; margin-right: 2%;">
+            @if ($message = Session::get('success'))
+            <div class="alert alert-success" style="width: 1600px;">
+                <p>{{ $message }}</p>
+            </div>
+            @endif
+            {{-- notifikasi form validasi --}}
+            @if ($errors->has('file'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('file') }}</strong>
+            </span>
+            @endif
+            {{-- notifikasi sukses --}}
+            @if ($sukses = Session::get('sukses'))
+            <div class="alert alert-success" style="width: 1600px;">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ $sukses }}</strong>
+            </div>
+            @endif
+            <div class="form-group col-12 d-flex flex-wrap align-items-center">
 
-                                <!-- Export Excel -->
-                                <a href="{{ url('export_excel_prosesMaterial') }}" class="btn btn-default mr-2"
-                                    target="_blank">Download Excel</a>
+                <!-- Export Excel -->
+                <a href="{{ url('export_excel_prosesMaterial') }}" class="btn btn-default mr-2"
+                    target="_blank">Download Excel</a>
 
-                                <a href="{{ url('proses_material') }}" class="btn btn-default mr-2">Refresh</a>
+                <a href="{{ url('proses_material') }}" class="btn btn-default mr-2">Refresh</a>
 
-                                <input type="text" name="search" id="searchpm" class="form-control w-25 mr-2"
-                                    placeholder="Cari disini ...">
+                <input type="text" name="search" id="searchpm" class="form-control w-25 mr-2"
+                    placeholder="Cari disini ...">
 
-                                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
-                            </div>
+                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
+            </div>
 
-                            <div class="table-responsive" style="margin: 0 auto;">
-                                <table border="1" id="pmTableBody"
-                                    style="display: block; overflow: scroll; height: 500px; width: 1500px; text-align: center; margin: 0 auto;">
-                                    <thead style="height:40px">
-                                        <tr class="table-secondary" style=" position: sticky; top: 0;">
-                                            {{-- <th style="width: 50px; text-align:center" scope="col"><input
-                                                    type="checkbox" class="sub_chk" id="master"></th> --}}
-                                            <th style="width: 50px; text-align:center" scope="col">No</th>
-                                            <th style="width: 100px; text-align:center" scope="col">Factory</th>
-                                            <th style="width: 100px; text-align:center" scope="col">Carcode</th>
-                                            <th style="width: 200px; text-align:center" scope="col">Area</th>
-                                            <th style="width: 200px; text-align:center" scope="col">Cavity</th>
-                                            <th style="width: 200px; text-align:center" scope="col">Partnumber</th>
-                                            <th style="width: 200px; text-align:center" scope="col">Part name</th>
-                                            <th style="width: 150px; text-align:center" scope="col">Qty total</th>
-                                            <th style="width: 150px; text-align:center" scope="col">Length</th>
-                                            <th style="width: 150px; text-align:center" scope="col">Konversi</th>
-                                            <th style="width: 150px; text-align:center" scope="col">QTY After Konversi
-                                            </th>
-                                            <th style="width: 150px; text-align:center" scope="col">Cek</th>
-                                            <th style="width: 150px; text-align:center" scope="col">Price</th>
-                                            <th style="width: 150px; text-align:center" scope="col">Amount</th>
+            <div class="table-responsive" style="max-height: 800px; overflow-y: auto;">
+                <table class="table table-bordered" style="width: 100%;" id="pmTableBody">
+                    <thead style="height:40px">
+                        <tr class="table-secondary" style=" position: sticky; top: 0;">
+                            {{-- <th style="width: 50px; text-align:center" scope="col"><input
+                                    type="checkbox" class="sub_chk" id="master"></th> --}}
+                            <th scope="col">No</th>
+                            <th scope="col">Factory</th>
+                            <th scope="col">Carcode</th>
+                            <th scope="col">Area</th>
+                            <th scope="col">Cavity</th>
+                            <th scope="col">Partnumber</th>
+                            <th scope="col">Part name</th>
+                            <th scope="col">Qty total</th>
+                            <th scope="col">Length</th>
+                            <th scope="col">Konversi</th>
+                            <th scope="col">QTY After Konversi</th>
+                            <th scope="col">Cek</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Amount</th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $no=1 ?>
-                                        @forelse ($proses_material as $data)
-                                        <tr id="tr_{{ $data->id }}">
-                                            {{-- <td><input type="checkbox" class="sub_chk" data-id="{{$data->id}}"
-                                                    onclick="handleCheckboxChange({{ $data->id }})"></td> --}}
-                                            <td>{{$no++}}</td>
-                                            <td>{{ $data->factory }}</td>
-                                            <td>{{ $data->carcode }}</td>
-                                            <td>{{ $data->area }}</td>
-                                            <td>{{ $data->cavity }}</td>
-                                            <td>{{ $data->partnumber }}</td>
-                                            <td>{{ $data->part_name }}</td>
-                                            <td>{{ $data->qty_total }}</td>
-                                            <td>{{ $data->length }}</td>
-                                            <td>{{ $data->konversi }}</td>
-                                            <td>{{ $data->qty_after_konversi }}</td>
-                                            <td>{{ $data->cek }}</td>
-                                            <td>{{ $data->price }}</td>
-                                            <td>{{ $data->amount }}</td>
-                                        </tr>
-                                        @empty
-                                        <br>
-                                        <div class="alert alert-danger">
-                                            Data belum Tersedia.
-                                        </div>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $no=1 ?>
+                        @forelse ($proses_material as $data)
+                        <tr id="tr_{{ $data->id }}">
+                            {{-- <td><input type="checkbox" class="sub_chk" data-id="{{$data->id}}"
+                                    onclick="handleCheckboxChange({{ $data->id }})"></td> --}}
+                            <td>{{$no++}}</td>
+                            <td>{{ $data->factory }}</td>
+                            <td>{{ $data->carcode }}</td>
+                            <td>{{ $data->area }}</td>
+                            <td>{{ $data->cavity }}</td>
+                            <td>{{ $data->partnumber }}</td>
+                            <td>{{ $data->part_name }}</td>
+                            <td>{{ $data->qty_total }}</td>
+                            <td>{{ $data->length }}</td>
+                            <td>{{ $data->konversi }}</td>
+                            <td>{{ $data->qty_after_konversi }}</td>
+                            <td>{{ $data->cek }}</td>
+                            <td>{{ $data->price }}</td>
+                            <td>{{ $data->amount }}</td>
+                        </tr>
+                        @empty
+                        <br>
+                        <div class="alert alert-danger">
+                            Data belum Tersedia.
                         </div>
-                    </div>
-                </div>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -253,13 +240,13 @@
                 }  
             }  
         });
-
+{{--  
         $('[data-toggle=confirmation]').confirmation({
             rootSelector: '[data-toggle=confirmation]',
             onConfirm: function (event, element) {
                 element.trigger('confirm');
             }
-        });
+        });  --}}
 
         $(document).on('confirm', function (e) {
             var ele = e.target;

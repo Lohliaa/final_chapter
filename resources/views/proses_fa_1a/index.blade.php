@@ -10,153 +10,138 @@
         src="{{ asset('assets/js/cdnjs.cloudflare.com_ajax_libs_bootstrap-confirmation_1.0.5_bootstrap-confirmation.min.js') }}">
     </script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
 </head>
 
-<body style="background: lightgray">
-    <figure class="text-center">
-        <blockquote class="blockquote" style="font-size: 24px; font-family: Cambria;">
-            <p>PROSES PRE ASSY
-            <p>
-        </blockquote>
-    </figure>
-    <div class="container mt-6">
-        <div class="row" style="width: 1100px">
-            <div class="col">
-                <div class="card border-0 shadow rounded">
-                    <div class="card-body">
-                        <div class="form-row justify-content-start">
-                            <div id="error-message"></div>
-                            @if ($message = Session::get('success'))
-                            <div class="alert alert-success" style="width: 1050px;">
-                                <p>{{ $message }}</p>
-                            </div>
-                            @endif
-                            {{-- notifikasi form validasi --}}
-                            @if ($errors->has('file'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('file') }}</strong>
-                            </span>
-                            @endif
-                            {{-- notifikasi sukses --}}
-                            @if ($sukses = Session::get('sukses'))
-                            <div class="alert alert-success" style="width: 1050px;">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                <strong>{{ $sukses }}</strong>
-                            </div>
-                            @endif
-                            <div class="form-group col-12 d-flex align-items-center">
+<body>
+    <div class="card shadow mt-3">
+        <div class="card-header py-6 mb-5">
+            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">PROSES PRE ASSY</h2>
+        </div>
+        <div class="form-row" style="margin-left: 2%; margin-right: 2%;">
+            <div id="error-message"></div>
+            @if ($message = Session::get('success'))
+            <div class="alert alert-success" style="width: 1050px;">
+                <p>{{ $message }}</p>
+            </div>
+            @endif
+            {{-- notifikasi form validasi --}}
+            @if ($errors->has('file'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('file') }}</strong>
+            </span>
+            @endif
+            {{-- notifikasi sukses --}}
+            @if ($sukses = Session::get('sukses'))
+            <div class="alert alert-success" style="width: 1050px;">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ $sukses }}</strong>
+            </div>
+            @endif
+            <div class="form-group col-12 d-flex flex-wrap align-items-center">
 
-                                <!-- Export Excel -->
-                                <a href="{{ url('export-excel-proses-fa-1a') }}" class="btn btn-default mr-2"
-                                    target="_blank">Download Excel</a>
+                <!-- Export Excel -->
+                <a href="{{ url('export-excel-proses-fa-1a') }}" class="btn btn-default mr-2"
+                    target="_blank">Download Excel</a>
 
-                                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
-                                    data-url="{{ url('deleteAll_proses_pa') }}">Delete</button>
-                                <a href="{{ url('proses-pa-841w') }}" class="btn btn-default mr-2">Refresh</a>
-                                <input type="text" name="search" id="searchproses_pa" class="form-control w-25 mr-2"
-                                placeholder="Cari disini ...">
+                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
+                    data-url="{{ url('deleteAll_proses_pa') }}">Delete</button>
+                <a href="{{ url('proses-pa-841w') }}" class="btn btn-default mr-2">Refresh</a>
+                <input type="text" name="search" id="searchproses_pa" class="form-control w-25 mr-2"
+                placeholder="Cari disini ...">
 
-                            <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
+            <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
 
-                            </div>
+            </div>
 
-                            <div class="table-responsive">
-                                <table border="1" id="proses_paTableBody"
-                                    style="display: block; overflow:scroll; height: 500px; width:3000px; text-align:center">
-                                    <thead style="height:40px">
-                                        <tr class="table-secondary" style=" position: sticky; top: 0;">
-                                            <th style="width: 50px; text-align:center" scope="col"><input
-                                                    type="checkbox" class="sub_chk" id="master"></th>
-                                            <th style="width: 50px; text-align:center" scope="col">No</th>
-                                            <th style="width: 80px; text-align:center" scope="col">Month</th>
-                                            <th style="width: 80px; text-align:center" scope="col">car_line</th>
-                                            <th style="width: 80px; text-align:center" scope="col">conveyor</th>
-                                            <th style="width: 180px; text-align:center" scope="col">ADDRESSING STORE
-                                            </th>
-                                            <th style="width: 110px; text-align:center" scope="col">CTRL NO1</th>
-                                            <th style="width: 100px; text-align:center" scope="col">CTRL NO2</th>
-                                            <th style="width: 100px; text-align:center" scope="col">kind</th>
-                                            <th style="width: 50px; text-align:center" scope="col">size</th>
-                                            <th style="width: 50px; text-align:center" scope="col">color</th>
-                                            <th style="width: 100px; text-align:center" scope="col">kind_size_color</th>
-                                            <th style="width: 100px; text-align:center" scope="col">cust_part_no</th>
-                                            <th style="width: 50px; text-align:center" scope="col">cl</th>
-                                            <th style="width: 110px; text-align:center" scope="col">term_b</th>
-                                            <th style="width: 130px; text-align:center" scope="col">accb1</th>
-                                            <th style="width: 130px; text-align:center" scope="col">accb2</th>
-                                            <th style="width: 110px; text-align:center" scope="col">tubeb</th>
-                                            <th style="width: 110px; text-align:center" scope="col">term_a</th>
-                                            <th style="width: 130px; text-align:center" scope="col">acca1</th>
-                                            <th style="width: 130px; text-align:center" scope="col">acca2</th>
-                                            <th style="width: 110px; text-align:center" scope="col">tubea</th>
-                                            <th style="width: 80px; text-align:center" scope="col">total_qty</th>
-                                            <th style="width: 100px; text-align:center" scope="col">price</th>
-                                            <th style="width: 100px; text-align:center" scope="col">wire_cost</th>
-                                            <th style="width: 130px; text-align:center" scope="col">component_cost</th>
-                                            <th style="width: 130px; text-align:center" scope="col">material_cost</th>
-                                            <th style="width: 130px; text-align:center" scope="col">material cost amount</th>
-                                            <th style="width: 100px; text-align:center" scope="col">process</th>
-                                            <th style="width: 100px; text-align:center" scope="col">UMH</th>
-                                            <th style="width: 100px; text-align:center" scope="col">charge</th>
-                                            <th style="width: 100px; text-align:center" scope="col">process cost</th>
-                                            <th style="width: 100px; text-align:center" scope="col">process cost amount</th>
-                                            <th style="width: 100px; text-align:center" scope="col">Total Cost Amount</th>
-                                            <th style="width: 100px; text-align:center" scope="col">keterangan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $no=1 ?>
-                                        @forelse ($proses_fa_1a as $data)
-                                        <tr id="tr_{{ $data->id }}">
-                                            <td><input type="checkbox" class="sub_chk" data-id="{{$data->id}}"></td>
-                                            <td>{{$no++}}</td>
-                                            <td>{{ $data->month }}</td>
-                                            <td>{{ $data->car_line }}</td>
-                                            <td>{{ $data->conveyor }}</td>
-                                            <td>{{ $data->addressing_store }}</td>
-                                            <td>{{ $data->ctrl_no }}</td>
-                                            <td>{{ $data->ctrlno }}</td>
-                                            <td>{{ $data->kind }}</td>
-                                            <td>{{ $data->size }}</td>
-                                            <td>{{ $data->color }}</td>
-                                            <td>{{ $data->kind_size_color }}</td>
-                                            <td>{{ $data->cust_part_no }}</td>
-                                            <td>{{ $data->cl }}</td>
-                                            <td>{{ $data->term_b }}</td>
-                                            <td>{{ $data->accb1 }}</td>
-                                            <td>{{ $data->accb2 }}</td>
-                                            <td>{{ $data->tubeb }}</td>
-                                            <td>{{ $data->term_a }}</td>
-                                            <td>{{ $data->acca1 }}</td>
-                                            <td>{{ $data->acca2 }}</td>
-                                            <td>{{ $data->tubea }}</td>
-                                            <td>{{ $data->total_qty }}</td>
-                                            <td>{{ $data->price_sum }}</td>
-                                            <td>{{ number_format($data->wire_cost, 2, ',', '.') }}</td>
-                                            <td>{{ number_format($data->component_cost, 2, ',', '.') }}</td>
-                                            <td>{{ number_format($data->material_cost, 2, ',', '.') }}</td>
-                                            <td>{{ number_format($data->material_cost_amount, 2, ',', '.') }}</td>
-                                            <td>{{ $data->process }}</td>
-                                            <td>{{ number_format($data->umh, 2, ',', '.') }}</td>
-                                            <td>{{ $data->charge }}</td>
-                                            <td>{{ number_format($data->process_cost, 2, ',', '.') }}</td>
-                                            <td>{{ number_format($data->process_cost_amount, 2, ',', '.') }}</td>
-                                            <td>{{ number_format($data->total_amount, 2, ',', '.') }}</td>
-                                            <td>{{ $data->keterangan }}</td>
-                                        </tr>
-                                        @empty
-                                        <br>
-                                        <div class="alert alert-danger">
-                                            Data belum Tersedia.
-                                        </div>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
+            <div class="table-responsive" style="max-height: 800px; overflow-y: auto;">
+                <table class="table table-bordered" style="width: 200%;" id="proses_paTableBody">
+                    <thead style="height:40px">
+                        <tr class="table-secondary" style=" position: sticky; top: 0;">
+                            <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
+                            <th scope="col">No</th>
+                            <th scope="col">Month</th>
+                            <th scope="col">car_line</th>
+                            <th scope="col">conveyor</th>
+                            <th scope="col">ADDRESSING STORE</th>
+                            <th scope="col">CTRL NO1</th>
+                            <th scope="col">CTRL NO2</th>
+                            <th scope="col">kind</th>
+                            <th scope="col">size</th>
+                            <th scope="col">color</th>
+                            <th scope="col">kind_size_color</th>
+                            <th scope="col">cust_part_no</th>
+                            <th scope="col">cl</th>
+                            <th scope="col">term_b</th>
+                            <th scope="col">accb1</th>
+                            <th scope="col">accb2</th>
+                            <th scope="col">tubeb</th>
+                            <th scope="col">term_a</th>
+                            <th scope="col">acca1</th>
+                            <th scope="col">acca2</th>
+                            <th scope="col">tubea</th>
+                            <th scope="col">total_qty</th>
+                            <th scope="col">price</th>
+                            <th scope="col">wire_cost</th>
+                            <th scope="col">component_cost</th>
+                            <th scope="col">material_cost</th>
+                            <th scope="col">material cost amount</th>
+                            <th scope="col">process</th>
+                            <th scope="col">UMH</th>
+                            <th scope="col">charge</th>
+                            <th scope="col">process cost</th>
+                            <th scope="col">process cost amount</th>
+                            <th scope="col">Total Cost Amount</th>
+                            <th scope="col">keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $no=1 ?>
+                        @forelse ($proses_fa_1a as $data)
+                        <tr id="tr_{{ $data->id }}">
+                            <td><input type="checkbox" class="sub_chk" data-id="{{$data->id}}"></td>
+                            <td>{{$no++}}</td>
+                            <td>{{ $data->month }}</td>
+                            <td>{{ $data->car_line }}</td>
+                            <td>{{ $data->conveyor }}</td>
+                            <td>{{ $data->addressing_store }}</td>
+                            <td>{{ $data->ctrl_no }}</td>
+                            <td>{{ $data->ctrlno }}</td>
+                            <td>{{ $data->kind }}</td>
+                            <td>{{ $data->size }}</td>
+                            <td>{{ $data->color }}</td>
+                            <td>{{ $data->kind_size_color }}</td>
+                            <td>{{ $data->cust_part_no }}</td>
+                            <td>{{ $data->cl }}</td>
+                            <td>{{ $data->term_b }}</td>
+                            <td>{{ $data->accb1 }}</td>
+                            <td>{{ $data->accb2 }}</td>
+                            <td>{{ $data->tubeb }}</td>
+                            <td>{{ $data->term_a }}</td>
+                            <td>{{ $data->acca1 }}</td>
+                            <td>{{ $data->acca2 }}</td>
+                            <td>{{ $data->tubea }}</td>
+                            <td>{{ $data->total_qty }}</td>
+                            <td>{{ $data->price_sum }}</td>
+                            <td>{{ number_format($data->wire_cost, 2, ',', '.') }}</td>
+                            <td>{{ number_format($data->component_cost, 2, ',', '.') }}</td>
+                            <td>{{ number_format($data->material_cost, 2, ',', '.') }}</td>
+                            <td>{{ number_format($data->material_cost_amount, 2, ',', '.') }}</td>
+                            <td>{{ $data->process }}</td>
+                            <td>{{ number_format($data->umh, 2, ',', '.') }}</td>
+                            <td>{{ $data->charge }}</td>
+                            <td>{{ number_format($data->process_cost, 2, ',', '.') }}</td>
+                            <td>{{ number_format($data->process_cost_amount, 2, ',', '.') }}</td>
+                            <td>{{ number_format($data->total_amount, 2, ',', '.') }}</td>
+                            <td>{{ $data->keterangan }}</td>
+                        </tr>
+                        @empty
+                        <br>
+                        <div class="alert alert-danger">
+                            Data belum Tersedia.
                         </div>
-                    </div>
-                </div>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -250,12 +235,12 @@
             }  
         });
 
-        $('[data-toggle=confirmation]').confirmation({
+        {{--  $('[data-toggle=confirmation]').confirmation({
             rootSelector: '[data-toggle=confirmation]',
             onConfirm: function (event, element) {
                 element.trigger('confirm');
             }
-        });
+        });  --}}
 
         $(document).on('confirm', function (e) {
             var ele = e.target;

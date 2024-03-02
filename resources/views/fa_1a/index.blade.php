@@ -11,152 +11,137 @@
         src="{{ asset('assets/js/cdnjs.cloudflare.com_ajax_libs_bootstrap-confirmation_1.0.5_bootstrap-confirmation.min.js') }}">
     </script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
 </head>
 
-<body style="background: lightgray">
-    <figure class="text-center">
-        <blockquote class="blockquote" style="font-size: 24px; font-family: Cambria;">
-            <p>PRE ASSY
-            <p>
-        </blockquote>
-    </figure>
-    <div class="container mt-6">
-        <div class="row" style="width: 1100px">
-            <div class="col">
-                <div class="card border-0 shadow rounded">
-                    <div class="card-body">
-                        <div class="form-row justify-content-start">
-                            @if ($message = Session::get('success'))
-                            <div class="alert alert-success" style="width: 1050px;">
-                                <p>{{ $message }}</p>
-                            </div>
-                            @endif
-                            {{-- notifikasi form validasi --}}
-                            @if ($errors->has('file'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('file') }}</strong>
-                            </span>
-                            @endif
-                            {{-- notifikasi sukses --}}
-                            @if ($sukses = Session::get('sukses'))
-                            <div class="alert alert-success" style="width: 1050px;">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                <strong>{{ $sukses }}</strong>
-                            </div>
-                            @endif
-                            <div class="form-group col-12 d-flex align-items-center">
-                                <button id="reset-pa-button" class="btn btn-danger mr-2">Reset</button>
-                                <a href="{{ route('data-pa-841w.create') }}"
-                                    class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
-                                <button type="button" class="btn btn-default mr-2"
-                                    onclick="handleEditClick()">Edit</button>
-                                <button type="button" class="btn btn-default mr-2" data-toggle="modal"
-                                    data-target="#import_excel_pa">
-                                    Upload Excel
-                                </button>
+<body>
+    <div class="card shadow mt-3">
+        <div class="card-header py-6 mb-5">
+            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">PRE ASSY</h2>
+        </div>
+        <div class="form-row" style="margin-left: 2%; margin-right: 2%;">
+            @if ($message = Session::get('success'))
+            <div class="alert alert-success" style="width: 1600px;">
+                <p>{{ $message }}</p>
+            </div>
+            @endif
+            {{-- notifikasi form validasi --}}
+            @if ($errors->has('file'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('file') }}</strong>
+            </span>
+            @endif
+            {{-- notifikasi sukses --}}
+            @if ($sukses = Session::get('sukses'))
+            <div class="alert alert-success" style="width: 1600px;">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ $sukses }}</strong>
+            </div>
+            @endif
+            <div class="form-group col-12 d-flex flex-wrap align-items-center">
+                <button id="reset-pa-button" class="btn btn-danger mr-2">Reset</button>
+                <a href="{{ route('data-pa-841w.create') }}"
+                    class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
+                <button type="button" class="btn btn-default mr-2"
+                    onclick="handleEditClick()">Edit</button>
+                <button type="button" class="btn btn-default mr-2" data-toggle="modal"
+                    data-target="#import_excel_pa">
+                    Upload Excel
+                </button>
 
-                                <div class="modal fade" id="import_excel_pa" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <form method="post" action="{{ url('import_excel_pa') }}"
-                                            enctype="multipart/form-data">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Import</h5>
-                                                </div>
-                                                <div class="modal-body">
-                                                    {{ csrf_field() }}
-                                                    <label>Pilih file excel</label>
-                                                    <div class="form-group">
-                                                        <input type="file" name="file" required="required">
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-default ">Import</button>
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                <div class="modal fade" id="import_excel_pa" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <form method="post" action="{{ url('import_excel_pa') }}"
+                            enctype="multipart/form-data">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Import</h5>
                                 </div>
+                                <div class="modal-body">
+                                    {{ csrf_field() }}
+                                    <label>Pilih file excel</label>
+                                    <div class="form-group">
+                                        <input type="file" name="file" required="required">
+                                    </div>
 
-                                <!-- Export Excel -->
-                                <a href="{{ url('export_excel_pa') }}" class="btn btn-default mr-2"
-                                    target="_blank">Download
-                                    Excel</a>
-
-                                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
-                                    data-url="{{ url('DeleteAll_pa') }}">Delete</button>
-                                <a href="{{ url('proses-pa-841w') }}" class="btn btn-default mr-2">Proses</a>
-
-                                <a href="{{ url('data-pa-841w') }}" class="btn btn-default mr-2">Refresh</a>
-
-                                <input type="text" name="search" id="searchfa_1a" class="form-control w-25 mr-2"
-                                    placeholder="Cari disini ...">
-
-                                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
-
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger"
+                                        data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-default ">Import</button>
+                                    <br>
+                                </div>
                             </div>
-
-                            <div class="table-responsive" style="margin: 0 auto;">
-                                <table border="1" id="fa_1aTableBody"
-                                    style="display: block; overflow: scroll; height: 500px; width: 1060px; text-align: center; margin: 0 auto;">
-                                    <thead style="height:40px">
-                                        <tr class="table-secondary" style=" position: sticky; top: 0;">
-                                            <th style="width: 50px; text-align:center" scope="col"><input
-                                                    type="checkbox" class="sub_chk" id="master"></th>
-                                            <th style="width: 50px; text-align:center" scope="col">No</th>
-                                            <th style="width: 100px; text-align:center" scope="col">Carline</th>
-                                            <th style="width: 100px; text-align:center" scope="col">Conveyor</th>
-                                            <th style="width: 150px; text-align:center" scope="col">Addressing Store
-                                            </th>
-                                            <th style="width: 100px; text-align:center" scope="col">Ctrl No</th>
-                                            <th style="width: 70px; text-align:center" scope="col">Colour</th>
-                                            <th style="width: 70px; text-align:center" scope="col">Qty Kbn</th>
-                                            <th style="width: 50px; text-align:center" scope="col">Issue</th>
-                                            <th style="width: 70px; text-align:center" scope="col">Total Qty</th>
-                                            <th style="width: 80px; text-align:center" scope="col">Housing</th>
-                                            <th style="width: 100px; text-align:center" scope="col">Month</th>
-                                            <th style="width: 100px; text-align:center" scope="col">Year</th>
-                                            <th style="width: 100px; text-align:center" scope="col">SAI</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $no=1 ?>
-                                        @forelse ($fa_1a as $c)
-                                        <tr id="tr_{{ $c->id }}">
-                                            <td><input type="checkbox" class="sub_chk" data-id="{{$c->id}}"
-                                                    onclick="handleCheckboxChange({{ $c->id }})"></td>
-                                            <td>{{$no++}}</td>
-                                            <td>{{ $c->car_line }}</td>
-                                            <td>{{ $c->conveyor }}</td>
-                                            <td>{{ $c->addressing_store }}</td>
-                                            <td>{{ $c->ctrl_no }}</td>
-                                            <td>{{ $c->colour }}</td>
-                                            <td>{{ $c->qty_kbn }}</td>
-                                            <td>{{ $c->issue }}</td>
-                                            <td>{{ $c->total_qty }}</td>
-                                            <td>{{ $c->housing }}</td>
-                                            <td>{{ $c->month }}</td>
-                                            <td>{{ $c->year }}</td>
-                                            <td>{{ $c->sai }}</td>
-                                        </tr>
-                                        @empty
-                                        <br>
-                                        <div class="alert alert-danger">
-                                            Data belum Tersedia.
-                                        </div>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
+
+                <!-- Export Excel -->
+                <a href="{{ url('export_excel_pa') }}" class="btn btn-default mr-2"
+                    target="_blank">Download
+                    Excel</a>
+
+                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
+                    data-url="{{ url('DeleteAll_pa') }}">Delete</button>
+                <a href="{{ url('proses-pa-841w') }}" class="btn btn-default mr-2">Proses</a>
+
+                <a href="{{ url('data-pa-841w') }}" class="btn btn-default mr-2">Refresh</a>
+
+                <input type="text" name="search" id="searchfa_1a" class="form-control w-25 mr-2"
+                    placeholder="Cari disini ...">
+
+                <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
+
+            </div>
+
+            <div class="table-responsive" style="max-height: 800px; overflow-y: auto;">
+                <table class="table table-bordered" style="width: 100%;" id="fa_1aTableBody">
+                    <thead style="height:40px">
+                        <tr class="table-secondary" style=" position: sticky; top: 0;">
+                            <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
+                            <th scope="col">No</th>
+                            <th scope="col">Carline</th>
+                            <th scope="col">Conveyor</th>
+                            <th scope="col">Addressing Store</th>
+                            <th scope="col">Ctrl No</th>
+                            <th scope="col">Colour</th>
+                            <th scope="col">Qty Kbn</th>
+                            <th scope="col">Issue</th>
+                            <th scope="col">Total Qty</th>
+                            <th scope="col">Housing</th>
+                            <th scope="col">Month</th>
+                            <th scope="col">Year</th>
+                            <th scope="col">Factory</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $no=1 ?>
+                        @forelse ($fa_1a as $c)
+                        <tr id="tr_{{ $c->id }}">
+                            <td><input type="checkbox" class="sub_chk" data-id="{{$c->id}}"
+                                    onclick="handleCheckboxChange({{ $c->id }})"></td>
+                            <td>{{$no++}}</td>
+                            <td>{{ $c->car_line }}</td>
+                            <td>{{ $c->conveyor }}</td>
+                            <td>{{ $c->addressing_store }}</td>
+                            <td>{{ $c->ctrl_no }}</td>
+                            <td>{{ $c->colour }}</td>
+                            <td>{{ $c->qty_kbn }}</td>
+                            <td>{{ $c->issue }}</td>
+                            <td>{{ $c->total_qty }}</td>
+                            <td>{{ $c->housing }}</td>
+                            <td>{{ $c->month }}</td>
+                            <td>{{ $c->year }}</td>
+                            <td>{{ $c->sai }}</td>
+                        </tr>
+                        @empty
+                        <br>
+                        <div class="alert alert-danger">
+                            Data belum Tersedia.
+                        </div>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -293,12 +278,12 @@
             }  
         });
 
-        $('[data-toggle=confirmation]').confirmation({
+        {{--  $('[data-toggle=confirmation]').confirmation({
             rootSelector: '[data-toggle=confirmation]',
             onConfirm: function (event, element) {
                 element.trigger('confirm');
             }
-        });
+        });  --}}
 
         $(document).on('confirm', function (e) {
             var ele = e.target;

@@ -4,7 +4,7 @@
 <body>
     <div class="card shadow mt-2">
         <div class="card-header py-3">
-            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">PT. Surabaya Autocomp Indonesia
+            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">PT. XXX
             </h2>
         </div>
         <ul>
