@@ -38,7 +38,7 @@
                 <form action="{{ route('loginaksi') }}" method="post">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="email" name="email" id="id" class="form-control" required="" placeholder="Email">
+                        <input type="email" name="email" id="email" class="form-control" required="" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>

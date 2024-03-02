@@ -25,16 +25,23 @@
     this.options = extend(options || {}, Sparkline.options);
 
     init: {
+      // Pastikan this.element sudah didefinisikan dan bukan undefined
+      if (!this.element) {
+        this.element = document.createElement("div");
+        document.body.appendChild(this.element);
+      }
+    
       this.element.innerHTML = "<canvas></canvas>";
       this.canvas = this.element.firstChild;
       this.context = this.canvas.getContext("2d");
       this.ratio = window.devicePixelRatio || 1;
-
+    
       if (this.options.tooltip) {
         this.canvas.style.position = "relative";
         this.canvas.onmousemove = showTooltip.bind(this);
       }
     }
+    
   }
 
   Sparkline.options = {
