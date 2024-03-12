@@ -82,7 +82,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <a href="{{ url('data_profile') }}">
+                            {{--  <a href="{{ url('data_profile') }}">  --}}
                             <img src="{{ asset('dist/img/profile.png') }}" alt="" style="width: 13rem;">
                         </td>
                         <td>

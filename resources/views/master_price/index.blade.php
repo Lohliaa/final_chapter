@@ -86,9 +86,9 @@
                                     class="sub_chk" id="master"></th>
                             <th scope="col">No</th>
                             <th scope="col">Part Number Ori</th>
-                            <th scope="col">Part Number</th>
+                            <th scope="col">Part Number MPL</th>
                             <th scope="col">Item</th>
-                            <th scope="col">Price Per PCS</th>
+                            <th scope="col">Price Per Pcs</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>

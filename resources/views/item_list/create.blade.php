@@ -23,7 +23,7 @@
                             
                                 @csrf
                                 <div class="form-group">
-                                    <label class="font-weight-bold">PART_NO</label>
+                                    <label class="font-weight-bold">Part Number</label>
                                     <input type="text" class="form-control @error('part_no') is-invalid @enderror" name="part_no" value="{{ old('part_no') }}" placeholder=" ">
                                 
                                     <!-- error message untuk title -->
@@ -34,7 +34,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="font-weight-bold">CUST_PNO</label>
+                                    <label class="font-weight-bold">Specific Part Number</label>
                                     <input type="text" class="form-control @error('cust_pno') is-invalid @enderror" name="cust_pno" value="{{ old('cust_pno') }}" placeholder=" ">
                                 
                                     <!-- error message untuk title -->
@@ -45,7 +45,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="font-weight-bold">PART_NAME</label>
+                                    <label class="font-weight-bold">Part Name</label>
                                     <input type="text" class="form-control @error('part_name') is-invalid @enderror" name="part_name" value="{{ old('part_name') }}" placeholder=" ">
                                 
                                     <!-- error message untuk title -->

@@ -24,7 +24,7 @@
 
                             @csrf
                             <div class="form-group">
-                                <label class="font-weight-bold">Carline</label>
+                                <label class="font-weight-bold">Line</label>
                                 <input type="text" class="form-control @error('carline') is-invalid @enderror"
                                     name="carline" value="{{ old('carline') }}" placeholder=" ">
 
@@ -36,7 +36,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Type</label>
+                                <label class="font-weight-bold">Tipe</label>
                                 <input type="text" class="form-control @error('type') is-invalid @enderror" name="type"
                                     value="{{ old('type') }}" placeholder=" ">
 
@@ -60,7 +60,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Ctrl NO</label>
+                                <label class="font-weight-bold">Material</label>
                                 <input type="text" class="form-control @error('ctrl_no') is-invalid @enderror"
                                     name="ctrl_no" value="{{ old('ctrl_no') }}" placeholder=" ">
 
@@ -72,7 +72,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Jenis Ctrl NO</label>
+                                <label class="font-weight-bold">Jenis Material</label>
                                 <input type="text" class="form-control @error('jenis_ctrl_no') is-invalid @enderror"
                                     name="jenis_ctrl_no" value="{{ old('jenis_ctrl_no') }}" placeholder=" ">
 
@@ -84,7 +84,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Ctrl No Circuit</label>
+                                <label class="font-weight-bold">Material Properties</label>
                                 <input type="text" class="form-control @error('ctrl_no_cct') is-invalid @enderror"
                                     name="ctrl_no_cct" value="{{ old('ctrl_no_cct') }}" placeholder=" ">
 
@@ -96,7 +96,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Kind</label>
+                                <label class="font-weight-bold">Model</label>
                                 <input type="text" class="form-control @error('kind') is-invalid @enderror" name="kind"
                                     value="{{ old('kind') }}" placeholder=" ">
 
@@ -108,7 +108,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Size</label>
+                                <label class="font-weight-bold">Ukuran</label>
                                 <input type="text" class="form-control @error('size') is-invalid @enderror" name="size"
                                     value="{{ old('size') }}" placeholder=" ">
 
@@ -120,7 +120,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">COLOR</label>
+                                <label class="font-weight-bold">Warna</label>
                                 <input type="text" class="form-control @error('color') is-invalid @enderror"
                                     name="color" value="{{ old('color') }}" placeholder=" ">
 
@@ -132,10 +132,9 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Kind Size Color</label>
+                                <label class="font-weight-bold">Model Ukuran Warna</label>
                                 <input type="text" class="form-control @error('kind_size_color') is-invalid @enderror"
-                                    name="kind_size_color" value="{{ old('kind_size_color') }}"
-                                    placeholder=" ">
+                                    name="kind_size_color" value="{{ old('kind_size_color') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
                                 @error('kind_size_color')
@@ -145,10 +144,9 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Cust Part No</label>
+                                <label class="font-weight-bold">Specific Part Numb</label>
                                 <input type="text" class="form-control @error('cust_part_no') is-invalid @enderror"
-                                    name="cust_part_no" value="{{ old('cust_part_no') }}"
-                                    placeholder=" ">
+                                    name="cust_part_no" value="{{ old('cust_part_no') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
                                 @error('cust_part_no')
@@ -158,7 +156,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Cl</label>
+                                <label class="font-weight-bold">CL</label>
                                 <input type="text" class="form-control @error('cl') is-invalid @enderror" name="cl"
                                     value="{{ old('cl') }}" placeholder=" ">
 
@@ -170,7 +168,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Term b</label>
+                                <label class="font-weight-bold">Terminal B</label>
                                 <input type="text" class="form-control @error('term_b') is-invalid @enderror"
                                     name="term_b" value="{{ old('term_b') }}" placeholder=" ">
 
@@ -182,7 +180,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Accb 1</label>
+                                <label class="font-weight-bold">Acc bag b1</label>
                                 <input type="text" class="form-control @error('accb1') is-invalid @enderror"
                                     name="accb1" value="{{ old('accb1') }}" placeholder=" ">
 
@@ -194,7 +192,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Accb 2</label>
+                                <label class="font-weight-bold">Acc bag b2</label>
                                 <input type="text" class="form-control @error('accb2') is-invalid @enderror"
                                     name="accb2" value="{{ old('accb2') }}" placeholder=" ">
 
@@ -206,7 +204,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Tubeb</label>
+                                <label class="font-weight-bold">Tube B</label>
                                 <input type="text" class="form-control @error('tubeb') is-invalid @enderror"
                                     name="tubeb" value="{{ old('tubeb') }}" placeholder=" ">
 
@@ -218,7 +216,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Term a</label>
+                                <label class="font-weight-bold">Terminal A</label>
                                 <input type="text" class="form-control @error('term_a') is-invalid @enderror"
                                     name="term_a" value="{{ old('term_a') }}" placeholder=" ">
 
@@ -230,7 +228,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Acca 1</label>
+                                <label class="font-weight-bold">Acc bag a1</label>
                                 <input type="text" class="form-control @error('acca1') is-invalid @enderror"
                                     name="acca1" value="{{ old('acca1') }}" placeholder=" ">
 
@@ -242,7 +240,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Acca 2</label>
+                                <label class="font-weight-bold">Acc bag a2</label>
                                 <input type="text" class="form-control @error('acca2') is-invalid @enderror"
                                     name="acca2" value="{{ old('acca2') }}" placeholder=" ">
 
@@ -254,7 +252,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Tube a</label>
+                                <label class="font-weight-bold">Tube A</label>
                                 <input type="text" class="form-control @error('tubea') is-invalid @enderror"
                                     name="tubea" value="{{ old('tubea') }}" placeholder=" ">
 

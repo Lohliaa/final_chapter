@@ -37,7 +37,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="font-weight-bold">Carcode</label>
+                                <label class="font-weight-bold">Code</label>
                                 <input type="text" class="form-control @error('carcode') is-invalid @enderror"
                                     name="carcode" value="{{ old('carcode') }}" placeholder=" ">
 
@@ -74,7 +74,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Partnumber</label>
+                                <label class="font-weight-bold">Part Number</label>
                                 <input type="text" class="form-control @error('partnumber') is-invalid @enderror"
                                     name="partnumber" value="{{ old('partnumber') }}" placeholder=" ">
 

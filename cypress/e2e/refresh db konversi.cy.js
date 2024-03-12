@@ -1,0 +1,23 @@
+context('Refresh Database Konversi', () => {
+  const loginUser = (email, password) => {
+    cy.get('#email').type(email);
+    cy.get('#password').type(password);
+    cy.get('form').submit();
+  };
+
+  beforeEach(() => {
+    const url = 'http://localhost:8000/home';
+    cy.log(`Visiting URL: ${url}`);
+    cy.visit(url);
+  });
+
+  it('Refresh Halaman', () => {
+    loginUser("admin@gmail.com", "admin");
+    cy.url().should('include', '/home');
+
+    cy.visit('http://localhost:8000/database_konversi');
+
+    // Klik tombol "Refresh"
+    cy.contains('Refresh').click();
+  });
+});

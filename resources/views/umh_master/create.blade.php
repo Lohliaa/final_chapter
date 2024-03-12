@@ -24,7 +24,7 @@
 
                             @csrf
                             <div class="form-group">
-                                <label class="font-weight-bold">Car line</label>
+                                <label class="font-weight-bold">Line</label>
                                 <input type="text" class="form-control @error('car_line') is-invalid @enderror" name="car_line"
                                     value="{{ old('car_line') }}" placeholder=" ">
                                 <!-- error message untuk title -->
