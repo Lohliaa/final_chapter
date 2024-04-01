@@ -17,7 +17,7 @@
 <body>
     <div class="card shadow mt-3">
         <div class="card-header py-6 mb-5">
-            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">PROSES FINAL ASSY</h2>
+            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">PROSES AREA FINAL</h2>
         </div>
         <div class="form-row" style="margin-left: 2%; margin-right: 2%;">
             @if ($message = Session::get('success'))

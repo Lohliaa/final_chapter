@@ -1,4 +1,4 @@
-context('Proses Area Final', () => {
+context('Download Report Amount', () => {
   const loginUser = (email, password) => {
     cy.get('#email').type(email);
     cy.get('#password').type(password);
@@ -10,14 +10,18 @@ context('Proses Area Final', () => {
     cy.log(`Visiting URL: ${url}`);
     cy.visit(url);
   });
- 
-  it('Proses Area Final', () => {
+
+  it('Download Report Amount', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
+  
+    cy.visit('http://localhost:8000/report');
 
-    cy.visit('http://localhost:8000/data-fa-841w');
+    cy.contains('Download Report').click();
 
-    // Klik tombol "Proses"
-    cy.get('a.btn.btn-default.mr-2').contains('Proses').click();
+    cy.visit('http://localhost:8000/export');
+
+    
   });
+  
 });

@@ -1,4 +1,4 @@
-context('Proses Area Final', () => {
+context('Download Proses Preparation', () => {
   const loginUser = (email, password) => {
     cy.get('#email').type(email);
     cy.get('#password').type(password);
@@ -8,16 +8,17 @@ context('Proses Area Final', () => {
   beforeEach(() => {
     const url = 'http://localhost:8000/home';
     cy.log(`Visiting URL: ${url}`);
-    cy.visit(url);
+    cy.visit(url); 
   });
- 
-  it('Proses Area Final', () => {
+
+  it('Download Proses Preparation', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/data-fa-841w');
-
-    // Klik tombol "Proses"
+    cy.visit('http://localhost:8000/data-pa-841w');
+  
     cy.get('a.btn.btn-default.mr-2').contains('Proses').click();
+
+    cy.contains('Download Excel').click();
   });
 });

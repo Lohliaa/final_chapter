@@ -347,7 +347,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/export', [ReportController::class, 'export'])->name('export');
     Route::get('/export_qty', [ReportController::class, 'export_qty'])->name('export_qty');
     Route::get('/export_cv', [ReportController::class, 'export_cv'])->name('export_cv');
-    Route::get('/export_pa', [ReportController::class, 'export_pre_assy'])->name('export_pa');
+    // Route::get('/export_pa', [ReportController::class, 'export_pre_assy'])->name('export_pa');
 
     // MATERIAL
     Route::resource('material', MaterialController::class);

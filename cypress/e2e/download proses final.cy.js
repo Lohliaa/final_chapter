@@ -8,21 +8,17 @@ context('Download Proses Final', () => {
   beforeEach(() => {
     const url = 'http://localhost:8000/home';
     cy.log(`Visiting URL: ${url}`);
-    cy.visit(url);
+    cy.visit(url); 
   });
- 
+
   it('Download Proses Final', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
     cy.visit('http://localhost:8000/data-fa-841w');
-
-    // Klik tombol "Proses"
-    cy.contains('Proses').click();
-
-    cy.visit('http://localhost:8000/proses');
+  
+    cy.get('a.btn.btn-default.mr-2').contains('Proses').click();
 
     cy.contains('Download Excel').click();
-
   });
 });

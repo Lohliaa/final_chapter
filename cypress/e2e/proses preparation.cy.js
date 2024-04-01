@@ -1,4 +1,4 @@
-context('Proses Area Final', () => {
+context('Proses Area Preparation', () => {
   const loginUser = (email, password) => {
     cy.get('#email').type(email);
     cy.get('#password').type(password);
@@ -11,11 +11,11 @@ context('Proses Area Final', () => {
     cy.visit(url);
   });
  
-  it('Proses Area Final', () => {
+  it('Proses Area Preparation', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/data-fa-841w');
+    cy.visit('http://localhost:8000/data-pa-841w');
 
     // Klik tombol "Proses"
     cy.get('a.btn.btn-default.mr-2').contains('Proses').click();

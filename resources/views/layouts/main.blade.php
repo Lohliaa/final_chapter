@@ -12,7 +12,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="{{ asset('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('dist/ionicons.min.css') }}">
   <!-- Tempusdominus Bbootstrap 4 -->
   <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
   <!-- iCheck -->
@@ -28,7 +28,7 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
   <!-- Google Font: Source Sans Pro -->
-  <link href="{{ asset('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700') }}" rel="stylesheet">
+  <link href="{{ asset('dist/css.css') }}" rel="stylesheet">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
@@ -56,8 +56,8 @@
     {{--  script  --}}
     @yield('scripts')
 
-    <script src="{{ asset('https://code.jquery.com/jquery-3.5.1.slim.min.js') }}"></script>
-    <script src="{{ asset('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/jquery-3.5.1.slim.min.js') }}"></script>
+    <script src="{{ asset('dist/bootstrap.min.js') }}"></script>
 
     <!-- /.content-wrapper -->
     @include('layouts.footer')
