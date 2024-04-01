@@ -3,7 +3,7 @@
         <tr class="table-secondary" style=" position: sticky; top: 0;">
             <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
             <th scope="col">No</th>
-            <th scope="col">Line</th>
+            <th scope="col">Kav</th>
             <th scope="col">Tipe</th>
             <th scope="col">Jenis</th>
             <th scope="col">Material</th>
@@ -13,45 +13,45 @@
             <th scope="col">Ukuran</th>
             <th scope="col">Warna</th>
             <th scope="col">Model Ukuran Warna</th>
-            <th scope="col">Specific Part Numb</th>
+            <th scope="col">No Item</th>
             <th scope="col">CL</th>
-            <th scope="col">Terminal B</th>
+            <th scope="col">TRM A</th>
             <th scope="col">Acc bag b1</th>
             <th scope="col">Acc bag b2</th>
-            <th scope="col">Tube B</th>
+            <th scope="col">TBE B</th>
             <th scope="col">Terminal A</th>
             <th scope="col">Acc bag a1</th>
             <th scope="col">Acc bag a2</th>
-            <th scope="col">Tube A</th>
+            <th scope="col">TBE A</th>
         </tr>
     </thead>
     <tbody>
         <?php $no=1 ?>
-        @forelse ($next_proses as $c)
+        @forelse ($properti_nonsingle as $c)
         <tr id="tr_{{ $c->id }}">
             <td><input type="checkbox" class="sub_chk" data-id="{{$c->id}}"
                     onclick="handleCheckboxChange({{ $c->id }})"></td>
             <td>{{$no++}}</td>
-            <td>{{ $c->carline }}</td>
-            <td>{{ $c->type }}</td>
+            <td>{{ $c->kav }}</td>
+            <td>{{ $c->tipe }}</td>
             <td>{{ $c->jenis }}</td>
-            <td>{{ $c->ctrl_no }}</td>
-            <td>{{ $c->jenis_ctrl_no }}</td>
-            <td>{{ $c->ctrl_no_cct }}</td>
-            <td>{{ $c->kind }}</td>
-            <td>{{ $c->size }}</td>
-            <td>{{ $c->color }}</td>
-            <td>{{ $c->kind_size_color }}</td>
-            <td>{{ $c->cust_part_no }}</td>
+            <td>{{ $c->material }}</td>
+            <td>{{ $c->jenis_material }}</td>
+            <td>{{ $c->material_properties }}</td>
+            <td>{{ $c->model }}</td>
+            <td>{{ $c->ukuran }}</td>
+            <td>{{ $c->warna }}</td>
+            <td>{{ $c->model_ukuran_warna }}</td>
+            <td>{{ $c->no_item }}</td>
             <td>{{ $c->cl }}</td>
-            <td>{{ $c->term_b }}</td>
-            <td>{{ $c->accb1 }}</td>
-            <td>{{ $c->accb2 }}</td>
-            <td>{{ $c->tubeb }}</td>
-            <td>{{ $c->term_a }}</td>
-            <td>{{ $c->acca1 }}</td>
-            <td>{{ $c->acca2 }}</td>
-            <td>{{ $c->tubea }}</td>
+            <td>{{ $c->trm_b }}</td>
+            <td>{{ $c->acc_bag_b1 }}</td>
+            <td>{{ $c->acc_bag_b2 }}</td>
+            <td>{{ $c->tbe_b }}</td>
+            <td>{{ $c->trm_a }}</td>
+            <td>{{ $c->acc_bag_a1 }}</td>
+            <td>{{ $c->acc_bag_a2 }}</td>
+            <td>{{ $c->tbe_a }}</td>
         </tr>
         @empty
         <br>

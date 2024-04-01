@@ -22,29 +22,29 @@
                         </div>
                         @endif
 
-                        <form action="{{ route('next_proses.update', $next_proses->id ) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('properti_nonsingle.update', $properti_nonsingle->id ) }}" method="POST" enctype="multipart/form-data">
 
                             @csrf
                             @method('PUT')
                             <div class="form-group">
-                                <label class="font-weight-bold">Carline</label>
-                                <input type="text" class="form-control @error('carline') is-invalid @enderror"
-                                    name="carline" value="{{ $next_proses->carline }}" placeholder=" ">
+                                <label class="font-weight-bold">Kav</label>
+                                <input type="text" class="form-control @error('kav') is-invalid @enderror"
+                                    name="kav" value="{{ $properti_nonsingle->kav }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('carline')
+                                @error('kav')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Type</label>
-                                <input type="text" class="form-control @error('type') is-invalid @enderror"
-                                    name="type" value="{{ $next_proses->type }}" placeholder=" ">
+                                <label class="font-weight-bold">Tipe</label>
+                                <input type="text" class="form-control @error('tipe') is-invalid @enderror"
+                                    name="tipe" value="{{ $properti_nonsingle->tipe }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('type')
+                                @error('tipe')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Jenis</label>
                                 <input type="text" class="form-control @error('jenis') is-invalid @enderror"
-                                    name="jenis" value="{{ $next_proses->jenis }}" placeholder=" ">
+                                    name="jenis" value="{{ $properti_nonsingle->jenis }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
                                 @error('jenis')
@@ -63,98 +63,98 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Ctrl No</label>
-                                <input type="text" class="form-control @error('ctrl_no') is-invalid @enderror" name="ctrl_no"
-                                    value="{{ $next_proses->ctrl_no }}" placeholder=" ">
+                                <label class="font-weight-bold">Material</label>
+                                <input type="text" class="form-control @error('material') is-invalid @enderror" name="material"
+                                    value="{{ $properti_nonsingle->material }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('ctrl_no')
+                                @error('material')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Jenis Ctrl No</label>
-                                <input type="text" class="form-control @error('jenis_ctrl_no') is-invalid @enderror" name="jenis_ctrl_no"
-                                    value="{{ $next_proses->jenis_ctrl_no }}" placeholder=" ">
+                                <label class="font-weight-bold">Jenis Material</label>
+                                <input type="text" class="form-control @error('jenis_material') is-invalid @enderror" name="jenis_material"
+                                    value="{{ $properti_nonsingle->jenis_material }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('jenis_ctrl_no')
+                                @error('jenis_material')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Ctrl No CCT</label>
-                                <input type="text" class="form-control @error('ctrl_no_cct') is-invalid @enderror"
-                                    name="ctrl_no_cct" value="{{ $next_proses->ctrl_no_cct }}" placeholder=" ">
+                                <label class="font-weight-bold">Material Properties</label>
+                                <input type="text" class="form-control @error('material_properties') is-invalid @enderror"
+                                    name="material_properties" value="{{ $properti_nonsingle->material_properties }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('ctrl_no_cct')
+                                @error('material_properties')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Kind</label>
-                                <input type="text" class="form-control @error('kind') is-invalid @enderror" name="kind"
-                                    value="{{ $next_proses->kind }}" placeholder="Masukkan KIND">
+                                <label class="font-weight-bold">Model</label>
+                                <input type="text" class="form-control @error('model') is-invalid @enderror" name="model"
+                                    value="{{ $properti_nonsingle->model }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('kind')
+                                @error('model')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Size</label>
-                                <input type="text" class="form-control @error('size') is-invalid @enderror" name="size"
-                                    value="{{ $next_proses->size }}" placeholder="Masukkan SIZE">
+                                <label class="font-weight-bold">Ukuran</label>
+                                <input type="text" class="form-control @error('ukuran') is-invalid @enderror" name="ukuran"
+                                    value="{{ $properti_nonsingle->ukuran }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('size')
+                                @error('ukuran')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">COLOR</label>
-                                <input type="text" class="form-control @error('color') is-invalid @enderror"
-                                    name="color" value="{{ $next_proses->color }}" placeholder="Masukkan COLOR">
+                                <label class="font-weight-bold">Warna</label>
+                                <input type="text" class="form-control @error('warna') is-invalid @enderror"
+                                    name="warna" value="{{ $properti_nonsingle->warna }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('color')
+                                @error('warna')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Kind Size Color</label>
-                                <input type="text" class="form-control @error('kind_size_color') is-invalid @enderror"
-                                    name="kind_size_color" value="{{ $next_proses->kind_size_color }}"
-                                    placeholder="Masukkan kind size color">
+                                <label class="font-weight-bold">Model Ukuran Warna</label>
+                                <input type="text" class="form-control @error('model_ukuran_warna') is-invalid @enderror"
+                                    name="model_ukuran_warna" value="{{ $properti_nonsingle->model_ukuran_warna }}"
+                                    placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('kind_size_color')
+                                @error('model_ukuran_warna')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Cust Part No</label>
-                                <input type="text" class="form-control @error('cust_part_no') is-invalid @enderror"
-                                    name="cust_part_no" value="{{ $next_proses->cust_part_no }}"
-                                    placeholder="Masukkan cust part no">
+                                <label class="font-weight-bold">No Item</label>
+                                <input type="text" class="form-control @error('no_item') is-invalid @enderror"
+                                    name="no_item" value="{{ $properti_nonsingle->no_item }}"
+                                    placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('cust_part_no')
+                                @error('no_item')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -163,7 +163,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Cl</label>
                                 <input type="text" class="form-control @error('cl') is-invalid @enderror" name="cl"
-                                    value="{{ $next_proses->cl }}" placeholder="Masukkan cl">
+                                    value="{{ $properti_nonsingle->cl }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
                                 @error('cl')
@@ -173,96 +173,96 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Term b</label>
-                                <input type="text" class="form-control @error('term_b') is-invalid @enderror"
-                                    name="term_b" value="{{ $next_proses->term_b }}" placeholder="Masukkan term b">
+                                <label class="font-weight-bold">TRM B</label>
+                                <input type="text" class="form-control @error('trm_b') is-invalid @enderror"
+                                    name="trm_b" value="{{ $properti_nonsingle->trm_b }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('term_b')
+                                @error('trm_b')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Accb 1</label>
-                                <input type="text" class="form-control @error('accb1') is-invalid @enderror"
-                                    name="accb1" value="{{ $next_proses->accb1 }}" placeholder="Masukkan accb 1">
+                                <label class="font-weight-bold">Acc Bag b1</label>
+                                <input type="text" class="form-control @error('acc_bag_b1') is-invalid @enderror"
+                                    name="acc_bag_b1" value="{{ $properti_nonsingle->acc_bag_b1 }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('accb1')
+                                @error('acc_bag_b1')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Accb 2</label>
-                                <input type="text" class="form-control @error('accb2') is-invalid @enderror"
-                                    name="accb2" value="{{ $next_proses->accb2 }}" placeholder="Masukkan accb2">
+                                <label class="font-weight-bold">Acc Bag b2</label>
+                                <input type="text" class="form-control @error('acc_bag_b2') is-invalid @enderror"
+                                    name="acc_bag_b2" value="{{ $properti_nonsingle->acc_bag_b2 }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('accb2')
+                                @error('acc_bag_b2')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Tubeb</label>
-                                <input type="text" class="form-control @error('tubeb') is-invalid @enderror"
-                                    name="tubeb" value="{{ $next_proses->tubeb }}" placeholder="Masukkan tubeb">
+                                <label class="font-weight-bold">TBE B</label>
+                                <input type="text" class="form-control @error('tbe_b') is-invalid @enderror"
+                                    name="tbe_b" value="{{ $properti_nonsingle->tbe_b }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('tubeb')
+                                @error('tbe_b')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Term a</label>
-                                <input type="text" class="form-control @error('term_a') is-invalid @enderror"
-                                    name="term_a" value="{{ $next_proses->term_a }}" placeholder="Masukkan term a">
+                                <label class="font-weight-bold">TRM A</label>
+                                <input type="text" class="form-control @error('trm_a') is-invalid @enderror"
+                                    name="trm_a" value="{{ $properti_nonsingle->trm_a }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('term_a')
+                                @error('trm_a')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Acca 1</label>
-                                <input type="text" class="form-control @error('acca1') is-invalid @enderror"
-                                    name="acca1" value="{{ $next_proses->acca1 }}" placeholder="Masukkan acca1">
+                                <label class="font-weight-bold">Acc Bag a1</label>
+                                <input type="text" class="form-control @error('acc_bag_a1') is-invalid @enderror"
+                                    name="acc_bag_a1" value="{{ $properti_nonsingle->acc_bag_a1 }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('acca1')
+                                @error('acc_bag_a1')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Acca 2</label>
-                                <input type="text" class="form-control @error('acca2') is-invalid @enderror"
-                                    name="acca2" value="{{ $next_proses->acca2 }}" placeholder="Masukkan acca2">
+                                <label class="font-weight-bold">Acca Bag a2</label>
+                                <input type="text" class="form-control @error('acc_bag_a2') is-invalid @enderror"
+                                    name="acc_bag_a2" value="{{ $properti_nonsingle->acc_bag_a2 }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('acca2')
+                                @error('acc_bag_a2')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Tube a</label>
-                                <input type="text" class="form-control @error('tubea') is-invalid @enderror"
-                                    name="tubea" value="{{ $next_proses->tubea }}" placeholder="Masukkan tubea">
+                                <label class="font-weight-bold">TBE A</label>
+                                <input type="text" class="form-control @error('tbe_a') is-invalid @enderror"
+                                    name="tbe_a" value="{{ $properti_nonsingle->tbe_a }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('tubea')
+                                @error('tbe_a')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -270,7 +270,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-md btn-success">SIMPAN</button>
-                            <a class="btn btn-md btn-primary" href="{{ route('next_proses.index') }}" class="">KEMBALI</a>
+                            <a class="btn btn-md btn-primary" href="{{ route('properti_nonsingle.index') }}" class="">KEMBALI</a>
                         </form>
                     </div>
                 </div>

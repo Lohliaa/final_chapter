@@ -16,7 +16,7 @@
 <body>
     <div class="card shadow mt-3">
         <div class="card-header py-6 mb-5">
-            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">CIRCUIT NON SINGLE</h2>
+            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">PROPERTI NON SINGLE</h2>
         </div>
         <div class="form-row" style="margin-left: 2%; margin-right: 2%;">
             @if ($message = Session::get('success'))
@@ -33,7 +33,7 @@
 
             <div class="form-group col-12 d-flex flex-wrap align-items-center">
                 <button id="reset-np-button" class="btn btn-danger mr-2">Reset</button>
-                <a href="{{ route('next_proses.create') }}" class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
+                <a href="{{ route('properti_nonsingle.create') }}" class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
 
                 <button type="button" class="btn btn-default mr-2" data-toggle="modal" data-target="#import_excel_np">
                     Upload Excel
@@ -71,9 +71,9 @@
                 <a href="{{ url('export_excel_np') }}" class="btn btn-default mr-2" target="_blank">Download Excel</a>
 
                 <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
-                    data-url="{{ url('DeleteAll_Next_Proses') }}">Delete</button>
+                    data-url="{{ url('DeleteAll_Properti_Nonsingle') }}">Delete</button>
                 <button type="button" class="btn btn-default mr-2" onclick="handleEditClick()">Edit</button>
-                <a href="{{ url('next_proses') }}" class="btn btn-default mr-2">Refresh</a>
+                <a href="{{ url('properti_nonsingle') }}" class="btn btn-default mr-2">Refresh</a>
                 <input type="text" name="search" id="searchnp" class="form-control w-25 mr-2"
                     placeholder="Cari disini ...">
 
@@ -87,7 +87,7 @@
                         <tr class="table-secondary" style=" position: sticky; top: 0;">
                             <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
                             <th scope="col">No</th>
-                            <th scope="col">Line</th>
+                            <th scope="col">Kav</th>
                             <th scope="col">Tipe</th>
                             <th scope="col">Jenis</th>
                             <th scope="col">Material</th>
@@ -97,45 +97,45 @@
                             <th scope="col">Ukuran</th>
                             <th scope="col">Warna</th>
                             <th scope="col">Model Ukuran Warna</th>
-                            <th scope="col">Specific Part Numb</th>
+                            <th scope="col">No Item</th>
                             <th scope="col">CL</th>
-                            <th scope="col">Terminal B</th>
+                            <th scope="col">TRM A</th>
                             <th scope="col">Acc bag b1</th>
                             <th scope="col">Acc bag b2</th>
-                            <th scope="col">Tube B</th>
+                            <th scope="col">TBE B</th>
                             <th scope="col">Terminal A</th>
                             <th scope="col">Acc bag a1</th>
                             <th scope="col">Acc bag a2</th>
-                            <th scope="col">Tube A</th>
+                            <th scope="col">TBE A</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $no=1 ?>
-                        @forelse ($next_proses as $c)
+                        @forelse ($properti_nonsingle as $c)
                         <tr id="tr_{{ $c->id }}">
                             <td><input type="checkbox" class="sub_chk" data-id="{{$c->id}}"
                                     onclick="handleCheckboxChange({{ $c->id }})"></td>
                             <td>{{$no++}}</td>
-                            <td>{{ $c->carline }}</td>
-                            <td>{{ $c->type }}</td>
+                            <td>{{ $c->kav }}</td>
+                            <td>{{ $c->tipe }}</td>
                             <td>{{ $c->jenis }}</td>
-                            <td>{{ $c->ctrl_no }}</td>
-                            <td>{{ $c->jenis_ctrl_no }}</td>
-                            <td>{{ $c->ctrl_no_cct }}</td>
-                            <td>{{ $c->kind }}</td>
-                            <td>{{ $c->size }}</td>
-                            <td>{{ $c->color }}</td>
-                            <td>{{ $c->kind_size_color }}</td>
-                            <td>{{ $c->cust_part_no }}</td>
+                            <td>{{ $c->material }}</td>
+                            <td>{{ $c->jenis_material }}</td>
+                            <td>{{ $c->material_properties }}</td>
+                            <td>{{ $c->model }}</td>
+                            <td>{{ $c->ukuran }}</td>
+                            <td>{{ $c->warna }}</td>
+                            <td>{{ $c->model_ukuran_warna }}</td>
+                            <td>{{ $c->no_item }}</td>
                             <td>{{ $c->cl }}</td>
-                            <td>{{ $c->term_b }}</td>
-                            <td>{{ $c->accb1 }}</td>
-                            <td>{{ $c->accb2 }}</td>
-                            <td>{{ $c->tubeb }}</td>
-                            <td>{{ $c->term_a }}</td>
-                            <td>{{ $c->acca1 }}</td>
-                            <td>{{ $c->acca2 }}</td>
-                            <td>{{ $c->tubea }}</td>
+                            <td>{{ $c->trm_b }}</td>
+                            <td>{{ $c->acc_bag_b1 }}</td>
+                            <td>{{ $c->acc_bag_b2 }}</td>
+                            <td>{{ $c->tbe_b }}</td>
+                            <td>{{ $c->trm_a }}</td>
+                            <td>{{ $c->acc_bag_a1 }}</td>
+                            <td>{{ $c->acc_bag_a2 }}</td>
+                            <td>{{ $c->tbe_a }}</td>
                         </tr>
                         @empty
                         <br>
@@ -153,16 +153,16 @@
 <script src="{{ asset('assets/js/code.jquery.com_jquery-3.6.0.min.js') }}"></script>
 
 <script>
-    function cari_next_proses() {
+    function cari_properti_nonsingle() {
         const selected = document.getElementById('searchnp').value;
     
-        fetch(`{{ route('search.next_proses') }}?next_proses=${selected}`)
+        fetch(`{{ route('search.properti_nonsingle') }}?properti_nonsingle=${selected}`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('nextProsesTableBody').innerHTML = data;
 
                 // Memperbarui jumlah data langsung dari respons server
-                fetch(`{{ route('get.count.next_proses') }}?next_proses=${selected}`)
+                fetch(`{{ route('get.count.properti_nonsingle') }}?properti_nonsingle=${selected}`)
                     .then(response => response.text())
                     .then(countData => {
                         document.getElementById('count').innerText = 'Jumlah Data ' + countData;
@@ -172,7 +172,7 @@
 
     // Menambahkan event listener untuk input pencarian
     document.getElementById('searchnp').addEventListener('input', function() {
-        cari_next_proses();
+        cari_properti_nonsingle();
     });
 
     // Fungsi yang akan dipanggil ketika checkbox berubah
@@ -211,7 +211,7 @@
             alert("Please select at least one item to edit.");
         } else {
             // Membuat URL dengan fungsi url() Laravel
-            var editUrl = "{{ url('edit_next_proses') }}/" + itemsToEdit.join(',');
+            var editUrl = "{{ url('edit_properti_nonsingle') }}/" + itemsToEdit.join(',');
     
             // Redirect ke halaman edit dengan URL yang telah dibuat
             window.location.href = editUrl;

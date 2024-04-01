@@ -23,9 +23,9 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
         <li
-          class="nav-item has-treeview {{ Request::is('konsep_commonize', 'next_proses', 'item_list', 'master_price', 'umh_master') ? 'menu-open' : '' }}">
+          class="nav-item has-treeview {{ Request::is('konsep_commonize', 'properti_nonsingle', 'item_list', 'master_price', 'umh_master') ? 'menu-open' : '' }}">
           <a href="#"
-            class="nav-link {{ Request::is('konsep_commonize', 'next_proses', 'item_list', 'master_price', 'umh_master') ? 'active' : '' }}">
+            class="nav-link {{ Request::is('konsep_commonize', 'properti_nonsingle', 'item_list', 'master_price', 'umh_master') ? 'active' : '' }}">
             <i class="nav-icon fas fa-copy"></i>
             <p>
               Update Database
@@ -38,15 +38,15 @@
                 class="nav-link {{ Request::is('konsep_commonize') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
-                  Circuit Single
+                  Properti Single
                 </p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ url('next_proses') }}" class="nav-link {{ Request::is('next_proses') ? 'active' : '' }}">
+              <a href="{{ url('properti_nonsingle') }}" class="nav-link {{ Request::is('properti_nonsingle') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
-                  Circuit Non-Single
+                  Properti Non-Single
                 </p>
               </a>
             </li>
