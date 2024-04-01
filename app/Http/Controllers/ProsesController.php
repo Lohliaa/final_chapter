@@ -322,68 +322,18 @@ class ProsesController extends Controller
                 $tubea_value = $item->tubea !== null ? 1 : 0;
 
                 $process = 0;
-                if (stripos($ctrlno_value, 'BONDER') !== false || stripos($ctrlno_value, 'JOINT') !== false) {
+
+                // Set process to 30 for specific conditions
+                if (stripos($ctrlno_value, 'BONDER') !== false || stripos($ctrlno_value, 'JOINT') !== false || ($accb1_value && $tubeb_value && $term_a_value && ($acca1_value || !$acca1_value) || $term_a_value && $acca1_value && !$acca2_value && $tubea_value || $accb1_value && $tubea_value && $term_b_value && ($acca1_value || !$acca1_value) || $term_b_value && !$accb2_value && $tubeb_value && !$tubea_value)) {
                     $process = 30;
-                } elseif ($accb1_value && $tubeb_value && $term_a_value && $acca1_value) {
-                    $process = 30;
-                } elseif ($accb1_value && $tubeb_value && $term_a_value && !$acca1_value) {
-                    $process = 30;
-                } elseif ($term_a_value && $acca1_value && !$acca2_value && $tubea_value) {
-                    $process = 30;
-                } elseif (!$accb1_value && $tubeb_value && $term_a_value && !$acca1_value) {
-                    $process = 30;
-                } elseif ($accb1_value && $tubea_value && $term_b_value && $acca1_value) {
-                    $process = 30;
-                } elseif ($accb1_value && $tubea_value && $term_b_value && !$acca1_value) {
-                    $process = 30;
-                } elseif ($term_b_value && !$accb2_value && $tubeb_value && !$tubea_value) {
-                    $process = 30;
-                } elseif (!$accb1_value && $tubea_value && $term_b_value && !$acca1_value) {
-                    $process = 30;
-                } elseif ($term_a_value && $acca1_value && $acca2_value && $tubea_value ) {
-                    $process = 30;
-                } elseif ($term_b_value && $term_a_value && $acca2_value && $tubea_value ) {
-                    $process = 30;
-                } elseif ($accb1_value && !$tubeb_value && $acca1_value && $tubea_value ) {
-                    $process = 30;
-                } elseif (!$accb2_value && !$acca2_value && $tubeb_value && !$tubea_value) {
-                    $process = 30;
-                } elseif (!$accb2_value && !$acca2_value && !$tubeb_value && $tubea_value) {
-                    $process = 30;
-                } elseif (!$accb2_value && $acca2_value && !$tubeb_value && !$tubea_value) {
-                    $process = 20;
-                } elseif ($accb2_value && !$acca2_value && !$tubeb_value && !$tubea_value) {
-                    $process = 20;
-                } elseif ($accb2_value && $term_a_value && !$tubeb_value && !$tubea_value) {
-                    $process = 20;
-                } elseif ($accb1_value && $accb2_value && $acca1_value && $accb2_value) {
+                } elseif ($accb2_value && $acca2_value && !$tubeb_value && !$tubea_value) {
                     $process = 20;
                 } elseif (!$term_b_value && !$accb1_value && !$accb2_value && !$tubeb_value && !$term_a_value && !$acca1_value && !$acca2_value && !$tubea_value) {
                     $process = 0;
-                } elseif ($accb1_value && $term_b_value && !$tubeb_value && !$tubea_value) {
-                    $process = 10;
-                } elseif ($acca1_value && $term_a_value && !$tubeb_value && !$tubea_value) {
-                    $process = 10;
-                } elseif (!$accb1_value && !$tubeb_value && $term_b_value && !$acca1_value) {
-                    $process = 10;
-                } elseif (!$accb1_value && !$tubeb_value && $term_a_value && !$acca1_value) {
-                    $process = 10;
-                } elseif (!$accb1_value && !$tubeb_value && !$term_a_value && !$acca1_value) {
-                    $process = 10;
-                } elseif (!$accb2_value && !$acca2_value && !$tubeb_value && !$tubea_value) {
-                    $process = 10;
-                } elseif ($accb1_value && !$term_b_value && !$tubeb_value && !$tubea_value) {
-                    $process = 10;
-                } elseif ($acca1_value && $term_a_value && !$tubeb_value && !$tubea_value) {
-                    $process = 10;
-                } elseif ($acca1_value && !$term_a_value && !$tubeb_value && !$tubea_value) {
-                    $process = 10;
-                } elseif (!$accb1_value && $acca1_value && !$tubeb_value && !$tubea_value) {
-                    $process = 10;
-                } elseif ($accb1_value && !$acca1_value && !$tubeb_value && !$tubea_value) {
+                } elseif ($accb1_value && $term_b_value && !$tubeb_value && !$tubea_value || $acca1_value && $term_a_value && !$tubeb_value && !$tubea_value || !$accb1_value && !$tubeb_value && $term_b_value && !$acca1_value || !$accb1_value && !$tubeb_value && $term_a_value && !$acca1_value || !$accb1_value && !$tubeb_value && !$term_a_value && !$acca1_value || !$accb2_value && !$acca2_value && !$tubeb_value && !$tubea_value || $accb1_value && !$term_b_value && !$tubeb_value && !$tubea_value || $acca1_value && $term_a_value && !$tubeb_value && !$tubea_value || $acca1_value && !$term_a_value && !$tubeb_value && !$tubea_value || !$accb1_value && $acca1_value && !$tubeb_value && !$tubea_value || $accb1_value && !$acca1_value && !$tubeb_value && !$tubea_value) {
                     $process = 10;
                 }
-
+                
                 $item->process = $process;
 
                 $processValue = $item->process;
