@@ -19,37 +19,37 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('item_list.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('item.store') }}" method="POST" enctype="multipart/form-data">
                             
                                 @csrf
                                 <div class="form-group">
-                                    <label class="font-weight-bold">Part Number</label>
-                                    <input type="text" class="form-control @error('part_no') is-invalid @enderror" name="part_no" value="{{ old('part_no') }}" placeholder=" ">
+                                    <label class="font-weight-bold">Component Number</label>
+                                    <input type="text" class="form-control @error('component_number') is-invalid @enderror" name="component_number" value="{{ old('component_number') }}" placeholder=" ">
                                 
                                     <!-- error message untuk title -->
-                                    @error('part_no')
+                                    @error('component_number')
                                         <div class="alert alert-danger mt-2">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="font-weight-bold">Specific Part Number</label>
-                                    <input type="text" class="form-control @error('cust_pno') is-invalid @enderror" name="cust_pno" value="{{ old('cust_pno') }}" placeholder=" ">
+                                    <label class="font-weight-bold">Specific Component Number</label>
+                                    <input type="text" class="form-control @error('specific_component_number') is-invalid @enderror" name="specific_component_number" value="{{ old('specific_component_number') }}" placeholder=" ">
                                 
                                     <!-- error message untuk title -->
-                                    @error('cust_pno')
+                                    @error('specific_component_number')
                                         <div class="alert alert-danger mt-2">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="font-weight-bold">Part Name</label>
-                                    <input type="text" class="form-control @error('part_name') is-invalid @enderror" name="part_name" value="{{ old('part_name') }}" placeholder=" ">
+                                    <label class="font-weight-bold">Component Name</label>
+                                    <input type="text" class="form-control @error('component_name') is-invalid @enderror" name="component_name" value="{{ old('component_name') }}" placeholder=" ">
                                 
                                     <!-- error message untuk title -->
-                                    @error('part_name')
+                                    @error('component_name')
                                         <div class="alert alert-danger mt-2">
                                             {{ $message }}
                                         </div>
@@ -57,7 +57,7 @@
                                 </div>
 
                                 <button type="submit" class="btn btn-md btn-success">SIMPAN</button>
-                                <a class="btn btn-md btn-primary" href="{{ route('item_list.index') }}" class="">KEMBALI</a>
+                                <a class="btn btn-md btn-primary" href="{{ route('item.index') }}" class="">KEMBALI</a>
                             </form> 
                         </div>
                     </div>

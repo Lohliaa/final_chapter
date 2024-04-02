@@ -22,41 +22,41 @@
                         </div>
                         @endif
 
-                        <form action="{{ route('item_list.update', $item_list->id ) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('item.update', $item->id ) }}" method="POST" enctype="multipart/form-data">
 
                             @csrf
                             @method('PUT')
                             <div class="form-group">
-                                <label class="font-weight-bold">part_no</label>
-                                <input type="text" class="form-control @error('part_no') is-invalid @enderror"
-                                    name="part_no" value="{{ $item_list->part_no }}" placeholder=" ">
+                                <label class="font-weight-bold">Component Number</label>
+                                <input type="text" class="form-control @error('component_number') is-invalid @enderror"
+                                    name="component_number" value="{{ $item->component_number }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('part_no')
+                                @error('component_number')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">cust_pno</label>
-                                <input type="text" class="form-control @error('cust_pno') is-invalid @enderror"
-                                    name="cust_pno" value="{{ $item_list->cust_pno }}" placeholder=" ">
+                                <label class="font-weight-bold">Specific Component Number</label>
+                                <input type="text" class="form-control @error('specific_component_number') is-invalid @enderror"
+                                    name="specific_component_number" value="{{ $item->specific_component_number }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('cust_pno')
+                                @error('specific_component_number')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">part_name</label>
-                                <input type="text" class="form-control @error('part_name') is-invalid @enderror"
-                                    name="part_name" value="{{ $item_list->part_name }}" placeholder=" ">
+                                <label class="font-weight-bold">Component Name</label>
+                                <input type="text" class="form-control @error('component_name') is-invalid @enderror"
+                                    name="component_name" value="{{ $item->component_name }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('part_name')
+                                @error('component_name')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -64,7 +64,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-md btn-success">SIMPAN</button>
-                            <a class="btn btn-md btn-primary" href="{{ route('item_list.index') }}" class="">KEMBALI</a>
+                            <a class="btn btn-md btn-primary" href="{{ route('item.index') }}" class="">KEMBALI</a>
                         </form>
                     </div>
                 </div>

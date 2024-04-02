@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Item_List extends Model
+class Item extends Model
 {
     use HasFactory;
-    protected $table = "item_list";
+    protected $table = "item";
     protected $primaryKey = 'id';
     protected $fillable = [
-        'part_no',
-        'cust_pno', 
-        'part_name', 
+        'component_number',
+        'specific_component_number', 
+        'component_name', 
         'user_id',
     ];
+
 }

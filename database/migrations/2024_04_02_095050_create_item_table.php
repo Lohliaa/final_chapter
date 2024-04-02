@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateItemListTable extends Migration
+class CreateItemTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateItemListTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_list', function (Blueprint $table) {
+        Schema::create('item', function (Blueprint $table) {
             $table->id();
-            $table->string('part_no')->nullable();
-            $table->string('cust_pno')->nullable();
-            $table->string('part_name')->nullable();
+            $table->string('component_number')->nullable();
+            $table->string('specific_component_number')->nullable();
+            $table->string('component_name')->nullable();
             $table->string('user_id');
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ class CreateItemListTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_list');
+        Schema::dropIfExists('item');
     }
 }

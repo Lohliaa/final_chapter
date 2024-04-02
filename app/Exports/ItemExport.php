@@ -9,17 +9,18 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
-class ItemListExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
+class ItemExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
     public function collection()
     {
         $user = Auth::id();
 
-        $type = DB::table('item_list')->select(
-            'part_no',
-            'cust_pno',
-            'part_name',
+        $type = FacadesDB::table('item')->select(
+            'component_number',
+            'specific_component_number', 
+            'component_name', 
         )
         ->where('user_id', $user)
         ->get();
@@ -28,9 +29,9 @@ class ItemListExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
     public function headings(): array
     {
         return [
-            'Part Number',
-            'Specific Part Number',
-            'Part Name',
+            'component_number',
+            'specific_component_number', 
+            'component_name', 
         ];
     }
 

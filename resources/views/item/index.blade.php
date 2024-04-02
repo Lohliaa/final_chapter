@@ -40,7 +40,7 @@
             @endif
             <div class="form-group col-12 d-flex flex-wrap align-items-center">
                 <button id="reset-il-button" class="btn btn-danger mr-2">Reset</button>
-                <a href="{{ route('item_list.create') }}" class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
+                <a href="{{ route('item.create') }}" class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
 
                 <button type="button" class="btn btn-default mr-2" onclick="handleEditClick()">Edit</button>
 
@@ -80,9 +80,9 @@
                 <a href="{{ url('export_excel_il') }}" class="btn btn-default mr-2" target="_blank">Download Excel</a>
 
                 <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
-                    data-url="{{ url('DeleteAll_Item_List') }}">Delete</button>
+                    data-url="{{ url('DeleteAll_item') }}">Delete</button>
 
-                <a href="{{ url('item_list') }}" class="btn btn-default mr-2">Refresh</a>
+                <a href="{{ url('item') }}" class="btn btn-default mr-2">Refresh</a>
 
                 <input type="text" name="search" id="searchil" class="form-control w-25 mr-2"
                     placeholder="Cari disini ...">
@@ -98,21 +98,21 @@
                             <th scope="col"><input type="checkbox"
                                     class="sub_chk" id="master"></th>
                             <th scope="col">No</th>
-                            <th scope="col">Part Number</th>
-                            <th scope="col">Specific Part Number</th>
-                            <th scope="col">Part Name</th>
+                            <th scope="col">Component Number</th>
+                            <th scope="col">Specific Component Number</th>
+                            <th scope="col">Component Name</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $no=1 ?>
-                        @forelse ($item_list as $c)
+                        @forelse ($item as $c)
                         <tr id="tr_{{ $c->id }}">
                             <td><input type="checkbox" class="sub_chk" data-id="{{$c->id}}"
                                     onclick="handleCheckboxChange({{ $c->id }})"></td>
                             <td>{{$no++}}</td>
-                            <td>{{ $c->part_no }}</td>
-                            <td>{{ $c->cust_pno }}</td>
-                            <td>{{ $c->part_name }}</td>
+                            <td>{{ $c->component_number }}</td>
+                            <td>{{ $c->specific_component_number }}</td>
+                            <td>{{ $c->component_name }}</td>
                         </tr>
                         @empty
                         <br>
@@ -122,7 +122,7 @@
                         @endforelse
                     </tbody>
                 </table>
-                {{ $item_list->links() }}
+                {{ $item->links() }}
             </div>
         </div>
     </div>
@@ -134,13 +134,13 @@
     function cari() {
         const selected = document.getElementById('searchil').value;
     
-        fetch(`{{ route('search.item_list') }}?item_list=${selected}`)
+        fetch(`{{ route('search.item') }}?item=${selected}`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('itemTableBody').innerHTML = data;
 
                 // Memperbarui jumlah data langsung dari respons server
-                fetch(`{{ route('get.count.item_list') }}?item_list=${selected}`)
+                fetch(`{{ route('get.count.item') }}?item=${selected}`)
                     .then(response => response.text())
                     .then(countData => {
                         document.getElementById('count').innerText = 'Jumlah Data ' + countData;

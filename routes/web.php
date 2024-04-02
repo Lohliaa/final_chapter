@@ -6,15 +6,12 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\C1Controller;
 use App\Http\Controllers\FA_1AController;
 use App\Http\Controllers\FA_1CController;
-use App\Http\Controllers\Item_ListController;
-use App\Http\Controllers\KonsepCommonizeController;
+use App\Http\Controllers\itemController;
 use App\Http\Controllers\KonversiController;
 use App\Http\Controllers\MasterPriceController;
 use App\Http\Controllers\MaterialController;
-use App\Http\Controllers\Next_ProsesController;
 use App\Http\Controllers\ProsesController;
 use App\Http\Controllers\Proses1AController;
 use App\Http\Controllers\ReportController;
@@ -87,19 +84,19 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/search-kc', [Properti_SingleController::class, 'cari_properti_single'])->name('search.properti_single');
     Route::get('/get-count-konsep-commonize', [Properti_SingleController::class, 'getCount'])->name('get.count.properti_single');
 
-    // ITEM LIST
-    Route::resource('item_list', Item_ListController::class);
-    Route::post('/import_excel_il', [Item_ListController::class, 'import_excel_il']);
-    Route::post('/update_excel_il', [Item_ListController::class, 'update_excel_il']);
-    Route::get('/export_excel_il', [Item_ListController::class, 'export_excel_il']);
-    // Route::get('/cari', [Item_ListController::class, 'cari'])->name('item_list.cari');
-    Route::delete('delete/{id}', [Item_ListController::class, 'destroy']);
-    Route::delete('DeleteAll_Item_List', [Item_ListController::class, 'deleteAll_Item_List']);
-    Route::post('reset_il', [Item_ListController::class, 'reset_il'])->name('reset_il');
-    Route::get('edit_buppin/{id}', [Item_ListController::class, 'edit'])->name('edit.item_list');
-    Route::get('/calculate', [Item_ListController::class, 'calculate'])->name('item_list.calculate');
-    Route::get('/search-il', [Item_ListController::class, 'cari'])->name('search.item_list');
-    Route::get('/get-count-item-list', [Item_ListController::class, 'getCount'])->name('get.count.item_list');
+    // ITEM
+    Route::resource('item', ItemController::class);
+    Route::post('/import_excel_il', [ItemController::class, 'import_excel_il']);
+    Route::post('/update_excel_il', [ItemController::class, 'update_excel_il']);
+    Route::get('/export_excel_il', [ItemController::class, 'export_excel_il']);
+    // Route::get('/cari', [ItemController::class, 'cari'])->name('item_list.cari');
+    Route::delete('delete/{id}', [ItemController::class, 'destroy']);
+    Route::delete('DeleteAll_item', [ItemController::class, 'deleteAll_Item']);
+    Route::post('reset_il', [ItemController::class, 'reset_il'])->name('reset_il');
+    Route::get('edit_buppin/{id}', [ItemController::class, 'edit'])->name('edit.item');
+    Route::get('/calculate', [ItemController::class, 'calculate'])->name('item.calculate');
+    Route::get('/search-il', [ItemController::class, 'cari'])->name('search.item');
+    Route::get('/get-count-item-list', [ItemController::class, 'getCount'])->name('get.count.item');
 
     // MASTER PRICE
     Route::resource('master_price', MasterPriceController::class);
