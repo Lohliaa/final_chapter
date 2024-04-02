@@ -117,7 +117,7 @@ class ProsesMaterialController extends Controller
             ->get();
         ProsesMaterial::where('user_id', $user)->delete();
         foreach ($dataMaterial as $data) {
-            $partNumbers = explode('+', $data->partnumber);
+            $partNumbers = explode('+', $data->component_number);
             $qtyTotal = $data->qty_total;
             foreach ($partNumbers as $partNumber) {
                 $length = null;
