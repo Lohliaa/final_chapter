@@ -24,11 +24,11 @@
 
                             @csrf
                             <div class="form-group">
-                                <label class="font-weight-bold">Line</label>
-                                <input type="text" class="form-control @error('car_line') is-invalid @enderror" name="car_line"
-                                    value="{{ old('car_line') }}" placeholder=" ">
+                                <label class="font-weight-bold">Kav</label>
+                                <input type="text" class="form-control @error('kav') is-invalid @enderror" name="kav"
+                                    value="{{ old('kav') }}" placeholder=" ">
                                 <!-- error message untuk title -->
-                                @error('car_line')
+                                @error('kav')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>

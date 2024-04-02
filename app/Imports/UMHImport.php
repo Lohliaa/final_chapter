@@ -18,7 +18,7 @@ class UMHImport implements ToModel, WithHeadingRow, WithBatchInserts
         $userRole = Auth::id();
 
         return new UMH_Master([
-            "car_line" => $row['carline'],
+            "kav" => $row['kav'],
             "code_umh1" => $row['code_10'],
             "code_umh2" => $row['code_20'],
             "code_umh3" => $row['code_30'],

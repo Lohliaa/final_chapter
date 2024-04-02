@@ -11,7 +11,7 @@ class UMH_Master extends Model
     protected $table = "umh_master";
     protected $primaryKey = 'id';
     protected $fillable = [
-        'car_line',
+        'kav',
         'code_umh1', 
         'code_umh2', 
         'code_umh3',

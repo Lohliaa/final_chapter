@@ -9,14 +9,15 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class UMHExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
     public function collection()
     {
         $user = Auth::id();
-        $type = DB::table('umh_master')->select(
-            'car_line',
+        $type = FacadesDB::table('umh_master')->select(
+            'kav',
             'code_umh1',
             'code_umh2',
             'code_umh3',
@@ -32,7 +33,7 @@ class UMHExport implements FromCollection, WithHeadings, ShouldAutoSize, WithSty
     public function headings(): array
     {
         return [
-            'Line',
+            'Kav',
             'Code 10',
             'Code 20',
             'Code 30',

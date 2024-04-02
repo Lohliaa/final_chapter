@@ -28,11 +28,11 @@
                             @method('PUT')
                             <div class="form-group">
                                 <label class="font-weight-bold">Car line</label>
-                                <input type="text" class="form-control @error('car_line') is-invalid @enderror"
-                                    name="car_line" value="{{ $umh_master->car_line }}" placeholder=" ">
+                                <input type="text" class="form-control @error('kav') is-invalid @enderror"
+                                    name="kav" value="{{ $umh_master->kav }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('car_line')
+                                @error('kav')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>

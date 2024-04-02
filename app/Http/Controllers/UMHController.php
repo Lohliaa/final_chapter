@@ -28,7 +28,7 @@ class UMHController extends Controller
         
         if($searchTerm){
             $query->where(function ($query) use ($searchTerm) {
-                $query->orWhere('car_line', 'LIKE', '%' . $searchTerm . '%')
+                $query->orWhere('kav', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('code_umh1', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('code_umh2', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('code_umh3', 'LIKE', '%' . $searchTerm . '%')
@@ -58,7 +58,7 @@ class UMHController extends Controller
 
         if($searchTerm){
             $query->where(function ($query) use ($searchTerm) {
-                $query->orWhere('car_line', 'LIKE', '%' . $searchTerm . '%')
+                $query->orWhere('kav', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('code_umh1', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('code_umh2', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('code_umh3', 'LIKE', '%' . $searchTerm . '%')
@@ -84,7 +84,7 @@ class UMHController extends Controller
         $query = UMH_Master::where('user_id', $user)->orderBy('id', 'asc');
         
         if ($keyword) {
-            $query->orWhere('car_line', 'LIKE', '%' . $keyword . '%')
+            $query->orWhere('kav', 'LIKE', '%' . $keyword . '%')
             ->orWhere('code_umh1', 'LIKE', '%' . $keyword . '%')
             ->orWhere('code_umh2', 'LIKE', '%' . $keyword . '%')
             ->orWhere('code_umh3', 'LIKE', '%' . $keyword . '%')
@@ -160,7 +160,7 @@ class UMHController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'car_line' => 'required',
+            'kav' => 'required',
             'code_umh1' => 'required',
             'code_umh2' => 'required',
             'code_umh3' => 'required',
@@ -173,7 +173,7 @@ class UMHController extends Controller
         $user = Auth::id();
 
         $umh_master = UMH_Master::create([
-            'car_line' => $request->car_line,
+            'kav' => $request->kav,
             'code_umh1' => $request->code_umh1,
             'code_umh2' => $request->code_umh2,
             'code_umh3' => $request->code_umh3,
@@ -224,7 +224,7 @@ class UMHController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'car_line' => 'required',
+            'kav' => 'required',
             'code_umh1' => 'required',
             'code_umh2' => 'required',
             'code_umh3' => 'required',
@@ -238,7 +238,7 @@ class UMHController extends Controller
         $umh_master = UMH_Master::findOrFail($id);
 
         $umh_master->update([
-            'car_line' => $request->car_line,
+            'kav' => $request->kav,
             'code_umh1' => $request->code_umh1,
             'code_umh2' => $request->code_umh2,
             'code_umh3' => $request->code_umh3,

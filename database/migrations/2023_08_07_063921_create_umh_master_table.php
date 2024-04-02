@@ -15,7 +15,7 @@ class CreateUmhMasterTable extends Migration
     {
         Schema::create('umh_master', function (Blueprint $table) {
             $table->id();
-            $table->string('car_line')->nullable();
+            $table->string('kav')->nullable();
             $table->double('code_umh1')->nullable();
             $table->double('code_umh2')->nullable();
             $table->double('code_umh3')->nullable();
