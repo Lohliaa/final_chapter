@@ -9,17 +9,18 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class DatabaseKonversiExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
     public function collection()
     {
         $user = Auth::id();
-        $type = DB::table('database_konversi')->select(
-            'part_no',
-            'buppin', 
-            'part_name', 
-            'uom', 
+        $type = FacadesDB::table('database_konversi')->select(
+            'nomor_komponen',
+            'item', 
+            'nama_komponen', 
+            'satuan', 
             'inner_packing',
         )
         ->where('user_id', $user)
@@ -29,9 +30,9 @@ class DatabaseKonversiExport implements FromCollection, WithHeadings, ShouldAuto
     public function headings(): array
     {
         return [
-            'Part Number',
+            'Nomor Komponen',
             'Item', 
-            'Part Name', 
+            'Nama Komponen', 
             'Satuan', 
             'Inner Packing',
         ];

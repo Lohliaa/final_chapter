@@ -3,9 +3,9 @@
         <tr class="table-secondary" style=" position: sticky; top: 0;">
             <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
             <th scope="col">No</th>
-            <th scope="col">Part Number</th>
+            <th scope="col">Nomor Komponen</th>
             <th scope="col">Item</th>
-            <th scope="col">Part Name</th>
+            <th scope="col">Nama Komponen</th>
             <th scope="col">Satuan</th>
             <th scope="col">Inner Packing</th>
         </tr>
@@ -17,10 +17,10 @@
             <td><input type="checkbox" class="sub_chk" data-id="{{$c->id}}"
                     onclick="handleCheckboxChange({{ $c->id }})"></td>
             <td>{{$no++}}</td>
-            <td>{{ $c->part_no }}</td>
-            <td>{{ $c->buppin }}</td>
-            <td>{{ $c->part_name }}</td>
-            <td>{{ $c->uom }}</td>
+            <td>{{ $c->nomor_komponen }}</td>
+            <td>{{ $c->item }}</td>
+            <td>{{ $c->nama_komponen }}</td>
+            <td>{{ $c->satuan }}</td>
             <td>{{ $c->inner_packing }}</td>
         </tr>
         @empty

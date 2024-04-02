@@ -31,10 +31,10 @@ class DatabaseKonversiImport implements ToModel, WithHeadingRow, WithValidation,
         $userRole = Auth::id();
 
         return new DatabaseKonversi([
-            "part_no" => $row['part_no'],
-            "buppin" => $row['buppin'],
-            "part_name" => $row['part_name'],
-            "uom" => $row['uom'],
+            "nomor_komponen" => $row['nomor_komponen'],
+            "item" => $row['item'],
+            "nama_komponen" => $row['nama_komponen'],
+            "satuan" => $row['satuan'],
             "inner_packing" => $row['inner_packing'],
             "user_id" => $userRole,
         ]);

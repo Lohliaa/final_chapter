@@ -6,10 +6,8 @@ use App\Exports\DatabaseKonversiExport;
 use App\Imports\DatabaseKonversiImport;
 use App\Models\DatabaseKonversi;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Messages\DatabaseMessage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Validators\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
 
 class KonversiController extends Controller
@@ -28,10 +26,10 @@ class KonversiController extends Controller
 
         if ($searchTerm) {
             $query->where(function ($query) use ($searchTerm) {
-                $query->orWhere('part_no', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('buppin', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('part_name', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('uom', 'LIKE', '%' . $searchTerm . '%')
+                $query->orWhere('nomor_komponen', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('item', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('nama_komponen', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('satuan', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('inner_packing', 'LIKE', '%' . $searchTerm . '%');
             });
         }
@@ -54,10 +52,10 @@ class KonversiController extends Controller
         $query->where('user_id', $user);
         if ($searchTerm) {
             $query->where(function ($query) use ($searchTerm) {
-                $query->orWhere('part_no', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('buppin', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('part_name', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('uom', 'LIKE', '%' . $searchTerm . '%')
+                $query->orWhere('nomor_komponen', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('item', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('nama_komponen', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('satuan', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('inner_packing', 'LIKE', '%' . $searchTerm . '%');
             });
         }
@@ -77,10 +75,10 @@ class KonversiController extends Controller
         $query = DatabaseKonversi::where('user_id', $user)->orderBy('id', 'asc');
         
         if ($keyword) {
-            $query->where('part_no', 'LIKE', '%' . $keyword . '%')
-            ->orWhere('buppin', 'LIKE', '%' . $keyword . '%')
-            ->orWhere('part_name', 'LIKE', '%' . $keyword . '%')
-            ->orWhere('uom', 'LIKE', '%' . $keyword . '%')
+            $query->where('nomor_komponen', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('item', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('nama_komponen', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('satuan', 'LIKE', '%' . $keyword . '%')
             ->orWhere('inner_packing', 'LIKE', '%' . $keyword . '%');
 
             $count = $query->count();
@@ -120,39 +118,29 @@ class KonversiController extends Controller
 
         return back()->with('success', "Data berhasil diimport!");
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return view('database_konversi.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'part_no' => 'required',
-            'buppin' => 'required',
-            'part_name' => 'required',
-            'uom' => 'required',
+            'nomor_komponen' => 'required',
+            'item' => 'required',
+            'nama_komponen' => 'required',
+            'satuan' => 'required',
             'inner_packing' => 'required',
         ]);
 
         $user = Auth::id();
 
         $database_konversi = DatabaseKonversi::create([
-            'part_no' => $request->part_no,
-            'buppin' => $request->buppin,
-            'part_name' => $request->part_name,
-            'uom' => $request->uom,
+            'nomor_komponen' => $request->nomor_komponen,
+            'item' => $request->item,
+            'nama_komponen' => $request->nama_komponen,
+            'satuan' => $request->satuan,
             'inner_packing' => $request->inner_packing,
             'user_id' => $user,
         ]);
@@ -164,43 +152,24 @@ class KonversiController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $database_konversi = DatabaseKonversi::findOrFail($id);
         return view('database_konversi.edit', compact('database_konversi'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'part_no' => 'required',
-            'buppin' => 'required',
-            'part_name' => 'required',
-            'uom' => 'required',
+            'nomor_komponen' => 'required',
+            'item' => 'required',
+            'nama_komponen' => 'required',
+            'satuan' => 'required',
             'inner_packing' => 'required',
         ]);
         $user = Auth::id();
@@ -208,10 +177,10 @@ class KonversiController extends Controller
         $database_konversi = DatabaseKonversi::findOrFail($id);
 
         $database_konversi->update([
-            'part_no' => $request->part_no,
-            'buppin' => $request->buppin,
-            'part_name' => $request->part_name,
-            'uom' => $request->uom,
+            'nomor_komponen' => $request->nomor_komponen,
+            'item' => $request->item,
+            'nama_komponen' => $request->nama_komponen,
+            'satuan' => $request->satuan,
             'inner_packing' => $request->inner_packing,
             'user_id' => $user,
         ]);
@@ -223,12 +192,6 @@ class KonversiController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $user = Auth::id();
@@ -236,11 +199,7 @@ class KonversiController extends Controller
         DatabaseKonversi::where('user_id', $user)->delete($id);
         return response()->json(['success' => " Deleted successfully.", 'tr' => 'tr_' . $id]);
     }
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function deleteAll_dk(Request $request)
     {
         $ids = $request->ids;

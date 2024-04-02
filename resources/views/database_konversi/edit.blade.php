@@ -25,48 +25,48 @@
                             @csrf
                             @method('PUT')
                             <div class="form-group">
-                                <label class="font-weight-bold">Part No</label>
-                                <input type="text" class="form-control @error('part_no') is-invalid @enderror"
-                                    name="part_no" value="{{ $database_konversi->part_no }}" placeholder=" ">
+                                <label class="font-weight-bold">Nomor Komponen</label>
+                                <input type="text" class="form-control @error('nomor_komponen') is-invalid @enderror"
+                                    name="nomor_komponen" value="{{ $database_konversi->nomor_komponen }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('part_no')
+                                @error('nomor_komponen')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Buppin</label>
-                                <input type="text" class="form-control @error('buppin') is-invalid @enderror" name="buppin"
-                                    value="{{ $database_konversi->buppin }}" placeholder=" ">
+                                <label class="font-weight-bold">Item</label>
+                                <input type="text" class="form-control @error('item') is-invalid @enderror" name="item"
+                                    value="{{ $database_konversi->item }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('buppin')
+                                @error('item')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Part Name</label>
-                                <input type="text" class="form-control @error('part_name') is-invalid @enderror" name="part_name"
-                                    value="{{ $database_konversi->part_name }}" placeholder=" ">
+                                <label class="font-weight-bold">Nama Komponen</label>
+                                <input type="text" class="form-control @error('nama_komponen') is-invalid @enderror" name="nama_komponen"
+                                    value="{{ $database_konversi->nama_komponen }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('part_name')
+                                @error('nama_komponen')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">UOM</label>
-                                <input type="text" class="form-control @error('uom') is-invalid @enderror"
-                                    name="uom" value="{{ $database_konversi->uom }}" placeholder=" ">
+                                <label class="font-weight-bold">Satuan</label>
+                                <input type="text" class="form-control @error('satuan') is-invalid @enderror"
+                                    name="satuan" value="{{ $database_konversi->satuan }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('uom')
+                                @error('satuan')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>

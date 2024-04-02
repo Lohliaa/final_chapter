@@ -15,10 +15,10 @@ class CreateDatabaseKonversiTable extends Migration
     {
         Schema::create('database_konversi', function (Blueprint $table) {
             $table->id();
-            $table->string('part_no')->nullable();
-            $table->string('buppin')->nullable();
-            $table->string('part_name')->nullable();
-            $table->string('uom')->nullable();
+            $table->string('nomor_komponen')->nullable();
+            $table->string('item')->nullable();
+            $table->string('nama_komponen')->nullable();
+            $table->string('satuan')->nullable();
             $table->integer('inner_packing')->nullable();
             $table->string('user_id');
             $table->timestamps();

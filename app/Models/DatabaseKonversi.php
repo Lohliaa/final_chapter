@@ -12,10 +12,10 @@ class DatabaseKonversi extends Model
     protected $table = "database_konversi";
     protected $primaryKey = 'id';
     protected $fillable = [
-        'part_no',
-        'buppin', 
-        'part_name', 
-        'uom', 
+        'nomor_komponen',
+        'item', 
+        'nama_komponen', 
+        'satuan', 
         'inner_packing',
         'user_id',
     ];
