@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Properti_Nonsingle;
-use App\Imports\Next_ProsesImport;
 use App\Exports\Properti_NonsingleExport;
 use App\Imports\Properti_NonsingleImport;
 use Maatwebsite\Excel\Facades\Excel;

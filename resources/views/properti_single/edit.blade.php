@@ -22,17 +22,17 @@
                         </div>
                         @endif
 
-                        <form action="{{ route('konsep_commonize.update', $konsep_commonize->id ) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('properti_single.update', $properti_single->id ) }}" method="POST" enctype="multipart/form-data">
 
                             @csrf
                             @method('PUT')
                             <div class="form-group">
                                 <label class="font-weight-bold">Material</label>
-                                <input type="text" class="form-control @error('ctrl_no') is-invalid @enderror"
-                                    name="ctrl_no" value="{{ $konsep_commonize->ctrl_no }}" placeholder="Masukkan CTRL NO">
+                                <input type="text" class="form-control @error('material_properties') is-invalid @enderror"
+                                    name="material_properties" value="{{ $properti_single->material_properties }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('ctrl_no')
+                                @error('material_properties')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -40,11 +40,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Model</label>
-                                <input type="text" class="form-control @error('kind_new') is-invalid @enderror" name="kind_new"
-                                    value="{{ $konsep_commonize->kind_new }}" placeholder=" ">
+                                <input type="text" class="form-control @error('model') is-invalid @enderror" name="model"
+                                    value="{{ $properti_single->model }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('kind_new')
+                                @error('model')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -52,11 +52,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Ukuran</label>
-                                <input type="text" class="form-control @error('size_new') is-invalid @enderror" name="size_new"
-                                    value="{{ $konsep_commonize->size_new }}" placeholder=" ">
+                                <input type="text" class="form-control @error('ukuran') is-invalid @enderror" name="ukuran"
+                                    value="{{ $properti_single->ukuran }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('size_new')
+                                @error('ukuran')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -64,11 +64,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Warna</label>
-                                <input type="text" class="form-control @error('col_new') is-invalid @enderror"
-                                    name="col_new" value="{{ $konsep_commonize->col_new }}" placeholder=" ">
+                                <input type="text" class="form-control @error('warna') is-invalid @enderror"
+                                    name="warna" value="{{ $properti_single->warna }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('col_new')
+                                @error('warna')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -76,25 +76,25 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">CL</label>
-                                <input type="text" class="form-control @error('cl_28') is-invalid @enderror"
-                                    name="cl_28" value="{{ $konsep_commonize->cl_28 }}"
+                                <input type="text" class="form-control @error('cl') is-invalid @enderror"
+                                    name="cl" value="{{ $properti_single->cl }}"
                                     placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('cl_28')
+                                @error('cl')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Terminal B</label>
-                                <input type="text" class="form-control @error('term_b_new') is-invalid @enderror"
-                                    name="term_b_new" value="{{ $konsep_commonize->term_b_new }}"
+                                <label class="font-weight-bold">TRM B</label>
+                                <input type="text" class="form-control @error('trm_b') is-invalid @enderror"
+                                    name="trm_b" value="{{ $properti_single->trm_b }}"
                                     placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('term_b_new')
+                                @error('trm_b')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -102,11 +102,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Acc bag b1</label>
-                                <input type="text" class="form-control @error('acc_b1_new') is-invalid @enderror" name="acc_b1_new"
-                                    value="{{ $konsep_commonize->acc_b1_new }}" placeholder=" ">
+                                <input type="text" class="form-control @error('acc_bag_b1') is-invalid @enderror" name="acc_bag_b1"
+                                    value="{{ $properti_single->acc_bag_b1 }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('acc_b1_new')
+                                @error('acc_bag_b1')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -114,35 +114,35 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Acc bag b2</label>
-                                <input type="text" class="form-control @error('acc_b2') is-invalid @enderror"
-                                    name="acc_b2" value="{{ $konsep_commonize->acc_b2 }}" placeholder=" ">
+                                <input type="text" class="form-control @error('acc_bag_b2') is-invalid @enderror"
+                                    name="acc_bag_b2" value="{{ $properti_single->acc_bag_b2 }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('acc_b2')
+                                @error('acc_bag_b2')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Tube B</label>
-                                <input type="text" class="form-control @error('tube_b_new') is-invalid @enderror"
-                                    name="tube_b_new" value="{{ $konsep_commonize->tube_b_new }}" placeholder=" ">
+                                <label class="font-weight-bold">TBE B</label>
+                                <input type="text" class="form-control @error('tbe_b') is-invalid @enderror"
+                                    name="tbe_b" value="{{ $properti_single->tbe_b }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('tube_b_new')
+                                @error('tbe_b')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Terminal A</label>
-                                <input type="text" class="form-control @error('term_a_new') is-invalid @enderror"
-                                    name="term_a_new" value="{{ $konsep_commonize->term_a_new }}" placeholder=" ">
+                                <label class="font-weight-bold">TRM A</label>
+                                <input type="text" class="form-control @error('trm_a') is-invalid @enderror"
+                                    name="trm_a" value="{{ $properti_single->trm_a }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('term_a_new')
+                                @error('trm_a')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -150,11 +150,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Acc bag a1</label>
-                                <input type="text" class="form-control @error('acc_a1_new') is-invalid @enderror"
-                                    name="acc_a1_new" value="{{ $konsep_commonize->acc_a1_new }}" placeholder=" ">
+                                <input type="text" class="form-control @error('acc_bag_a1') is-invalid @enderror"
+                                    name="acc_bag_a1" value="{{ $properti_single->acc_bag_a1 }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('acc_a1_new')
+                                @error('acc_bag_a1')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -162,30 +162,30 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Acc bag a2</label>
-                                <input type="text" class="form-control @error('acc_a2') is-invalid @enderror"
-                                    name="acc_a2" value="{{ $konsep_commonize->acc_a2 }}" placeholder=" ">
+                                <input type="text" class="form-control @error('acc_bag_a2') is-invalid @enderror"
+                                    name="acc_bag_a2" value="{{ $properti_single->acc_bag_a2 }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('acc_a2')
+                                @error('acc_bag_a2')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Tube A</label>
-                                <input type="text" class="form-control @error('tube_a_new') is-invalid @enderror"
-                                    name="tube_a_new" value="{{ $konsep_commonize->tube_a_new }}" placeholder=" ">
+                                <label class="font-weight-bold">TBE A</label>
+                                <input type="text" class="form-control @error('tbe_a') is-invalid @enderror"
+                                    name="tbe_a" value="{{ $properti_single->tbe_a }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('tube_a_new')
+                                @error('tbe_a')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <button type="submit" class="btn btn-md btn-success">SIMPAN</button>
-                            <a class="btn btn-md btn-primary" href="{{ route('konsep_commonize.index') }}" class="">KEMBALI</a>
+                            <a class="btn btn-md btn-primary" href="{{ route('properti_single.index') }}" class="">KEMBALI</a>
                         </form>
                     </div>
                 </div>

@@ -23,9 +23,9 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
         <li
-          class="nav-item has-treeview {{ Request::is('konsep_commonize', 'properti_nonsingle', 'item_list', 'master_price', 'umh_master') ? 'menu-open' : '' }}">
+          class="nav-item has-treeview {{ Request::is('properti_single', 'properti_nonsingle', 'item_list', 'master_price', 'umh_master') ? 'menu-open' : '' }}">
           <a href="#"
-            class="nav-link {{ Request::is('konsep_commonize', 'properti_nonsingle', 'item_list', 'master_price', 'umh_master') ? 'active' : '' }}">
+            class="nav-link {{ Request::is('properti_single', 'properti_nonsingle', 'item_list', 'master_price', 'umh_master') ? 'active' : '' }}">
             <i class="nav-icon fas fa-copy"></i>
             <p>
               Update Database
@@ -34,8 +34,8 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ url('konsep_commonize') }}"
-                class="nav-link {{ Request::is('konsep_commonize') ? 'active' : '' }}">
+              <a href="{{ url('properti_single') }}"
+                class="nav-link {{ Request::is('properti_single') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
                   Properti Single

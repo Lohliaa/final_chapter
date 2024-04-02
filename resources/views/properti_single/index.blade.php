@@ -17,7 +17,7 @@
 <body>
     <div class="card shadow mt-3">
         <div class="card-header py-6 mb-5">
-            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">CIRCUIT SINGLE</h2>
+            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">PROPERTI SINGLE</h2>
         </div>
 
         <div class="form-row" style="margin-left: 2%; margin-right: 2%;">
@@ -36,7 +36,7 @@
             <div class="form-group col-12 d-flex flex-wrap align-items-center">
                 <button id="reset-kc-button" class="btn btn-danger mr-2">Reset</button>
 
-                <a href="{{ route('konsep_commonize.create') }}" class="btn btn-md btn-default mb-6 mr-2">Tambah</a>
+                <a href="{{ route('properti_single.create') }}" class="btn btn-md btn-default mb-6 mr-2">Tambah</a>
                 <button type="button" class="btn btn-default mr-2" onclick="handleEditClick()">Edit</button>
 
                 <button type="button" class="btn btn-default mr-2" data-toggle="modal" data-target="#import_excel_kc">
@@ -71,10 +71,10 @@
                 <!-- Export Excel -->
                 <a href="{{ url('export_excel_kc') }}" class="btn btn-default mr-2" target="_blank">Download Excel</a>
                 <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
-                    data-url="{{ url('DeleteAll_konsep') }}">
+                    data-url="{{ url('DeleteAll_properti_single') }}">
                     Delete
                 </button>
-                <a href="{{ url('konsep_commonize') }}" class="btn btn-default mr-2">Refresh</a>
+                <a href="{{ url('properti_single') }}" class="btn btn-default mr-2">Refresh</a>
 
                 <input type="text" name="search" id="searchk" class="form-control w-25 mr-2"
                     placeholder="Cari disini ...">
@@ -94,36 +94,36 @@
                             <th scope="col">Ukuran</th>
                             <th scope="col">Warna</th>
                             <th scope="col">CL</th>
-                            <th scope="col">Terminal B</th>
+                            <th scope="col">TRM B</th>
                             <th scope="col">Acc bag b1</th>
                             <th scope="col">Acc bag b2</th>
-                            <th scope="col">Tube B</th>
-                            <th scope="col">Terminal A</th>
+                            <th scope="col">TBE B</th>
+                            <th scope="col">TRM A</th>
                             <th scope="col">Acc bag a1</th>
                             <th scope="col">Acc bag a2</th>
-                            <th scope="col">Tube A</th>
+                            <th scope="col">TBE A</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $no=1 ?>
-                        @forelse ($konsep_commonize as $c)
+                        @forelse ($properti_single as $c)
                         <tr id="tr_{{ $c->id }}">
                             <td><input type="checkbox" class="sub_chk" data-id="{{$c->id}}"
                                     onclick="handleCheckboxChange({{ $c->id }})"></td>
                             <td>{{$no++}}</td>
-                            <td>{{ $c->ctrl_no }}</td>
-                            <td>{{ $c->kind_new }}</td>
-                            <td>{{ $c->size_new }}</td>
-                            <td>{{ $c->col_new }}</td>
-                            <td>{{ $c->cl_28 }}</td>
-                            <td>{{ $c->term_b_new }}</td>
-                            <td>{{ $c->acc_b1_new }}</td>
-                            <td>{{ $c->acc_b2 }}</td>
-                            <td>{{ $c->tube_b_new }}</td>
-                            <td>{{ $c->term_a_new }}</td>
-                            <td>{{ $c->acc_a1_new }}</td>
-                            <td>{{ $c->acc_a2 }}</td>
-                            <td>{{ $c->tube_a_new }}</td>
+                            <td>{{ $c->material_properties }}</td>
+                            <td>{{ $c->model }}</td>
+                            <td>{{ $c->ukuran }}</td>
+                            <td>{{ $c->warna }}</td>
+                            <td>{{ $c->cl }}</td>
+                            <td>{{ $c->trm_b }}</td>
+                            <td>{{ $c->acc_bag_b1 }}</td>
+                            <td>{{ $c->acc_bag_b2 }}</td>
+                            <td>{{ $c->tbe_b }}</td>
+                            <td>{{ $c->trm_a }}</td>
+                            <td>{{ $c->acc_bag_a1 }}</td>
+                            <td>{{ $c->acc_bag_a2 }}</td>
+                            <td>{{ $c->tbe_a }}</td>
                         </tr>
                         @empty
                         <br>
@@ -141,16 +141,16 @@
 <script src="{{ asset('assets/js/code.jquery.com_jquery-3.6.0.min.js') }}"></script>
 
 <script>
-    function cari_konsep() {
+    function cari_properti_single() {
         const selected = document.getElementById('searchk').value;
     
-        fetch(`{{ route('search.konsep_commonize') }}?konsep_commonize=${selected}`)
+        fetch(`{{ route('search.properti_single') }}?properti_single=${selected}`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('konsepTableBody').innerHTML = data;
 
                 // Memperbarui jumlah data langsung dari respons server
-                fetch(`{{ route('get.count.konsep_commonize') }}?konsep_commonize=${selected}`)
+                fetch(`{{ route('get.count.properti_single') }}?properti_single=${selected}`)
                     .then(response => response.text())
                     .then(countData => {
                         document.getElementById('count').innerText = 'Jumlah Data ' + countData;
@@ -160,7 +160,7 @@
 
     // Menambahkan event listener untuk input pencarian
     document.getElementById('searchk').addEventListener('input', function() {
-        cari_konsep();
+        cari_properti_single();
     });
 
     // Fungsi yang akan dipanggil ketika checkbox berubah

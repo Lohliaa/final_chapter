@@ -22,6 +22,7 @@ use App\Http\Controllers\UMHController;
 use App\Models\Fa_1C;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Properti_NonsingleController;
+use App\Http\Controllers\Properti_SingleController;
 use App\Http\Controllers\ProsesMaterialController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckRole;
@@ -62,7 +63,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/report_hasil', [HomeController::class, 'report_hasil'])->name('report_hasil')->middleware('auth');
     Route::get('/data_profile', [HomeController::class, 'data_profile'])->name('data_profile')->middleware('auth');
 
-    // DATABASE ON NEXT PROSES
+    // DATABASE ON PROPERTI NON SINGLE
     Route::resource('properti_nonsingle', Properti_NonsingleController::class);
     Route::post('/import_excel_np', [Properti_NonsingleController::class, 'import_excel_np']);
     Route::get('/export_excel_np', [Properti_NonsingleController::class, 'export_excel_np']);
@@ -74,18 +75,17 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/search-np', [Properti_NonsingleController::class, 'cari_properti_nonsingle'])->name('search.properti_nonsingle');
     Route::get('/get-count-next-proses', [Properti_NonsingleController::class, 'getCount'])->name('get.count.properti_nonsingle');
 
-    // DATABASE KONSEP COMMONIZE
-    Route::resource('konsep_commonize', KonsepCommonizeController::class);
-    Route::post('/import_excel_kc', [KonsepCommonizeController::class, 'import_excel_kc']);
-    Route::get('/export_excel_kc', [KonsepCommonizeController::class, 'export_excel_kc']);
-    // Route::get('/cari_konsep', [KonsepCommonizeController::class, 'cari_konsep'])->name('konsep_communize.cari_konsep');
-    Route::delete('delete/{id}', [KonsepCommonizeController::class, 'destroy']);
-    Route::delete('DeleteAll_konsep', [KonsepCommonizeController::class, 'deleteAll_konsep']);
-    Route::get('edit/{id}', [KonsepCommonizeController::class, 'edit'])->name('edit.konsep_commonize');
-    Route::get('/calculate', [KonsepCommonizeController::class, 'calculate'])->name('kc.calculate');
-    Route::post('reset_kc', [KonsepCommonizeController::class, 'reset_kc'])->name('reset_kc');
-    Route::get('/search-kc', [KonsepCommonizeController::class, 'cari_konsep'])->name('search.konsep_commonize');
-    Route::get('/get-count-konsep-commonize', [KonsepCommonizeController::class, 'getCount'])->name('get.count.konsep_commonize');
+    // DATABASE PROPERTI SINGLE
+    Route::resource('properti_single', Properti_SingleController::class);
+    Route::post('/import_excel_kc', [Properti_SingleController::class, 'import_excel_kc']);
+    Route::get('/export_excel_kc', [Properti_SingleController::class, 'export_excel_kc']);
+    Route::delete('delete/{id}', [Properti_SingleController::class, 'destroy']);
+    Route::delete('DeleteAll_properti_single', [Properti_SingleController::class, 'deleteAll_properti_single']);
+    Route::get('edit/{id}', [Properti_SingleController::class, 'edit'])->name('edit.properti_single');
+    Route::get('/calculate', [Properti_SingleController::class, 'calculate'])->name('kc.calculate');
+    Route::post('reset_kc', [Properti_SingleController::class, 'reset_kc'])->name('reset_kc');
+    Route::get('/search-kc', [Properti_SingleController::class, 'cari_properti_single'])->name('search.properti_single');
+    Route::get('/get-count-konsep-commonize', [Properti_SingleController::class, 'getCount'])->name('get.count.properti_single');
 
     // ITEM LIST
     Route::resource('item_list', Item_ListController::class);

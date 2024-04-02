@@ -126,8 +126,9 @@ class ProsesMaterialController extends Controller
                 }
 
                 $pricePerPcs = DB::table('master_price')
-                    ->where('part_number_ori_sto', trim($partNumber))
-                    ->value('price_per_pcs');
+                ->where('part_number_ori_sto', trim($partNumber))
+                ->where('user_id', $user)
+                ->value('price_per_pcs');
 
                 if (isset($pricePerPcs->price_per_pcs)) {
                     $data->price = $pricePerPcs->price_per_pcs;

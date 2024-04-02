@@ -10,23 +10,16 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use DB;
 use Illuminate\Support\Facades\Auth;
 
-class Properti_NonsingleExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
+class Properti_SingleExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
     public function collection()
     {
         $user = Auth::id();
-        $type = DB::table('properti_nonsingle')->select(
-            'kav',
-            'tipe', 
-            'jenis', 
-            'material', 
-            'jenis_material', 
+        $type = DB::table('properti_single')->select(
             'material_properties', 
             'model', 
             'ukuran', 
             'warna',
-            'model_ukuran_warna',
-            'no_item',
             'cl',
             'trm_b', 
             'acc_bag_b1', 
@@ -36,7 +29,6 @@ class Properti_NonsingleExport implements FromCollection, WithHeadings, ShouldAu
             'acc_bag_a1', 
             'acc_bag_b2', 
             'tbe_a',
-    
         )
         ->where('user_id', $user)
         ->get();
@@ -45,17 +37,10 @@ class Properti_NonsingleExport implements FromCollection, WithHeadings, ShouldAu
     public function headings(): array
     {
         return [
-            'kav',
-            'tipe', 
-            'jenis', 
-            'material', 
-            'jenis_material', 
             'material_properties', 
             'model', 
             'ukuran', 
             'warna',
-            'model_ukuran_warna',
-            'no_item',
             'cl',
             'trm_b', 
             'acc_bag_b1', 
