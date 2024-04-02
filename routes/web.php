@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\FA_1AController;
 use App\Http\Controllers\FA_1CController;
+use App\Http\Controllers\HargaController;
 use App\Http\Controllers\itemController;
 use App\Http\Controllers\KonversiController;
 use App\Http\Controllers\MasterPriceController;
@@ -98,18 +99,17 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/search-il', [ItemController::class, 'cari'])->name('search.item');
     Route::get('/get-count-item-list', [ItemController::class, 'getCount'])->name('get.count.item');
 
-    // MASTER PRICE
-    Route::resource('master_price', MasterPriceController::class);
-    Route::post('/import_excel_mp', [MasterPriceController::class, 'import_excel_mp']);
-    Route::post('/update_excel_mp', [MasterPriceController::class, 'update_excel_mp']);
-    Route::get('/export_excel_mp', [MasterPriceController::class, 'export_excel_mp']);
-    // Route::get('/search', [MasterPriceController::class, 'search'])->name('master_price.search');
-    Route::delete('delete/{id}', [MasterPriceController::class, 'destroy']);
-    Route::delete('deleteAll', [MasterPriceController::class, 'deleteAll']);
-    Route::post('reset_mp', [MasterPriceController::class, 'reset_mp'])->name('reset_mp');
-    Route::delete('destroy_mp', [MasterPriceController::class, 'destroy_mp'])->name('master_price.destroy_mp');
-    Route::get('/search', [MasterPriceController::class, 'search'])->name('search.master_price');
-    Route::get('/get-count-master-price', [MasterPriceController::class, 'getCount'])->name('get.count.master_price');
+    // HARGA
+    Route::resource('harga', HargaController::class);
+    Route::post('/import_excel_mp', [HargaController::class, 'import_excel_mp']);
+    Route::post('/update_excel_mp', [HargaController::class, 'update_excel_mp']);
+    Route::get('/export_excel_mp', [HargaController::class, 'export_excel_mp']);
+    Route::delete('delete/{id}', [HargaController::class, 'destroy']);
+    Route::delete('deleteAll', [HargaController::class, 'deleteAll']);
+    Route::post('reset_mp', [HargaController::class, 'reset_mp'])->name('reset_mp');
+    Route::delete('destroy_mp', [HargaController::class, 'destroy_mp'])->name('harga.destroy_mp');
+    Route::get('/search', [HargaController::class, 'search'])->name('search.harga');
+    Route::get('/get-count-master-price', [HargaController::class, 'getCount'])->name('get.count.harga');
 
     // FA-841W
     Route::resource('data-fa-841w', FA_1CController::class);

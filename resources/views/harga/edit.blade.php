@@ -22,41 +22,41 @@
                         </div>
                         @endif
 
-                        <form action="{{ route('master_price.update', $master_price->id ) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('harga.update', $harga->id ) }}" method="POST" enctype="multipart/form-data">
 
                             @csrf
                             @method('PUT')
                             <div class="form-group">
-                                <label class="font-weight-bold">Part Number Ori STO</label>
-                                <input type="text" class="form-control @error('part_number_ori_sto') is-invalid @enderror"
-                                    name="part_number_ori_sto" value="{{ $master_price->part_number_ori_sto }}" placeholder="Masukkan part number ori sto">
+                                <label class="font-weight-bold">Component Number Ori</label>
+                                <input type="text" class="form-control @error('component_number_ori') is-invalid @enderror"
+                                    name="component_number_ori" value="{{ $harga->component_number_ori }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('part_number_ori_sto')
+                                @error('component_number_ori')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Part Number MPL</label>
-                                <input type="text" class="form-control @error('part_number_mpl') is-invalid @enderror"
-                                    name="part_number_mpl" value="{{ $master_price->part_number_mpl }}" placeholder="Masukkan Part Number Mpl">
+                                <label class="font-weight-bold">Component Number</label>
+                                <input type="text" class="form-control @error('component_number') is-invalid @enderror"
+                                    name="component_number" value="{{ $harga->component_number }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('part_number_mpl')
+                                @error('component_number')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Buppin</label>
-                                <input type="text" class="form-control @error('buppin') is-invalid @enderror"
-                                    name="buppin" value="{{ $master_price->buppin }}" placeholder="Masukkan Buppin">
+                                <label class="font-weight-bold">Item</label>
+                                <input type="text" class="form-control @error('item') is-invalid @enderror"
+                                    name="item" value="{{ $harga->item }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('buppin')
+                                @error('item')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -66,7 +66,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Price Per Pcs</label>
                                 <input type="text" class="form-control @error('price_per_pcs') is-invalid @enderror"
-                                    name="price_per_pcs" value="{{ $master_price->price_per_pcs }}" placeholder="Masukkan Price per pcs">
+                                    name="price_per_pcs" value="{{ $harga->price_per_pcs }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
                                 @error('price_per_pcs')
@@ -77,7 +77,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-md btn-success">SIMPAN</button>
-                            <a class="btn btn-md btn-primary" href="{{ route('master_price.index') }}" class="">KEMBALI</a>
+                            <a class="btn btn-md btn-primary" href="{{ route('harga.index') }}" class="">KEMBALI</a>
                         </form>
                     </div>
                 </div>

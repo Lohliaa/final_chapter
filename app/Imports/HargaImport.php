@@ -2,19 +2,18 @@
 
 namespace App\Imports;
 
-use App\Models\MasterPrice;
+use App\Models\Harga;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Throwable;
 
-class MasterPriceImport implements ToModel, WithHeadingRow, WithValidation, WithChunkReading, ShouldQueue
+class HargaImport implements ToModel, WithHeadingRow, WithValidation, WithChunkReading, ShouldQueue
 {
     protected $errors = [];
 
@@ -29,10 +28,10 @@ class MasterPriceImport implements ToModel, WithHeadingRow, WithValidation, With
     {
         $userRole = Auth::id();
 
-        return new MasterPrice([
-            "part_number_ori_sto" => $row['part_number_ori_sto'],
-            "part_number_mpl" => $row['part_number_mpl'],
-            "buppin" => $row['buppin'],
+        return new Harga([
+            "component_number_ori" => $row['component_number_ori'],
+            "component_number" => $row['component_number'],
+            "item" => $row['item'],
             "price_per_pcs" => $row['price_per_pcs'],
             "user_id" => $userRole,
         ]);

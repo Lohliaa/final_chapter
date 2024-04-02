@@ -19,27 +19,27 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('master_price.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('harga.store') }}" method="POST" enctype="multipart/form-data">
                             
                                 @csrf
 
                                 <div class="form-group">
-                                    <label class="font-weight-bold">Part Number Ori</label>
-                                    <input type="text" class="form-control @error('part_number_ori_sto') is-invalid @enderror" name="part_number_ori_sto" value="{{ old('part_number_ori_sto') }}" placeholder=" ">
+                                    <label class="font-weight-bold">Component Number Ori</label>
+                                    <input type="text" class="form-control @error('component_number_ori') is-invalid @enderror" name="component_number_ori" value="{{ old('component_number_ori') }}" placeholder=" ">
                                 
                                     <!-- error message untuk title -->
-                                    @error('part_number_ori_sto')
+                                    @error('component_number_ori')
                                         <div class="alert alert-danger mt-2">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="font-weight-bold">Part Number MPL</label>
-                                    <input type="text" class="form-control @error('part_number_mpl') is-invalid @enderror" name="part_number_mpl" value="{{ old('part_number_mpl') }}" placeholder=" ">
+                                    <label class="font-weight-bold">Component Number</label>
+                                    <input type="text" class="form-control @error('component_number') is-invalid @enderror" name="component_number" value="{{ old('component_number') }}" placeholder=" ">
                                 
                                     <!-- error message untuk title -->
-                                    @error('part_number_mpl')
+                                    @error('component_number')
                                         <div class="alert alert-danger mt-2">
                                             {{ $message }}
                                         </div>
@@ -47,10 +47,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="font-weight-bold">Item</label>
-                                    <input type="text" class="form-control @error('buppin') is-invalid @enderror" name="buppin" value="{{ old('buppin') }}" placeholder=" ">
+                                    <input type="text" class="form-control @error('item') is-invalid @enderror" name="item" value="{{ old('item') }}" placeholder=" ">
                                 
                                     <!-- error message untuk title -->
-                                    @error('buppin')
+                                    @error('item')
                                         <div class="alert alert-danger mt-2">
                                             {{ $message }}
                                         </div>
@@ -69,7 +69,7 @@
                                 </div>
     
                                 <button type="submit" class="btn btn-md btn-success">SIMPAN</button>
-                                <a class="btn btn-md btn-primary" href="{{ route('master_price.index') }}" class="">KEMBALI</a>
+                                <a class="btn btn-md btn-primary" href="{{ route('harga.index') }}" class="">KEMBALI</a>
                             </form> 
                         </div>
                     </div>

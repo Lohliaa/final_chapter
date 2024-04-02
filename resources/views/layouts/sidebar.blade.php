@@ -23,9 +23,9 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
         <li
-          class="nav-item has-treeview {{ Request::is('properti_single', 'properti_nonsingle', 'item', 'master_price', 'umh_master') ? 'menu-open' : '' }}">
+          class="nav-item has-treeview {{ Request::is('properti_single', 'properti_nonsingle', 'item', 'harga', 'umh_master') ? 'menu-open' : '' }}">
           <a href="#"
-            class="nav-link {{ Request::is('properti_single', 'properti_nonsingle', 'item', 'master_price', 'umh_master') ? 'active' : '' }}">
+            class="nav-link {{ Request::is('properti_single', 'properti_nonsingle', 'item', 'harga', 'umh_master') ? 'active' : '' }}">
             <i class="nav-icon fas fa-copy"></i>
             <p>
               Update Database
@@ -59,7 +59,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ url('master_price') }}" class="nav-link {{ Request::is('master_price') ? 'active' : '' }}">
+              <a href="{{ url('harga') }}" class="nav-link {{ Request::is('harga') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
                   Daftar Harga

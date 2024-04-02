@@ -9,16 +9,17 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
-class MasterPriceExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
+class HargaExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
     public function collection()
     {
         $user = Auth::id();
-        $type = DB::table('master_price')->select(
-            'part_number_ori_sto',
-            'part_number_mpl',
-            'buppin',
+        $type = FacadesDB::table('harga')->select(
+            'component_number_ori',
+            'component_number',
+            'item',
             'price_per_pcs'
         )
         ->where('user_id', $user)
@@ -28,8 +29,8 @@ class MasterPriceExport implements FromCollection, WithHeadings, ShouldAutoSize,
     public function headings(): array
     {
         return [
-            'Part Number Ori',
-            'Part Number',
+            'Component Number Ori',
+            'Component Number',
             'Item',
             'Price Per PCS'
         ];

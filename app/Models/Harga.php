@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MasterPrice extends Model
+class Harga extends Model
 {
     use HasFactory;
-    
-    protected $table = "master_price";
+
+    protected $table = "harga";
     protected $primaryKey = 'id';
     protected $fillable = [
-        'part_number_ori_sto',
-        'part_number_mpl', 
-        'buppin', 
+        'component_number_ori',
+        'component_number', 
+        'item', 
         'price_per_pcs', 
         'user_id',
     ];

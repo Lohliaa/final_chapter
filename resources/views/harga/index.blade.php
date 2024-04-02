@@ -31,7 +31,7 @@
 
             <div class="form-group col-12 d-flex flex-wrap align-items-center">
                 <button id="reset-mp-button" class="btn btn-danger mr-2">Reset</button>
-                <a href="{{ route('master_price.create') }}" class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
+                <a href="{{ route('harga.create') }}" class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
 
                 <button type="button" class="btn btn-default mr-2" data-toggle="modal" data-target="#import_excel_mp">
                     Upload Excel
@@ -70,7 +70,7 @@
                     Excel</a>
                 <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
                     data-url="{{ url('deleteAll') }}">Delete</button>
-                <a href="{{ url('master_price') }}" class="btn btn-default mr-2">Refresh</a>
+                <a href="{{ url('harga') }}" class="btn btn-default mr-2">Refresh</a>
 
                 <input type="text" name="search" id="searchmp" class="form-control w-25 mr-2"
                     placeholder="Cari disini ...">
@@ -85,8 +85,8 @@
                             <th scope="col"><input type="checkbox"
                                     class="sub_chk" id="master"></th>
                             <th scope="col">No</th>
-                            <th scope="col">Part Number Ori</th>
-                            <th scope="col">Part Number MPL</th>
+                            <th scope="col">Component Number Ori</th>
+                            <th scope="col">Component Number</th>
                             <th scope="col">Item</th>
                             <th scope="col">Price Per Pcs</th>
                             <th scope="col">Action</th>
@@ -94,16 +94,16 @@
                     </thead>
                     <tbody>
                         <?php $no=1 ?>
-                        @forelse ($master_price as $mp)
+                        @forelse ($harga as $mp)
                         <tr id="tr_{{ $mp->id }}">
                             <td><input type="checkbox" class="sub_chk" data-id="{{$mp->id}}"></td>
                             <td>{{$no++}}</td>
-                            <td>{{ $mp->part_number_ori_sto }}</td>
-                            <td>{{ $mp->part_number_mpl }}</td>
-                            <td>{{ $mp->buppin }}</td>
+                            <td>{{ $mp->component_number_ori }}</td>
+                            <td>{{ $mp->component_number }}</td>
+                            <td>{{ $mp->item }}</td>
                             <td style="white-space: nowrap; text-align:center">{{ $mp->price_per_pcs }}</td>
                             <td class="text-center">
-                                <a href="{{ route('master_price.edit', $mp->id) }}" class="btn btn-xs" style="margin-top: 5px; margin-bottom: 5px; background-color: transparent;
+                                <a href="{{ route('harga.edit', $mp->id) }}" class="btn btn-xs" style="margin-top: 5px; margin-bottom: 5px; background-color: transparent;
                                             border: 1px solid #f0ad4e;
                                             padding: 6px 12px;
                                             border-radius: 4px;">EDIT</a>
@@ -117,7 +117,7 @@
                         @endforelse
                     </tbody>
                 </table>
-                {{ $master_price->links() }}
+                {{ $harga->links() }}
             </div>
         </div>
     </div>
@@ -129,13 +129,13 @@
     function search() {
         const selected = document.getElementById('searchmp').value;
     
-        fetch(`{{ route('search.master_price') }}?master_price=${selected}`)
+        fetch(`{{ route('search.harga') }}?harga=${selected}`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('mpTableBody').innerHTML = data;
 
                 // Memperbarui jumlah data langsung dari respons server
-                fetch(`{{ route('get.count.master_price') }}?master_price=${selected}`)
+                fetch(`{{ route('get.count.harga') }}?harga=${selected}`)
                     .then(response => response.text())
                     .then(countData => {
                         document.getElementById('count').innerText = 'Jumlah Data ' + countData;
