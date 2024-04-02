@@ -12,11 +12,11 @@ class Material extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
     'factory',
-    'carcode',
+    'code',
     'area',
-    'cavity',
-    'partnumber',
-    'part_name',
+    'hole',
+    'component_number',
+    'component_name',
     'qty_total',
     'user_id',
     ];

@@ -19,11 +19,11 @@ class MaterialImport implements ToModel, WithHeadingRow, WithBatchInserts
 
         return new Material([
             "factory" => $row['factory'],
-            "carcode" => $row['carcode'],
+            "code" => $row['code'],
             "area" => $row['area'],
-            "cavity" => $row['cavity'],
-            "partnumber" => $row['partnumber'],
-            "part_name" => $row['part_name'],
+            "hole" => $row['hole'],
+            "component_number" => $row['component_number'],
+            "component_name" => $row['component_name'],
             "qty_total" => $row['qty_total'],
             "user_id" => $userRole,
         ]);

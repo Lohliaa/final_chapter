@@ -29,11 +29,11 @@ class MaterialController extends Controller
         if ($searchTerm) {
             $query->where(function ($query) use ($searchTerm) {
                 $query->where('factory', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('carcode', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('code', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('area', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('cavity', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('partnumber', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('part_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('hole', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('component_number', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('component_name', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('qty_total', 'LIKE', '%' . $searchTerm . '%');
             });
         }
@@ -58,11 +58,11 @@ class MaterialController extends Controller
         if ($searchTerm) {
             $query->where(function ($query) use ($searchTerm) {
                 $query->where('factory', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('carcode', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('code', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('area', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('cavity', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('partnumber', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('part_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('hole', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('component_number', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('component_name', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('qty_total', 'LIKE', '%' . $searchTerm . '%');
             });
         }
@@ -83,11 +83,11 @@ class MaterialController extends Controller
         
         if ($keyword) {
             $query->where('factory', 'LIKE', '%' . $keyword . '%')
-            ->orWhere('carcode', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('code', 'LIKE', '%' . $keyword . '%')
             ->orWhere('area', 'LIKE', '%' . $keyword . '%')
-            ->orWhere('cavity', 'LIKE', '%' . $keyword . '%')
-            ->orWhere('partnumber', 'LIKE', '%' . $keyword . '%')
-            ->orWhere('part_name', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('hole', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('component_number', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('component_name', 'LIKE', '%' . $keyword . '%')
             ->orWhere('qty_total', 'LIKE', '%' . $keyword . '%');            
             $count = $query->count();
         } else {
@@ -145,11 +145,11 @@ class MaterialController extends Controller
     {
         $request->validate([
             'factory' => 'required',
-            'carcode' => 'required',
+            'code' => 'required',
             'area' => 'required',
-            'cavity' => 'required',
-            'partnumber' => 'required',
-            'part_name' => 'required',
+            'hole' => 'required',
+            'component_number' => 'required',
+            'component_name' => 'required',
             'qty_total' => 'required',
         ]);
 
@@ -157,11 +157,11 @@ class MaterialController extends Controller
 
         $material = Material::create([
             'factory' => $request->factory,
-            'carcode' => $request->carcode,
+            'code' => $request->code,
             'area' => $request->area,
-            'cavity' => $request->cavity,
-            'partnumber' => $request->partnumber,
-            'part_name' => $request->part_name,
+            'hole' => $request->hole,
+            'component_number' => $request->component_number,
+            'component_name' => $request->component_name,
             'qty_total' => $request->qty_total,
             'user_id' => $user,
 
@@ -208,11 +208,11 @@ class MaterialController extends Controller
     {
         $this->validate($request, [
             'factory' => 'required',
-            'carcode' => 'required',
+            'code' => 'required',
             'area' => 'required',
-            'cavity' => 'required',
-            'partnumber' => 'required',
-            'part_name' => 'required',
+            'hole' => 'required',
+            'component_number' => 'required',
+            'component_name' => 'required',
             'qty_total' => 'required',
         ]);
         $user = Auth::id();
@@ -221,11 +221,11 @@ class MaterialController extends Controller
 
         $material->update([
             'factory' => $request->factory,
-            'carcode' => $request->carcode,
+            'code' => $request->code,
             'area' => $request->area,
-            'cavity' => $request->cavity,
-            'partnumber' => $request->partnumber,
-            'part_name' => $request->part_name,
+            'hole' => $request->hole,
+            'component_number' => $request->component_number,
+            'component_name' => $request->component_name,
             'qty_total' => $request->qty_total,
             'user_id' => $user,
 

@@ -9,19 +9,20 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class MaterialExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
     public function collection()
     {
         $user = Auth::id();
-        $type = DB::table('material')->select(
+        $type = FacadesDB::table('material')->select(
             'factory',
-            'carcode',
+            'code',
             'area',
-            'cavity',
-            'partnumber',
-            'part_name',
+            'hole',
+            'component_number',
+            'component_name',
             'qty_total'
         )
             ->where('user_id', $user)
@@ -34,9 +35,9 @@ class MaterialExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
             'Factory',
             'Code',
             'Area',
-            'Cavity',
-            'Part Number',
-            'Part Name',
+            'Hole',
+            'Component Number',
+            'Component Name',
             'Qty Total'
         ];
     }

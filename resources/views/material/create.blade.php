@@ -38,11 +38,11 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Code</label>
-                                <input type="text" class="form-control @error('carcode') is-invalid @enderror"
-                                    name="carcode" value="{{ old('carcode') }}" placeholder=" ">
+                                <input type="text" class="form-control @error('code') is-invalid @enderror"
+                                    name="code" value="{{ old('code') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('carcode')
+                                @error('code')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -62,36 +62,36 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Cavity</label>
-                                <input type="text" class="form-control @error('cavity') is-invalid @enderror"
-                                    name="cavity" value="{{ old('cavity') }}" placeholder=" ">
+                                <label class="font-weight-bold">Hole</label>
+                                <input type="text" class="form-control @error('hole') is-invalid @enderror"
+                                    name="hole" value="{{ old('hole') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('cavity')
+                                @error('hole')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Part Number</label>
-                                <input type="text" class="form-control @error('partnumber') is-invalid @enderror"
-                                    name="partnumber" value="{{ old('partnumber') }}" placeholder=" ">
+                                <label class="font-weight-bold">Component Number</label>
+                                <input type="text" class="form-control @error('component_number') is-invalid @enderror"
+                                    name="component_number" value="{{ old('component_number') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('partnumber')
+                                @error('component_number')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Part Name</label>
-                                <input type="text" class="form-control @error('part_name') is-invalid @enderror"
-                                    name="part_name" value="{{ old('part_name') }}" placeholder=" ">
+                                <label class="font-weight-bold">Component Name</label>
+                                <input type="text" class="form-control @error('component_name') is-invalid @enderror"
+                                    name="component_name" value="{{ old('component_name') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('part_name')
+                                @error('component_name')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
