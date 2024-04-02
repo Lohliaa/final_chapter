@@ -12,11 +12,11 @@ class ProsesMaterial extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'factory',
-        'carcode',
+        'code',
         'area',
-        'cavity',
-        'partnumber',
-        'part_name',
+        'hole',
+        'component_number',
+        'component_name',
         'qty_total',
         'length',
         'konversi',

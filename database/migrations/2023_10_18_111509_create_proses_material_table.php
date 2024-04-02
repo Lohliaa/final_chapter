@@ -16,11 +16,11 @@ class CreateProsesMaterialTable extends Migration
         Schema::create('proses_material', function (Blueprint $table) {
             $table->id();
             $table->string('factory')->nullable();
-            $table->string('carcode')->nullable();
+            $table->string('code')->nullable();
             $table->string('area')->nullable();
-            $table->string('cavity')->nullable();
-            $table->string('partnumber')->nullable();
-            $table->string('part_name')->nullable();
+            $table->string('hole')->nullable();
+            $table->string('component_number')->nullable();
+            $table->string('component_name')->nullable();
             $table->integer('qty_total')->nullable();
             $table->integer('length')->nullable();
             $table->integer('konversi')->nullable();

@@ -7,9 +7,9 @@
             <th scope="col">Factory</th>
             <th scope="col">Code</th>
             <th scope="col">Area</th>
-            <th scope="col">Cavity</th>
-            <th scope="col">Part Number</th>
-            <th scope="col">Part Name</th>
+            <th scope="col">Hole</th>
+            <th scope="col">Component Number</th>
+            <th scope="col">Component Name</th>
             <th scope="col">Qty Total</th>
             <th scope="col">Length</th>
             <th scope="col">Konversi</th>
@@ -28,11 +28,11 @@
                     onclick="handleCheckboxChange({{ $data->id }})"></td> --}}
             <td>{{$no++}}</td>
             <td>{{ $data->factory }}</td>
-            <td>{{ $data->carcode }}</td>
+            <td>{{ $data->code }}</td>
             <td>{{ $data->area }}</td>
-            <td>{{ $data->cavity }}</td>
-            <td>{{ $data->partnumber }}</td>
-            <td>{{ $data->part_name }}</td>
+            <td>{{ $data->hole }}</td>
+            <td>{{ $data->component_number }}</td>
+            <td>{{ $data->component_name }}</td>
             <td>{{ $data->qty_total }}</td>
             <td>{{ $data->length }}</td>
             <td>{{ $data->konversi }}</td>

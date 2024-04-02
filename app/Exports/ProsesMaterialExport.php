@@ -22,11 +22,11 @@ class ProsesMaterialExport implements FromCollection, WithHeadings, ShouldAutoSi
         $user = Auth::id();
         $type = FacadesDB::table('proses_material')->select(
             'factory',
-            'carcode',
+            'code',
             'area',
-            'cavity',
-            'partnumber',
-            'part_name',
+            'hole',
+            'component_number',
+            'component_name',
             'qty_total',
             'length',
             'konversi',
@@ -46,15 +46,15 @@ class ProsesMaterialExport implements FromCollection, WithHeadings, ShouldAutoSi
             'Factory',
             'Code',
             'Area',
-            'Cavity',
-            'Part Number',
-            'Part Name',
+            'Hole',
+            'Component Number',
+            'Component Name',
             'Qty Total',
             'Length',
             'Konversi',
             'Qty After Konversi',
             'Cek',
-            'Harga',
+            'Price',
             'Total'
         ];
     }
@@ -96,11 +96,11 @@ class ProsesMaterialSheet implements FromCollection, WithHeadings, ShouldAutoSiz
         $data = FacadesDB::table('proses_material')
             ->select(
                 'factory',
-                'carcode',
+                'code',
                 'area',
-                'cavity',
-                'partnumber',
-                'part_name',
+                'hole',
+                'component_number',
+                'component_name',
                 'qty_total',
                 'length',
                 'konversi',
@@ -130,15 +130,15 @@ class ProsesMaterialSheet implements FromCollection, WithHeadings, ShouldAutoSiz
             'Factory',
             'Code',
             'Area',
-            'Cavity',
-            'Part Number',
-            'Part Name',
+            'Hole',
+            'Component Number',
+            'Component Name',
             'Qty Total',
             'Length',
             'Konversi',
             'Qty After Konversi',
             'Cek',
-            'Harga',
+            'Price',
             'Total'
         ];
     }
@@ -165,12 +165,12 @@ class SummarySheet implements FromCollection, WithHeadings, ShouldAutoSize
     {
         return FacadesDB::table('proses_material')
             ->select(
-                'carcode',
+                'code',
                 FacadesDB::raw('SUM(qty_after_konversi) as total_qty_total'),
                 FacadesDB::raw('SUM(amount) as total_amount')
             )
             ->where('user_id', $this->userId)
-            ->groupBy('carcode')
+            ->groupBy('code')
             ->get();
     }
 
@@ -197,18 +197,18 @@ class PartNumberSummarySheet implements FromCollection, WithHeadings, ShouldAuto
     {
         return FacadesDB::table('proses_material')
             ->select(
-                'partnumber',
+                'component_number',
                 FacadesDB::raw('SUM(qty_after_konversi) as total_qty_total')
             )
             ->where('user_id', $this->userId)
-            ->groupBy('partnumber')
+            ->groupBy('component_number')
             ->get();
     }
 
     public function headings(): array
     {
         return [
-            'Part Number',
+            'Component Number',
             'Total Qty Total'
         ];
     }
@@ -226,13 +226,13 @@ class PartNumberByCarcodeSummarySheet implements FromCollection, WithHeadings, S
     {
         return FacadesDB::table('proses_material')
             ->select(
-                'carcode',
-                'partnumber',
+                'code',
+                'component_number',
                 FacadesDB::raw('SUM(qty_after_konversi) as total_qty_total')
             )
             ->where('user_id', $this->userId)
-            ->groupBy('partnumber', 'carcode')
-            ->orderBy('carcode')
+            ->groupBy('component_number', 'code')
+            ->orderBy('code')
             ->get();
     }
 
@@ -240,7 +240,7 @@ class PartNumberByCarcodeSummarySheet implements FromCollection, WithHeadings, S
     {
         return [
             'Code',
-            'Part Number',
+            'Component Number',
             'Total Qty Total'
         ];
     }
