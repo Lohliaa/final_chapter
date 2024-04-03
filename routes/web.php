@@ -143,17 +143,14 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/get-count-fa-1a', [AreaPreparationController::class, 'getCount'])->name('get.count.area_preparation');
 
     // PROSES PA
-    Route::resource('proses-pa-841w', Proses1AController::class);
+    Route::resource('proses_pa', Proses1AController::class);
     Route::get('/proses-data-fa-1a', [Proses1AController::class, 'proses']);
     Route::get('/export-excel-proses-fa-1a', [Proses1AController::class, 'export_excel_proses_fa_1a']);
     Route::get('/export-proses-fa-1a', [Proses1AController::class, 'export_filtered_proses'])->name('export_filtered_proses');
-    // Route::get('/pilih_proses_pa', [Proses1AController::class, 'pilih_proses_pa'])->name('proses_fa_1a.pilih_proses_pa');
     Route::delete('delete/{id}', [Proses1AController::class, 'destroy']);
     Route::delete('deleteAll_proses_pa', [Proses1AController::class, 'deleteAll_proses_pa']);
-    // Route::get('edit/{id}', [FA_1AController::class, 'edit']);
-    // Route::get('/calculate', [Proses1AController::class, 'calculate']);
-    Route::get('/pilih_proses_pa', [Proses1AController::class, 'pilih_proses_pa'])->name('search.proses_fa_1a');
-    Route::get('/get-count-proses-fa-1a', [Proses1AController::class, 'getCount'])->name('get.count.proses_fa_1a');
+    Route::get('/pilih_proses_pa', [Proses1AController::class, 'pilih_proses_pa'])->name('search.proses_pa');
+    Route::get('/get-count-proses-fa-1a', [Proses1AController::class, 'getCount'])->name('get.count.proses_pa');
 
     // UMH MASTER
     Route::resource('umh_master', UMHController::class);

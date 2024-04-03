@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Proses extends Model
+class Proses_PA extends Model
 {
     use HasFactory;
 
-    protected $table = "proses";
+    protected $table = "proses_pa";
     protected $primaryKey = 'id';
     protected $fillable = [
         'area_store',
@@ -44,24 +44,4 @@ class Proses extends Model
         'keterangan',
         'user_id',
     ];
-
-    public function area_final()
-    {
-        return $this->belongsTo(Area_Final::class, 'material', 'material');
-    }
-
-    public function properti_nonsingle()
-    {
-        return $this->hasOne(Properti_Nonsingle::class, 'material', 'material');
-    }
-
-    public function properti_single()
-    {
-        return $this->hasOne(Properti_Single::class, 'material', 'material');
-    }
-
-    public function item()
-    {
-        return $this->hasOne(Item::class, 'component_number', 'model_ukuran_warna');
-    }
 }

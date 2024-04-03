@@ -40,7 +40,7 @@
     </thead>
     <tbody>
         <?php $no=1 ?>
-        @forelse ($proses_fa_1a as $data)
+        @forelse ($proses_pa as $data)
         <tr id="tr_{{ $data->id }}">
             <td><input type="checkbox" class="sub_chk" data-id="{{$data->id}}"></td>
             <td>{{$no++}}</td>

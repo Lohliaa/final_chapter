@@ -83,7 +83,7 @@
 
                 <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
                     data-url="{{ url('DeleteAll_pa') }}">Delete</button>
-                <a href="{{ url('proses-pa-841w') }}" class="btn btn-default mr-2">Proses</a>
+                <a href="{{ url('proses_pa') }}" class="btn btn-default mr-2">Proses</a>
 
                 <a href="{{ url('area_preparation') }}" class="btn btn-default mr-2">Refresh</a>
 

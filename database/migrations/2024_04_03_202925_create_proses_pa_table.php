@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProsesTable extends Migration
+class CreateProsesPaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProsesTable extends Migration
      */
     public function up()
     {
-        Schema::create('proses', function (Blueprint $table) {
+        Schema::create('proses_pa', function (Blueprint $table) {
             $table->id();
             $table->string('month')->nullable();
             $table->string('kav')->nullable();
@@ -60,6 +60,6 @@ class CreateProsesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proses');
+        Schema::dropIfExists('proses_pa');
     }
 }

@@ -45,7 +45,7 @@
 
                 <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
                     data-url="{{ url('deleteAll_proses_pa') }}">Delete</button>
-                <a href="{{ url('proses-pa-841w') }}" class="btn btn-default mr-2">Refresh</a>
+                <a href="{{ url('proses_pa') }}" class="btn btn-default mr-2">Refresh</a>
                 <input type="text" name="search" id="searchproses_pa" class="form-control w-25 mr-2"
                 placeholder="Cari disini ...">
 
@@ -60,25 +60,25 @@
                             <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
                             <th scope="col">No</th>
                             <th scope="col">Month</th>
-                            <th scope="col">Line</th>
+                            <th scope="col">Kav</th>
                             <th scope="col">Bagian</th>
-                            <th scope="col">Area STORE</th>
+                            <th scope="col">Area Store</th>
                             <th scope="col">Material</th>
                             <th scope="col">Material Properties</th>
                             <th scope="col">Model</th>
                             <th scope="col">Ukuran</th>
                             <th scope="col">Warna</th>
                             <th scope="col">Model Ukuran Warna</th>
-                            <th scope="col">Specific Part Numb</th>
+                            <th scope="col">Specific Component Number</th>
                             <th scope="col">CL</th>
-                            <th scope="col">Terminal B</th>
+                            <th scope="col">TRM B</th>
                             <th scope="col">Acc bag b1</th>
                             <th scope="col">Acc bag b2</th>
-                            <th scope="col">Tube B</th>
-                            <th scope="col">Terminal A</th>
+                            <th scope="col">TBE B</th>
+                            <th scope="col">TRM A</th>
                             <th scope="col">Acc bag a1</th>
                             <th scope="col">Acc bag a2</th>
-                            <th scope="col">Tube B</th>
+                            <th scope="col">TBE B</th>
                             <th scope="col">Total QTY</th>
                             <th scope="col">Harga</th>
                             <th scope="col">Wire Cost</th>
@@ -96,30 +96,30 @@
                     </thead>
                     <tbody>
                         <?php $no=1 ?>
-                        @forelse ($proses_fa_1a as $data)
+                        @forelse ($proses_pa as $data)
                         <tr id="tr_{{ $data->id }}">
                             <td><input type="checkbox" class="sub_chk" data-id="{{$data->id}}"></td>
                             <td>{{$no++}}</td>
                             <td>{{ $data->month }}</td>
-                            <td>{{ $data->car_line }}</td>
-                            <td>{{ $data->conveyor }}</td>
-                            <td>{{ $data->addressing_store }}</td>
-                            <td>{{ $data->ctrl_no }}</td>
-                            <td>{{ $data->ctrlno }}</td>
-                            <td>{{ $data->kind }}</td>
-                            <td>{{ $data->size }}</td>
-                            <td>{{ $data->color }}</td>
-                            <td>{{ $data->kind_size_color }}</td>
-                            <td>{{ $data->cust_part_no }}</td>
+                            <td>{{ $data->kav }}</td>
+                            <td>{{ $data->bagian }}</td>
+                            <td>{{ $data->area_store }}</td>
+                            <td>{{ $data->material }}</td>
+                            <td>{{ $data->material_properties }}</td>
+                            <td>{{ $data->model }}</td>
+                            <td>{{ $data->ukuran }}</td>
+                            <td>{{ $data->warna }}</td>
+                            <td>{{ $data->model_ukuran_warna }}</td>
+                            <td>{{ $data->specific_component_number }}</td>
                             <td>{{ $data->cl }}</td>
-                            <td>{{ $data->term_b }}</td>
-                            <td>{{ $data->accb1 }}</td>
-                            <td>{{ $data->accb2 }}</td>
-                            <td>{{ $data->tubeb }}</td>
-                            <td>{{ $data->term_a }}</td>
-                            <td>{{ $data->acca1 }}</td>
-                            <td>{{ $data->acca2 }}</td>
-                            <td>{{ $data->tubea }}</td>
+                            <td>{{ $data->trm_b }}</td>
+                            <td>{{ $data->acc_bag_b1 }}</td>
+                            <td>{{ $data->acc_bag_b2 }}</td>
+                            <td>{{ $data->tbe_b }}</td>
+                            <td>{{ $data->trm_a }}</td>
+                            <td>{{ $data->acc_bag_a1 }}</td>
+                            <td>{{ $data->acc_bag_a2 }}</td>
+                            <td>{{ $data->tbe_a }}</td>
                             <td>{{ $data->total_qty }}</td>
                             <td>{{ $data->price_sum }}</td>
                             <td>{{ number_format($data->wire_cost, 2, ',', '.') }}</td>
@@ -151,13 +151,13 @@
     function pilih_proses_pa() {
         const selected = document.getElementById('searchproses_pa').value;
     
-        fetch(`{{ route('search.proses_fa_1a') }}?proses_fa_1a=${selected}`)
+        fetch(`{{ route('search.proses_pa') }}?proses_pa=${selected}`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('proses_paTableBody').innerHTML = data;
 
                 // Memperbarui jumlah data langsung dari respons server
-                fetch(`{{ route('get.count.proses_fa_1a') }}?proses_fa_1a=${selected}`)
+                fetch(`{{ route('get.count.proses_pa') }}?proses_pa=${selected}`)
                     .then(response => response.text())
                     .then(countData => {
                         document.getElementById('count').innerText = 'Jumlah Data ' + countData;

@@ -3,12 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ProsesPAExport;
-use App\Exports\SelectedDataExport;
-use App\Models\Fa_1A;
-use App\Models\Next_Proses;
-use App\Models\Konsep_Commonize;
-use App\Models\Item_List;
-use App\Models\ProsesFa_1A;
+use App\Models\Proses_PA;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,36 +17,36 @@ class Proses1AController extends Controller
 
         $user = Auth::id();
 
-        $searchTerm = $request->input('proses_fa_1a');
+        $searchTerm = $request->input('proses_pa');
 
-        $count = ProsesFa_1A::count();
+        $count = Proses_PA::count();
 
-        $query = ProsesFa_1A::query();
+        $query = Proses_PA::query();
 
         $query->where('user_id', $user);
 
         if ($searchTerm) {
             $query->where(function ($query) use ($searchTerm) {
-                $query->where('ctrl_no', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('kind', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('size', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('color', 'LIKE', '%' . $searchTerm . '%')
+                $query->where('material', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('model', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('ukuran', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('warna', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('month', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('car_line', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('conveyor', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('addressing_store', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('ctrlno', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('kind_size_color', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('cust_part_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kav', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('bagian', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('area_store', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('material_properties', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('model_ukuran_warna', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('specific_component_number', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('cl', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('term_b', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('accb1', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('accb2', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('tubeb', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('term_a', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('acca1', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('acca2', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('tubea', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('trm_b', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_bag_b1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_bag_b2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tbe_b', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('trm_a', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_bag_a1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_bag_a2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tbe_a', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('total_qty', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('wire_cost', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('component_cost', 'LIKE', '%' . $searchTerm . '%')
@@ -69,43 +64,43 @@ class Proses1AController extends Controller
 
         $count = $query->count();
 
-        $proses_fa_1a = $query->paginate(5000);
+        $proses_pa = $query->paginate(5000);
 
-        return view('proses_fa_1a.partial.proses_fa_1a', ['proses_fa_1a' => $proses_fa_1a, 'count' => $count, 'user' => $user]);
+        return view('proses_pa.partial.proses_pa', ['proses_pa' => $proses_pa, 'count' => $count, 'user' => $user]);
     }
 
     public function getCount(Request $request)
     {
         $user = Auth::id();
 
-        $searchTerm = $request->input('proses_fa_1a');
+        $searchTerm = $request->input('proses_pa');
 
-        $query = ProsesFa_1A::query();
+        $query = Proses_PA::query();
 
         $query->where('user_id', $user);
 
         if ($searchTerm) {
             $query->where(function ($query) use ($searchTerm) {
-                $query->where('ctrl_no', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('kind', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('size', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('color', 'LIKE', '%' . $searchTerm . '%')
+                $query->where('material', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('model', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('ukuran', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('warna', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('month', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('car_line', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('conveyor', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('addressing_store', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('ctrlno', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('kind_size_color', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('cust_part_no', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('kav', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('bagian', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('area_store', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('material_properties', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('model_ukuran_warna', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('specific_component_number', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('cl', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('term_b', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('accb1', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('accb2', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('tubeb', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('term_a', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('acca1', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('acca2', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('tubea', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('trm_b', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_bag_b1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_bag_b2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tbe_b', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('trm_a', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_bag_a1', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('acc_bag_a2', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('tbe_a', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('total_qty', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('wire_cost', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('component_cost', 'LIKE', '%' . $searchTerm . '%')
@@ -123,7 +118,7 @@ class Proses1AController extends Controller
 
         $count = $query->count();
 
-        $proses_fa_1a = $query->paginate(8000);
+        $proses_pa = $query->paginate(8000);
 
         return response()->json($count);
     }
@@ -133,130 +128,131 @@ class Proses1AController extends Controller
         set_time_limit(0);
         $keyword = $request->pilih_proses_pa;
         $user = Auth::id();
-        $query = ProsesFa_1A::where('user_id', $user)->orderBy('id', 'asc');
+        $query = Proses_PA::where('user_id', $user)->orderBy('id', 'asc');
 
         if ($keyword) {
-            $query->where('ctrl_no', 'like', "%" . $keyword . "%")
-                ->orWhere('kind', 'like', "%" . $keyword . "%")
-                ->orWhere('size', 'like', "%" . $keyword . "%")
-                ->orWhere('color', 'like', "%" . $keyword . "%")
-                ->orWhere('month', 'like', "%" . $keyword . "%")
-                ->orWhere('car_line', 'like', "%" . $keyword . "%")
-                ->orWhere('conveyor', 'like', "%" . $keyword . "%")
-                ->orWhere('addressing_store', 'like', "%" . $keyword . "%")
-                ->orWhere('ctrlno', 'like', "%" . $keyword . "%")
-                ->orWhere('kind_size_color', 'like', "%" . $keyword . "%")
-                ->orWhere('cust_part_no', 'like', "%" . $keyword . "%")
-                ->orWhere('term_b', 'like', "%" . $keyword . "%")
-                ->orWhere('accb1', 'like', "%" . $keyword . "%")
-                ->orWhere('accb2', 'like', "%" . $keyword . "%")
-                ->orWhere('tubeb', 'like', "%" . $keyword . "%")
-                ->orWhere('term_a', 'like', "%" . $keyword . "%")
-                ->orWhere('acca1', 'like', "%" . $keyword . "%")
-                ->orWhere('acca2', 'like', "%" . $keyword . "%")
-                ->orWhere('tubea', 'like', "%" . $keyword . "%")
-                ->orWhere('total_qty', 'like', "%" . $keyword . "%")
-                ->orWhere('wire_cost', 'like', "%" . $keyword . "%")
-                ->orWhere('component_cost', 'like', "%" . $keyword . "%")
-                ->orWhere('material_cost', 'like', "%" . $keyword . "%")
-                ->orWhere('material_cost_amount', 'like', "%" . $keyword . "%")
-                ->orWhere('process', 'like', "%" . $keyword . "%")
-                ->orWhere('umh', 'like', "%" . $keyword . "%")
-                ->orWhere('charge', 'like', "%" . $keyword . "%")
-                ->orWhere('process_cost', 'like', "%" . $keyword . "%")
-                ->orWhere('process_cost_amount', 'like', "%" . $keyword . "%")
-                ->orWhere('total_amount', 'like', "%" . $keyword . "%")
-                ->orWhere('price_sum', 'like', "%" . $keyword . "%");
+            $query->where('material', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('model', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('ukuran', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('warna', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('month', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('kav', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('bagian', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('area_store', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('material_properties', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('model_ukuran_warna', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('specific_component_number', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('cl', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('trm_b', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('acc_bag_b1', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('acc_bag_b2', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('tbe_b', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('trm_a', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('acc_bag_a1', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('acc_bag_a2', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('tbe_a', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('total_qty', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('wire_cost', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('component_cost', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('material_cost', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('material_cost_amount', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('process', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('umh', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('charge', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('process_cost', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('process_cost_amount', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('total_amount', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('price_sum', 'LIKE', '%' . $keyword . '%');
             $count = $query->count();
         } else {
             $count = $query->count();
         }
 
-        $dataFa1a = DB::table('fa_1a')->select('month', 'car_line', 'conveyor', 'addressing_store', 'ctrl_no', 'total_qty', 'car_line')
+        $dataFa1a = DB::table('area_preparation')->select('kav', 'month', 'bagian', 'area_store', 'material', 'total_qty')
             ->where('user_id', $user)
             ->get();
-        ProsesFa_1A::where('user_id', $user)->delete();
-          
-        $proses_fa_1a = $query->get();
+        Proses_PA::where('user_id', $user)->delete();
 
-        $data = $proses_fa_1a->all();
+        $proses_pa = $query->get();
+
+        $data = $proses_pa->all();
         $dataToInsert = [];
 
         foreach ($dataFa1a as $data) {
-            $konsep_commonizes = DB::table('konsep_commonize')->where('ctrl_no', $data->ctrl_no)->where('user_id', $user)->get();
-            $next_proseses = DB::table('next_proses')->where('jenis_ctrl_no', $data->ctrl_no)->where('user_id', $user)->get();
+            $properti_single = DB::table('properti_single')->where('material_properties', $data->material)->where('user_id', $user)->get();
+            $properti_nonsingle = DB::table('properti_nonsingle')->where('jenis_material', $data->material)->where('user_id', $user)->get();
 
             $ctrl_no_exists = false;
 
-            foreach ($konsep_commonizes as $konsep_commonize) {
-                if (is_numeric($konsep_commonize->size_new)) {
-                    // Jika size_new adalah numerik, cek jika itu bulat atau pecahan
-                    $is_integer = ($konsep_commonize->size_new == intval($konsep_commonize->size_new));
+            foreach ($properti_single as $properti_single) {
+                if (is_numeric($properti_single->ukuran)) {
+                    // Jika ukuran adalah numerik, cek jika itu bulat atau pecahan
+                    $is_integer = ($properti_single->ukuran == intval($properti_single->ukuran));
                     if ($is_integer) {
-                        $size_decimal = number_format($konsep_commonize->size_new, 1);
+                        $size_decimal = number_format($properti_single->ukuran, 1);
                     } else {
-                        $size_formatted = sprintf("%.2f", $konsep_commonize->size_new);
+                        $size_formatted = sprintf("%.2f", $properti_single->ukuran);
                         $size_decimal = rtrim(rtrim($size_formatted, '0'), '.');
                     }
                 } else {
-                    // Jika size_new adalah teks, gunakan nilai teks tanpa perubahan
-                    $size_decimal = $konsep_commonize->size_new;
+                    // Jika ukuran adalah teks, gunakan nilai teks tanpa perubahan
+                    $size_decimal = $properti_single->ukuran;
                 }
 
-                $itemList = DB::table('item_list')
-                    ->where('part_no', $konsep_commonize->kind_new . ' ' . $size_decimal . ' ' . $konsep_commonize->col_new,)
+                $itemList = DB::table('item')
+                    ->where('component_number', $properti_single->model . ' ' . $size_decimal . ' ' . $properti_single->warna,)
                     ->where('user_id', $user)
                     ->first();
                 $prosesData = [
                     'month' => $data->month,
-                    'car_line' => $data->car_line,
-                    'conveyor' => $data->conveyor,
-                    'addressing_store' => $data->addressing_store,
-                    'ctrl_no' => $data->ctrl_no,
+                    'kav' => $data->kav,
+                    'bagian' => $data->bagian,
+                    'area_store' => $data->area_store,
+                    'material' => $data->material,
                     'total_qty' => $data->total_qty,
-                    'ctrlno' => $konsep_commonize->ctrl_no,
-                    'kind' => $konsep_commonize->kind_new,
-                    'size' => $size_decimal,
-                    'color' => $konsep_commonize->col_new,
-                    'kind_size_color' => $konsep_commonize->kind_new . ' ' . $size_decimal . ' ' . $konsep_commonize->col_new,
-                    'cust_part_no' => $itemList ? $itemList->cust_pno : '',
-                    'cl' => $konsep_commonize->cl_28,
-                    'term_b' => $konsep_commonize->term_b_new,
-                    'accb1' => $konsep_commonize->acc_b1_new,
-                    'accb2' => $konsep_commonize->acc_b2,
-                    'tubeb' => $konsep_commonize->tube_b_new,
-                    'term_a' => $konsep_commonize->term_a_new,
-                    'acca1' => $konsep_commonize->acc_a1_new,
-                    'acca2' => $konsep_commonize->acc_a2,
-                    'tubea' => $konsep_commonize->tube_a_new,
+                    'material_properties' => $properti_single->material_properties,
+                    'model' => $properti_single->model,
+                    'ukuran' => $size_decimal,
+                    'warna' => $properti_single->warna,
+                    'model_ukuran_warna' => $properti_single->model . ' ' . $size_decimal . ' ' . $properti_single->warna,
+                    'specific_component_number' => $itemList ? $itemList->specific_component_number : '',
+                    'cl' => $properti_single->cl,
+                    'trm_b' => $properti_single->trm_b,
+                    'acc_bag_b1' => $properti_single->acc_bag_b1,
+                    'acc_bag_b2' => $properti_single->acc_bag_b2,
+                    'tbe_b' => $properti_single->tbe_b,
+                    'trm_a' => $properti_single->trm_a,
+                    'acc_bag_a1' => $properti_single->acc_bag_a1,
+                    'acc_bag_a2' => $properti_single->acc_bag_a2,
+                    'tbe_b' => $properti_single->tbe_a,
                 ];
                 $dataToInsert[] = $prosesData;
                 $ctrl_no_exists = true;
             }
 
-            foreach ($next_proseses as $next_proses) {
+            foreach ($properti_nonsingle as $properti_nonsingle) {
                 $prosesData2 = [
                     'month' => $data->month,
-                    'car_line' => $data->car_line,
-                    'conveyor' => $data->conveyor,
-                    'addressing_store' => $data->addressing_store,
-                    'ctrl_no' => $data->ctrl_no,
+                    'kav' => $data->kav,
+                    'bagian' => $data->bagian,
+                    'area_store' => $data->area_store,
+                    'material' => $data->material,
                     'total_qty' => $data->total_qty,
-                    'ctrlno' => $next_proses->ctrl_no_cct,
-                    'kind' => $next_proses->kind,
-                    'size' => $next_proses->size,
-                    'color' => $next_proses->color,
-                    'kind_size_color' => $next_proses->kind . ' ' . $next_proses->size . ' ' . $next_proses->color,
-                    'cust_part_no' => $next_proses->cust_part_no,
-                    'cl' => $next_proses->cl,
-                    'term_b' => $next_proses->term_b,
-                    'accb1' => $next_proses->accb1,
-                    'accb2' => $next_proses->accb2,
-                    'tubeb' => $next_proses->tubeb,
-                    'term_a' => $next_proses->term_a,
-                    'acca1' => $next_proses->acca1,
-                    'acca2' => $next_proses->acca2,
-                    'tubea' => $next_proses->tubea,
+                    'material_properties' => $properti_nonsingle->material_properties,
+                    'model' => $properti_nonsingle->model,
+                    'ukuran' => $properti_nonsingle->ukuran,
+                    'warna' => $properti_nonsingle->warna,
+                    'model_ukuran_warna' => $properti_nonsingle->model . ' ' . $properti_nonsingle->ukuran . ' ' . $properti_nonsingle->warna,
+                    'specific_component_number' => $properti_nonsingle->specific_component_number,
+                    'cl' => $properti_nonsingle->cl,
+                    'trm_b' => $properti_nonsingle->trm_b,
+                    'acc_bag_b1' => $properti_nonsingle->acc_bag_b1,
+                    'acc_bag_b2' => $properti_nonsingle->acc_bag_b2,
+                    'tbe_b' => $properti_nonsingle->tbe_b,
+                    'trm_a' => $properti_nonsingle->trm_a,
+                    'acc_bag_a1' => $properti_nonsingle->acc_bag_a1,
+                    'acc_bag_a2' => $properti_nonsingle->acc_bag_a2,
+                    'tbe_b' => $properti_nonsingle->tbe_b,
                 ];
                 $dataToInsert[] = $prosesData2;
                 $ctrl_no_exists = true;
@@ -264,79 +260,103 @@ class Proses1AController extends Controller
             if (!$ctrl_no_exists) {
                 $prosesDataFa1a = [
                     'month' => $data->month,
-                    'car_line' => $data->car_line,
-                    'conveyor' => $data->conveyor,
-                    'addressing_store' => $data->addressing_store,
-                    'ctrl_no' => $data->ctrl_no,
+                    'kav' => $data->kav,
+                    'bagian' => $data->bagian,
+                    'area_store' => $data->area_store,
+                    'material' => $data->material,
                     'total_qty' => $data->total_qty,
                     'keterangan' => '#N/A',
                 ];
                 $dataToInsert[] = $prosesDataFa1a;
             }
         }
-        ProsesFa_1A::where('user_id', $user)->truncate();
+        Proses_PA::where('user_id', $user)->truncate();
 
         foreach ($dataToInsert as $data) {
             $data['user_id'] = $user;
-            ProsesFa_1A::insert($data);
+            Proses_PA::insert($data);
         }
 
-        $proses_fa_1a = ProsesFa_1A::where('user_id', $user)->get();
+        $proses_pa = Proses_PA::where('user_id', $user)->get();
 
-        foreach ($proses_fa_1a as $item) {
-            $kind_size_color = intval($item->kind_size_color);
-            $cust_part_no = intval($item->cust_part_no);
+        foreach ($proses_pa as $item) {
+            $model_ukuran_warna = intval($item->model_ukuran_warna);
+            $specific_component_number = intval($item->specific_component_number);
             $cl = intval($item->cl);
-            $term_b = intval($item->term_b);
-            $accb1 = intval($item->accb1);
-            $accb2 = intval($item->accb2);
-            $tubeb = intval($item->tubeb);
-            $term_a = intval($item->term_a);
-            $acca1 = intval($item->acca1);
-            $acca2 = intval($item->acca2);
-            $tubea = intval($item->tubea);
+            $trm_b = intval($item->trm_b);
+            $acc_bag_b1 = intval($item->acc_bag_b1);
+            $acc_bag_b2 = intval($item->acc_bag_b2);
+            $tbe_b = intval($item->tbe_b);
+            $trm_a = intval($item->trm_a);
+            $acc_bag_a1 = intval($item->acc_bag_a1);
+            $acc_bag_a2 = intval($item->acc_bag_a2);
+            $tbe_b = intval($item->tbe_b);
             $total_qty = intval($item->total_qty);
             $processValue = $item->process;
             $charge = $item->charge;
             $umh = $item->umh;
-            $ctrlno_value = $item->ctrl_no;
+            $ctrlno_value = $item->material;
 
-            $item->term_b = $item->term_b === '-' ? null : $item->term_b;
-            $item->accb1 = $item->accb1 === '-' ? null : $item->accb1;
-            $item->accb2 = $item->accb2 === '-' ? null : $item->accb2;
-            $item->tubeb = $item->tubeb === '-' ? null : $item->tubeb;
-            $item->term_a = $item->term_a === '-' ? null : $item->term_a;
-            $item->acca1 = $item->acca1 === '-' ? null : $item->acca1;
-            $item->acca2 = $item->acca2 === '-' ? null : $item->acca2;
-            $item->tubea = $item->tubea === '-' ? null : $item->tubea;
+            $item->trm_b = $item->trm_b === '-' ? null : $item->trm_b;
+            $item->acc_bag_b1 = $item->acc_bag_b1 === '-' ? null : $item->acc_bag_b1;
+            $item->acc_bag_b2 = $item->acc_bag_b2 === '-' ? null : $item->acc_bag_b2;
+            $item->tbe_b = $item->tbe_b === '-' ? null : $item->tbe_b;
+            $item->trm_a = $item->trm_a === '-' ? null : $item->trm_a;
+            $item->acc_bag_a1 = $item->acc_bag_a1 === '-' ? null : $item->acc_bag_a1;
+            $item->acc_bag_a2 = $item->acc_bag_a2 === '-' ? null : $item->acc_bag_a2;
+            $item->tbe_b = $item->tbe_b === '-' ? null : $item->tbe_b;
 
             // Mencari nilai 1 atau 0 berdasarkan kondisi pada kolom-kolom yang disebutkan
-            $term_b_value = $item->term_b !== null ? 1 : 0;
-            $accb1_value = $item->accb1 !== null ? 1 : 0;
-            $term_a_value = $item->term_a !== null ? 1 : 0;
-            $acca1_value = $item->acca1 !== null ? 1 : 0;
-            $accb2_value = $item->accb2 !== null ? 1 : 0;
-            $acca2_value = $item->acca2 !== null ? 1 : 0;
-            $tubeb_value = $item->tubeb !== null ? 1 : 0;
-            $tubea_value = $item->tubea !== null ? 1 : 0;
+            $term_b_value = $item->trm_b !== null ? 1 : 0;
+            $accb1_value = $item->acc_bag_b1 !== null ? 1 : 0;
+            $term_a_value = $item->trm_a !== null ? 1 : 0;
+            $acca1_value = $item->acc_bag_a1 !== null ? 1 : 0;
+            $accb2_value = $item->acc_bag_b2 !== null ? 1 : 0;
+            $acca2_value = $item->acc_bag_a2 !== null ? 1 : 0;
+            $tubeb_value = $item->tbe_b !== null ? 1 : 0;
+            $tubea_value = $item->tbe_b !== null ? 1 : 0;
 
             $process = 0;
 
             // Set process to 30 for specific conditions
-            if (stripos($ctrlno_value, 'BONDER') !== false || stripos($ctrlno_value, 'JOINT') !== false || ($accb1_value && $tubeb_value && $term_a_value && ($acca1_value || !$acca1_value) || $term_a_value && $acca1_value && !$acca2_value && $tubea_value || $accb1_value && $tubea_value && $term_b_value && ($acca1_value || !$acca1_value) || $term_b_value && !$accb2_value && $tubeb_value && !$tubea_value)) {
-                $process = 30;
-            } elseif ($accb2_value && $acca2_value && !$tubeb_value && !$tubea_value) {
-                $process = 20;
-            } elseif (!$term_b_value && !$accb1_value && !$accb2_value && !$tubeb_value && !$term_a_value && !$acca1_value && !$acca2_value && !$tubea_value) {
+            if (
+                !$term_b_value && !$accb1_value && !$accb2_value &&
+                !$tubeb_value && !$term_a_value && !$acca1_value && !$acca2_value && !$tubea_value
+            ) {
                 $process = 0;
-            } elseif ($accb1_value && $term_b_value && !$tubeb_value && !$tubea_value || $acca1_value && $term_a_value && !$tubeb_value && !$tubea_value || !$accb1_value && !$tubeb_value && $term_b_value && !$acca1_value || !$accb1_value && !$tubeb_value && $term_a_value && !$acca1_value || !$accb1_value && !$tubeb_value && !$term_a_value && !$acca1_value || !$accb2_value && !$acca2_value && !$tubeb_value && !$tubea_value || $accb1_value && !$term_b_value && !$tubeb_value && !$tubea_value || $acca1_value && $term_a_value && !$tubeb_value && !$tubea_value || $acca1_value && !$term_a_value && !$tubeb_value && !$tubea_value || !$accb1_value && $acca1_value && !$tubeb_value && !$tubea_value || $accb1_value && !$acca1_value && !$tubeb_value && !$tubea_value) {
+            } elseif (
+                $accb2_value && $acca2_value && !$tubeb_value && !$tubea_value ||
+                !$accb2_value && $acca2_value && !$tubeb_value && !$tubea_value ||
+                $accb2_value && !$acca2_value && !$tubeb_value && !$tubea_value
+            ) {
+                $process = 20;
+            } elseif (
+                stripos($ctrlno_value, 'SOLDER') !== false || stripos($ctrlno_value, 'JOINT') !== false ||
+                ($accb1_value && $tubeb_value && $term_a_value && ($acca1_value || !$acca1_value) ||
+                    $term_a_value && $acca1_value && !$acca2_value && $tubea_value || $accb1_value && $tubea_value && $term_b_value &&
+                    ($acca1_value || !$acca1_value) || $term_b_value && !$accb2_value && $tubeb_value && !$tubea_value)
+            ) {
+                $process = 30;
+            } elseif (
+                $accb1_value && $term_b_value && !$tubeb_value && !$tubea_value ||
+                $acca1_value && $term_a_value && !$tubeb_value && !$tubea_value ||
+                !$accb1_value && !$tubeb_value && $term_b_value && !$acca1_value ||
+                !$accb1_value && !$tubeb_value && $term_a_value && !$acca1_value ||
+                !$accb1_value && !$tubeb_value && !$term_a_value && !$acca1_value ||
+                !$accb2_value && !$acca2_value && !$tubeb_value && !$tubea_value ||
+                $accb1_value && !$term_b_value && !$tubeb_value && !$tubea_value ||
+                $acca1_value && $term_a_value && !$tubeb_value && !$tubea_value ||
+                $acca1_value && !$term_a_value && !$tubeb_value && !$tubea_value ||
+                !$accb1_value && $acca1_value && !$tubeb_value && !$tubea_value ||
+                $accb1_value && !$acca1_value && !$tubeb_value && !$tubea_value
+            ) {
                 $process = 10;
             }
 
             $item->process = $process;
 
             $processValue = $item->process;
-            $umh_master = DB::table('umh_master')->where('car_line', $item->car_line)->where('user_id', $user)->first();
+            $umh_master = DB::table('umh_master')->where('kav', $item->kav)->where('user_id', $user)->first();
 
             if ($umh_master) {
                 switch ($processValue) {
@@ -383,43 +403,39 @@ class Proses1AController extends Controller
             $item->save();
 
             // WIRE COST 
-            $master_price = DB::table('master_price')
-                ->where('part_number_ori_sto', $item->kind_size_color)
+            $harga = DB::table('harga')
+                ->where('component_number_ori', $item->model_ukuran_warna)
                 ->where('user_id', $user)
                 ->first();
 
-            if (isset($master_price->price_per_pcs)) {
-                $item->price_sum = $master_price->price_per_pcs;
+            if (isset($harga->price_per_pcs)) {
+                $item->price_sum = $harga->price_per_pcs;
             } else {
                 $item->price_sum = null;
                 $item->keterangan = '#N/A';
             }
 
-            if ($master_price && isset($master_price->price_per_pcs)) {
-                $item->wire_cost = $master_price->price_per_pcs * $item->cl / 1000;
+            if ($harga && isset($harga->price_per_pcs)) {
+                $item->wire_cost = $harga->price_per_pcs * $item->cl / 1000;
             } else {
                 $item->wire_cost = null;
                 $item->keterangan = '#N/A';
             }
 
-
-            // $item->price_sum = $master_price->price_per_pcs;
-            // $item->wire_cost = $master_price->price_per_pcs * $item->cl / 1000;
-
             $component_cost = null;
-            $part_numbers = ['term_b', 'accb1', 'accb2', 'tubeb', 'term_a', 'acca1', 'acca2', 'tubea'];
+            $part_numbers = ['trm_b', 'acc_bag_b1', 'acc_bag_b2', 'tbe_b', 'trm_a', 'acc_bag_a1', 'acc_bag_a2', 'tbe_b'];
             $missingData = false;
 
-            foreach ($part_numbers as $part_name) {
-                $part_number = $item->{$part_name};
+            foreach ($part_numbers as $component_name) {
+                $component_number = $item->{$component_name};
 
-                if (!empty($part_number)) {
-                    if (preg_match('/=(\d+)/', $part_number, $matches)) {
+                if (!empty($component_number)) {
+                    if (preg_match('/=(\d+)/', $component_number, $matches)) {
                         $multiplier = intval($matches[1]);
 
-                        $prices = DB::table('master_price')
+                        $prices = DB::table('harga')
                             ->where('user_id', $user)
-                            ->whereIn('part_number_ori_sto', [$part_number])
+                            ->whereIn('component_number_ori', [$component_number])
                             ->pluck('price_per_pcs')
                             ->toArray();
 
@@ -430,9 +446,9 @@ class Proses1AController extends Controller
                             break;
                         }
                     } else {
-                        $prices = DB::table('master_price')
+                        $prices = DB::table('harga')
                             ->where('user_id', $user)
-                            ->whereIn('part_number_ori_sto', [$part_number])
+                            ->whereIn('component_number_ori', [$component_number])
                             ->pluck('price_per_pcs')
                             ->toArray();
 
@@ -451,7 +467,7 @@ class Proses1AController extends Controller
                         $component_cost += $price;
                     }
                 }
-                // dd($part_number);
+                // dd($component_number);
             }
 
             if ($missingData) {
@@ -463,8 +479,6 @@ class Proses1AController extends Controller
             $material_cost = $item->wire_cost + $component_cost;
             $material_cost_amount = $material_cost * $total_qty;
 
-            // TOTAL COST
-            // $total_cost = $process_cost + $material_cost;
             // TOTAL COST AMOUNT
             $total_amount = $material_cost_amount + $process_cost_amount;
 
@@ -480,34 +494,30 @@ class Proses1AController extends Controller
             $item->save();
         }
 
-        return view('proses_fa_1a.index', compact('count', 'proses_fa_1a'));
+        return view('proses_pa.index', compact('count', 'proses_pa'));
     }
 
     public function export_excel_proses_fa_1a()
     {
         set_time_limit(0);
         $user = Auth::id();
-        $dataToExport = ProsesFa_1A::where('user_id', $user)->get();
-        return Excel::download(new ProsesPAExport($dataToExport), 'proses_pa_data.xlsx');
+        $dataToExport = Proses_PA::where('user_id', $user)->get();
+        return Excel::download(new ProsesPAExport($dataToExport), 'Proses Preparation.xlsx');
     }
 
     public function destroy($id)
     {
         $user = Auth::id();
-        ProsesFa_1A::where('user_id', $user)->delete($id);
+        Proses_PA::where('user_id', $user)->delete($id);
         return response()->json(['success' => " Deleted successfully.", 'tr' => 'tr_' . $id]);
     }
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function deleteAll_proses_pa(Request $request)
     {
         $ids = $request->ids;
         $user = Auth::id();
 
-        ProsesFa_1A::where('user_id', $user)->whereIn('id', explode(",", $ids))->delete();
+        Proses_PA::where('user_id', $user)->whereIn('id', explode(",", $ids))->delete();
         return response()->json(['success' => " Deleted successfully."]);
     }
 }
