@@ -243,7 +243,7 @@ class Proses1AController extends Controller
                     'ukuran' => $properti_nonsingle->ukuran,
                     'warna' => $properti_nonsingle->warna,
                     'model_ukuran_warna' => $properti_nonsingle->model . ' ' . $properti_nonsingle->ukuran . ' ' . $properti_nonsingle->warna,
-                    'specific_component_number' => $properti_nonsingle->specific_component_number,
+                    'specific_component_number' => $properti_nonsingle->no_item,
                     'cl' => $properti_nonsingle->cl,
                     'trm_b' => $properti_nonsingle->trm_b,
                     'acc_bag_b1' => $properti_nonsingle->acc_bag_b1,
@@ -318,8 +318,9 @@ class Proses1AController extends Controller
 
             $process = 0;
 
-            // Set process to 30 for specific conditions
-            if (
+            if (stripos($ctrlno_value, 'SOLDER') !== false || stripos($ctrlno_value, 'JOINT') !== false) {
+                $process = 30;
+            } elseif (
                 !$term_b_value && !$accb1_value && !$accb2_value &&
                 !$tubeb_value && !$term_a_value && !$acca1_value && !$acca2_value && !$tubea_value
             ) {

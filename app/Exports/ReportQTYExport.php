@@ -20,55 +20,55 @@ class ReportQTYExport implements FromCollection, WithHeadings, ShouldAutoSize, W
         $user = Auth::id();
 
         $prosesData = DB::table('proses')
-            ->select('kind_size_color', 'cust_part_no')
-            ->groupBy('kind_size_color', 'cust_part_no')
+            ->select('model_ukuran_warna', 'specific_component_number')
+            ->groupBy('model_ukuran_warna', 'specific_component_number')
             ->where('user_id', $user)
             ->get();
 
-        $prosesFa1aData = DB::table('proses_fa_1a')
-            ->select('kind_size_color', 'cust_part_no')
-            ->groupBy('kind_size_color', 'cust_part_no')
+        $prosesPaData = DB::table('proses_pa')
+            ->select('model_ukuran_warna', 'specific_component_number')
+            ->groupBy('model_ukuran_warna', 'specific_component_number')
             ->where('user_id', $user)
             ->get();
 
-        $combinedData = $prosesData->concat($prosesFa1aData)->unique();
+        $combinedData = $prosesData->concat($prosesPaData)->unique();
 
         $result = [];
 
         foreach ($combinedData as $data) {
             $cl_sum_proses = DB::table('proses')
                 ->selectRaw('SUM(CASE 
-                WHEN kind_size_color LIKE "%=%" THEN (SUBSTRING_INDEX(kind_size_color, "=", -1) * total_qty) / 1000 
+                WHEN model_ukuran_warna LIKE "%=%" THEN (SUBSTRING_INDEX(model_ukuran_warna, "=", -1) * total_qty) / 1000 
                 ELSE (cl * total_qty) / 1000 
                 END) as total')
-                ->where('kind_size_color', $data->kind_size_color)
-                ->where('cust_part_no', $data->cust_part_no)
+                ->where('model_ukuran_warna', $data->model_ukuran_warna)
+                ->where('specific_component_number', $data->specific_component_number)
                 ->first();
 
             $total_fa = $cl_sum_proses->total;
 
-            $cl_sum_proses_fa1a = DB::table('proses_fa_1a')
+            $cl_sum_proses_pa = DB::table('proses_pa')
                 ->selectRaw('SUM(CASE 
-                WHEN kind_size_color LIKE "%=%" THEN (SUBSTRING_INDEX(kind_size_color, "=", -1) * total_qty) / 1000 
+                WHEN model_ukuran_warna LIKE "%=%" THEN (SUBSTRING_INDEX(model_ukuran_warna, "=", -1) * total_qty) / 1000 
                 ELSE (cl * total_qty) / 1000 
                 END) as total')
-                ->where('kind_size_color', $data->kind_size_color)
-                ->where('cust_part_no', $data->cust_part_no)
+                ->where('model_ukuran_warna', $data->model_ukuran_warna)
+                ->where('specific_component_number', $data->specific_component_number)
                 ->first();
 
-            $total_pa = $cl_sum_proses_fa1a->total;
+            $total_pa = $cl_sum_proses_pa->total;
 
             $cl_sum_combined = $total_fa + $total_pa;
             $result[] = [
-                'kind_size_color' => $data->kind_size_color,
-                'cust_part_no' => $data->cust_part_no,
+                'model_ukuran_warna' => $data->model_ukuran_warna,
+                'specific_component_number' => $data->specific_component_number,
                 'cl_sum' => $cl_sum_combined,
             ];
         }
 
         $groups = [
-            'term_b', 'accb1', 'accb2', 'tubeb',
-            'term_a', 'acca1', 'acca2', 'tubea',
+            'trm_b', 'acc_bag_b1', 'acc_bag_b2', 'tbe_b',
+            'trm_a', 'acc_bag_a1', 'acc_bag_a2', 'tbe_a',
         ];
 
         $results = [];
@@ -106,17 +106,17 @@ class ReportQTYExport implements FromCollection, WithHeadings, ShouldAutoSize, W
                         ->where($group, $key)
                         ->sum('total_qty');
 
-                    $qtySumProsesFa1a = DB::table('proses_fa_1a')
+                    $qtySumProsesPa = DB::table('proses_pa')
                         ->where('user_id', $user)
                         ->where($group, $key)
                         ->sum('total_qty');
 
-                    $qtySumCombined = $qtySumProses + $qtySumProsesFa1a;
+                    $qtySumCombined = $qtySumProses + $qtySumProsesPa;
 
                     if (!isset($results[$key])) {
                         $results[$key] = [
                             'material' => $key,
-                            'buppin' => $key,
+                            'item' => $key,
                             'qty_sum_combined' => 0,
                         ];
                     }
@@ -128,34 +128,34 @@ class ReportQTYExport implements FromCollection, WithHeadings, ShouldAutoSize, W
                         ->where($group, $key)
                         ->sum('total_qty');
 
-                    $qtySumProsesFa1a = DB::table('proses_fa_1a')
+                    $qtySumProsesPa = DB::table('proses_pa')
                         ->where('user_id', $user)
                         ->where($group, $key)
                         ->sum('total_qty');
 
-                    $qtySumCombined = $qtySumProses + $qtySumProsesFa1a;
+                    $qtySumCombined = $qtySumProses + $qtySumProsesPa;
 
-                    $itemList = DB::table('item_list')
-                        ->where('part_no', 'LIKE', '%' . $key . '%')
+                    $itemList = DB::table('item')
+                        ->where('component_number', 'LIKE', '%' . $key . '%')
                         ->where('user_id', $user)
                         ->first();
 
                     $material = $key;
-                    $buppin = $key;
+                    $item = $key;
 
                     if ($itemList) {
-                        $formattedPartNo = convertMaterialToPartNo($itemList->part_no);
-                        $buppin = $itemList->cust_pno;
+                        $formattedPartNo = convertMaterialToPartNo($itemList->component_number);
+                        $item = $itemList->specific_component_number;
 
                         if ($formattedPartNo == $material) {
-                            $buppin = $itemList->cust_pno;
+                            $item = $itemList->specific_component_number;
                         }
                     }
 
                     if (!isset($results[$key])) {
                         $results[$key] = [
                             'material' => $material,
-                            'buppin' => $buppin,
+                            'item' => $item,
                             'qty_sum_combined' => 0,
                         ];
                     }

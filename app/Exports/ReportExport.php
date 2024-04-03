@@ -35,7 +35,7 @@ class ReportExport implements FromCollection, WithMultipleSheets, WithStyles, Sh
 
     public function sheets(): array
     {
-        $groupedData = $this->dataToExport->groupBy('conveyor');
+        $groupedData = $this->dataToExport->groupBy('bagian');
 
         $sheets = [];
 
@@ -70,7 +70,7 @@ class FirstSheet implements FromCollection, WithTitle, WithHeadings, WithStyles,
     {
         return [
             'Month',
-            'Line',
+            'Kav',
             'Bagian',
             'Material',
             'Total QTY',
@@ -108,7 +108,7 @@ class SecondSheet implements FromCollection, WithTitle, WithStyles, ShouldAutoSi
     {
         $data = [];
 
-        foreach ($this->groupedData as $conveyor => $conveyorGroup) {
+        foreach ($this->groupedData as $bagian => $conveyorGroup) {
             $conveyorRow = [];
 
             $data[] = $conveyorRow;
@@ -116,22 +116,22 @@ class SecondSheet implements FromCollection, WithTitle, WithStyles, ShouldAutoSi
             $processedCarLines = [];
 
             foreach ($conveyorGroup as $dataRow) {
-                $carLine = $dataRow->car_line;
+                $kav = $dataRow->kav;
 
-                if (!in_array($carLine, $processedCarLines)) {
-                    $preAssaySums = $this->calculatePreAssaySums($conveyorGroup->where('car_line', $carLine));
+                if (!in_array($kav, $processedCarLines)) {
+                    $preAssaySums = $this->calculatePreAssaySums($conveyorGroup->where('kav', $kav));
 
                     $row = [
                         'Month' => $dataRow->month,
-                        'line' => $carLine,
-                        'Bagian' => $dataRow->conveyor,
+                        'kav' => $kav,
+                        'Bagian' => $dataRow->bagian,
                         'Total Qty' => $preAssaySums['pre_assay_total_qty'],
                         'Total Cost Amount' => $preAssaySums['pre_assay_total_cost_amount'],                        
                     ];
 
                     $data[] = $row;
 
-                    $processedCarLines[] = $carLine;
+                    $processedCarLines[] = $kav;
                 }
             }
         }

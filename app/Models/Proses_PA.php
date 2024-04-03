@@ -19,7 +19,7 @@ class Proses_PA extends Model
         'ukuran',
         'warna',
         'model_ukuran_warna',
-        'specific_component_number',
+        'no_item',
         'cl',
         'trm_b',
         'acc_bag_b1',

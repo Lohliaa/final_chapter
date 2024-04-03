@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\ConveyorSheet;
-use App\Exports\ConveyorSheetExport;
 use App\Exports\ReportCVExport;
 use App\Models\Proses;
 use App\Exports\ReportExport;
 use App\Exports\ReportQTYExport;
-use App\Models\ProsesFa_1A;
+use App\Models\Proses_PA;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -31,9 +29,9 @@ class ReportController extends Controller
         $dataToExport = DB::table('proses')
             ->select(
                 'month',
-                'car_line',
-                'conveyor',
-                'ctrl_no',
+                'kav',
+                'bagian',
+                'material',
                 DB::raw("CASE WHEN total_qty IN ('#N/A', '#VALUE!', '#REF!') THEN 'N/A' ELSE total_qty END as total_qty"),                'wire_cost',
                 'component_cost',
                 'material_cost',
@@ -44,12 +42,12 @@ class ReportController extends Controller
                 'total_amount'
             )
             ->where('user_id', $user)
-            ->unionAll(DB::table('proses_fa_1a')
+            ->unionAll(DB::table('proses_pa')
                 ->select(
                     'month',
-                    'car_line',
-                    'conveyor',
-                    'ctrl_no',
+                    'kav',
+                    'bagian',
+                    'material',
                     DB::raw("CASE WHEN total_qty IN ('#N/A', '#VALUE!', '#REF!') THEN 'N/A' ELSE total_qty END as total_qty"),                    'wire_cost',
                     'component_cost',
                     'material_cost',
@@ -60,7 +58,7 @@ class ReportController extends Controller
                     'total_amount')
                 ->where('user_id', $user))
             ->get();
-        return Excel::download(new ReportExport($dataToExport), 'Hasil STO.xlsx');
+        return Excel::download(new ReportExport($dataToExport), 'Report Amount.xlsx');
     }
     
     public function export_cv()
@@ -68,19 +66,19 @@ class ReportController extends Controller
         $user = Auth::id();
         set_time_limit(0);
 
-        $conveyorsFromProses = Proses::select('conveyor', 'kind_size_color', 'cust_part_no')
+        $conveyorsFromProses = Proses::select('bagian', 'model_ukuran_warna', 'specific_component_number')
             ->where('user_id', $user)
             ->distinct()
             ->get();
 
-        $conveyorsFromProsesFa1A = ProsesFa_1A::select('conveyor', 'kind_size_color', 'cust_part_no')
+        $conveyorsFromProsesPa = Proses_PA::select('bagian', 'model_ukuran_warna', 'specific_component_number')
             ->where('user_id', $user)
             ->distinct()
             ->get();
 
-        $allConveyors = $conveyorsFromProses->concat($conveyorsFromProsesFa1A);
+        $allConveyors = $conveyorsFromProses->concat($conveyorsFromProsesPa);
 
-        $groupedConveyors = $allConveyors->groupBy('conveyor');
+        $groupedConveyors = $allConveyors->groupBy('bagian');
 
         $conveyorSheets = [];
 
@@ -90,18 +88,18 @@ class ReportController extends Controller
 
         $exportSheets = new ReportCVExport($conveyorSheets);
 
-        return Excel::download($exportSheets, 'report_cv.xlsx');
+        return Excel::download($exportSheets, 'Report Perbagian.xlsx');
     }
 
     public function export_qty()
     {
         set_time_limit(0);
 
-        $useProsesFa1a = true;
+        $useProsesPa = true;
 
-        $reportExport = new ReportQTYExport($useProsesFa1a);
+        $reportExport = new ReportQTYExport($useProsesPa);
 
-        $fileName = 'report_all.xlsx';
+        $fileName = 'Report All.xlsx';
 
         return Excel::download($reportExport, $fileName);
     }

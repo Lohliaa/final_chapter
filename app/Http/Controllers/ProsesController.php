@@ -200,7 +200,7 @@ class ProsesController extends Controller
                     $size_decimal = $properti_single->ukuran;
                 }
 
-                $itemList = DB::table('item')
+                $item = DB::table('item')
                     ->where('component_number', $properti_single->model . ' ' . $size_decimal . ' ' . $properti_single->warna,)
                     ->where('user_id', $user)
                     ->first();
@@ -216,7 +216,7 @@ class ProsesController extends Controller
                     'ukuran' => $size_decimal,
                     'warna' => $properti_single->warna,
                     'model_ukuran_warna' => $properti_single->model . ' ' . $size_decimal . ' ' . $properti_single->warna,
-                    'specific_component_number' => $itemList ? $itemList->specific_component_number : '',
+                    'specific_component_number' => $item ? $item->specific_component_number : '',
                     'cl' => $properti_single->cl,
                     'trm_b' => $properti_single->trm_b,
                     'acc_bag_b1' => $properti_single->acc_bag_b1,
@@ -244,7 +244,7 @@ class ProsesController extends Controller
                     'ukuran' => $properti_nonsingle->ukuran,
                     'warna' => $properti_nonsingle->warna,
                     'model_ukuran_warna' => $properti_nonsingle->model . ' ' . $properti_nonsingle->ukuran . ' ' . $properti_nonsingle->warna,
-                    'specific_component_number' => $properti_nonsingle->specific_component_number,
+                    'specific_component_number' => $properti_nonsingle->no_item,
                     'cl' => $properti_nonsingle->cl,
                     'trm_b' => $properti_nonsingle->trm_b,
                     'acc_bag_b1' => $properti_nonsingle->acc_bag_b1,
@@ -319,8 +319,9 @@ class ProsesController extends Controller
 
             $process = 0;
 
-            // Set process to 30 for specific conditions
-            if (
+            if (stripos($ctrlno_value, 'SOLDER') !== false || stripos($ctrlno_value, 'JOINT') !== false) {
+                $process = 30;
+            } elseif (
                 !$term_b_value && !$accb1_value && !$accb2_value &&
                 !$tubeb_value && !$term_a_value && !$acca1_value && !$acca2_value && !$tubea_value
             ) {
@@ -332,10 +333,10 @@ class ProsesController extends Controller
             ) {
                 $process = 20;
             } elseif (
-                stripos($ctrlno_value, 'SOLDER') !== false || stripos($ctrlno_value, 'JOINT') !== false ||
-                ($accb1_value && $tubeb_value && $term_a_value && ($acca1_value || !$acca1_value) ||
-                    $term_a_value && $acca1_value && !$acca2_value && $tubea_value || $accb1_value && $tubea_value && $term_b_value &&
-                    ($acca1_value || !$acca1_value) || $term_b_value && !$accb2_value && $tubeb_value && !$tubea_value)
+                $accb1_value && $tubeb_value && $term_a_value && ($acca1_value || !$acca1_value) ||
+                $term_a_value && $acca1_value && !$acca2_value && $tubea_value ||
+                $accb1_value && $tubea_value && $term_b_value && ($acca1_value || !$acca1_value) ||
+                $term_b_value && !$accb2_value && $tubeb_value && !$tubea_value
             ) {
                 $process = 30;
             } elseif (

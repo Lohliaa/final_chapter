@@ -30,48 +30,48 @@ class ConveyorSheetExport implements FromCollection, WithHeadings, ShouldAutoSiz
         $rows = [];
         $user = Auth::id();
 
-        foreach ($this->conveyorData as $conveyor) {
+        foreach ($this->conveyorData as $bagian) {
             $cl_sum_proses = DB::table('proses')
-                ->where('conveyor', $conveyor->conveyor)
-                ->where('kind_size_color', $conveyor->kind_size_color)
-                ->where('cust_part_no', $conveyor->cust_part_no)
+                ->where('bagian', $bagian->bagian)
+                ->where('model_ukuran_warna', $bagian->model_ukuran_warna)
+                ->where('specific_component_number', $bagian->specific_component_number)
                 ->where('user_id', $user)
                 ->sum(DB::raw('(cl * total_qty) / 1000'));
 
-            $cl_sum_proses_fa1a = DB::table('proses_fa_1a')
-                ->where('conveyor', $conveyor->conveyor)
-                ->where('kind_size_color', $conveyor->kind_size_color)
-                ->where('cust_part_no', $conveyor->cust_part_no)
+            $cl_sum_proses_fa1a = DB::table('proses_pa')
+                ->where('bagian', $bagian->bagian)
+                ->where('model_ukuran_warna', $bagian->model_ukuran_warna)
+                ->where('specific_component_number', $bagian->specific_component_number)
                 ->where('user_id', $user)
                 ->sum(DB::raw('(cl * total_qty) / 1000'));
 
             $cl_sum_combined = $cl_sum_proses + $cl_sum_proses_fa1a;
 
             $rows[] = [
-                'Conveyor' => $conveyor->conveyor,
-                'Material' => $conveyor->kind_size_color,
-                'Buppin' => $conveyor->cust_part_no,
+                'Bagian' => $bagian->bagian,
+                'Material' => $bagian->model_ukuran_warna,
+                'Item' => $bagian->specific_component_number,
                 'QTY' => $cl_sum_combined,
             ];
         }
 
         $groups = [
-            'term_b', 'accb1', 'accb2', 'tubeb',
-            'term_a', 'acca1', 'acca2', 'tubea',
+            'trm_b', 'acc_bag_b1', 'acc_bag_b2', 'tbe_b',
+            'trm_a', 'acc_bag_a1', 'acc_bag_a2', 'tbe_a',
         ];
 
         $results = [];
 
         foreach ($groups as $group) {
             $data_fa = DB::table('proses')
-                ->where('conveyor', $conveyor->conveyor)
+                ->where('bagian', $bagian->bagian)
                 ->select($group)
                 ->groupBy($group)
                 ->where('user_id', $user)
                 ->get();
 
-            $data_pa = DB::table('proses_fa_1a')
-                ->where('conveyor', $conveyor->conveyor)
+            $data_pa = DB::table('proses_pa')
+                ->where('bagian', $bagian->bagian)
                 ->select($group)
                 ->groupBy($group)
                 ->where('user_id', $user)
@@ -95,23 +95,23 @@ class ConveyorSheetExport implements FromCollection, WithHeadings, ShouldAutoSiz
                 if ($isNumeric) {
                     $qtySumProses = DB::table('proses')
                         ->where('user_id', $user)
-                        ->where('conveyor', $conveyor->conveyor)
+                        ->where('bagian', $bagian->bagian)
                         ->where($group, $key)
                         ->sum('total_qty');
 
-                    $qtySumProsesFa1a = DB::table('proses_fa_1a')
+                    $qtySumProsesPa = DB::table('proses_pa')
                         ->where('user_id', $user)
-                        ->where('conveyor', $conveyor->conveyor)
+                        ->where('bagian', $bagian->bagian)
                         ->where($group, $key)
                         ->sum('total_qty');
 
-                    $qtySumCombined = $qtySumProses + $qtySumProsesFa1a;
+                    $qtySumCombined = $qtySumProses + $qtySumProsesPa;
 
                     if (!isset($results[$key])) {
                         $results[$key] = [
-                            'conveyor' => $conveyor->conveyor,
+                            'bagian' => $bagian->bagian,
                             'material' => $key,
-                            'buppin' => $key,
+                            'item' => $key,
                             'qty_sum_combined' => 0,
                         ];
                     }
@@ -120,41 +120,45 @@ class ConveyorSheetExport implements FromCollection, WithHeadings, ShouldAutoSiz
                 } elseif ($containsHyphen && $containsLetter) {
                     $qtySumProses = DB::table('proses')
                         ->where('user_id', $user)
-                        ->where('conveyor', $conveyor->conveyor)
+                        ->where('bagian', $bagian->bagian)
                         ->where($group, $key)
                         ->sum('total_qty');
 
-                    $qtySumProsesFa1a = DB::table('proses_fa_1a')
+                    $qtySumProsesPa = DB::table('proses_pa')
                         ->where('user_id', $user)
-                        ->where('conveyor', $conveyor->conveyor)
+                        ->where('bagian', $bagian->bagian)
                         ->where($group, $key)
                         ->sum('total_qty');
 
-                    $qtySumCombined = $qtySumProses + $qtySumProsesFa1a;
+                    $qtySumCombined = $qtySumProses + $qtySumProsesPa;
 
-                    $itemList = DB::table('item_list')
-                        ->where('part_no', 'LIKE', '%' . $key . '%')
+                    $item = DB::table('item')
+                        ->where('component_number', 'LIKE', '%' . $key . '%')
                         ->where('user_id', $user)
                         ->first();
 
                     $material = $key;
-                    $buppin = $key;
+                    $item = $key;
 
-                    if ($itemList) {
+                    if ($item) {
                         $exportUtilities = new ExportUtilities();
-                        $formattedPartNo = $exportUtilities->convertMaterialToPartNo($itemList->part_no);
-                        $buppin = $itemList->cust_pno;
-
-                        if ($formattedPartNo == $material) {
-                            $buppin = $itemList->cust_pno;
+                        // Check if $item is an object
+                        if (is_object($item) && property_exists($item, 'component_number')) {
+                            $formattedPartNo = $exportUtilities->convertMaterialToPartNo($item->component_number);
+                            $item = $item->specific_component_number;
+                    
+                            if ($formattedPartNo == $material) {
+                                $item = $item->specific_component_number;
+                            }
                         }
                     }
+                    
 
                     if (!isset($results[$key])) {
                         $results[$key] = [
-                            'conveyor' => $conveyor->conveyor,
+                            'bagian' => $bagian->bagian,
                             'material' => $material,
-                            'buppin' => $buppin,
+                            'item' => $item,
                             'qty_sum_combined' => 0,
                         ];
                     }
