@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\Fa_1C;
+use App\Models\Area_Final;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -10,25 +10,25 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class FA_1CImport implements ToModel, WithHeadingRow, WithBatchInserts
+class AreaFinalImport implements ToModel, WithHeadingRow, WithBatchInserts
 {
     public function model(array $row)
     {
         $userRole = Auth::id();
 
-        return new Fa_1C([
-            "car_line" => $row['carline'],
-            "conveyor" => $row['conveyor'],
-            "addressing_store" => $row['addressing_store'],
-            "ctrl_no" => $row['ctrl_no'],
-            "colour" => $row['colour'],
-            "qty_kbn" => $row['qty_kbn'],
-            "issue" => $row['issue'],
+        return new Area_Final([
+            "kav" => $row['kav'],
+            "bagian" => $row['bagian'],
+            "area_store" => $row['area_store'],
+            "material" => $row['material'],
+            "warna" => $row['warna'],
+            "qty_board" => $row['qty_board'],
+            "publish" => $row['publish'],
             "total_qty" => $row['total_qty'],
-            "housing" => $row['housing'],
+            "plank" => $row['plank'],
             "month" => $row['month'],
             "year" => $row['year'],
-            "sai" => $row['sai'],
+            "factory" => $row['factory'],
             "user_id" => $userRole,
         ]);
 

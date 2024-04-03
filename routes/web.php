@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AreaFinalController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -17,7 +18,6 @@ use App\Http\Controllers\ProsesController;
 use App\Http\Controllers\Proses1AController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UMHController;
-use App\Models\Fa_1C;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Properti_NonsingleController;
 use App\Http\Controllers\Properti_SingleController;
@@ -111,17 +111,17 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/search', [HargaController::class, 'search'])->name('search.harga');
     Route::get('/get-count-master-price', [HargaController::class, 'getCount'])->name('get.count.harga');
 
-    // FA-841W
-    Route::resource('data-fa-841w', FA_1CController::class);
-    Route::post('/import_excel_fa', [FA_1CController::class, 'import_excel_fa']);
-    Route::get('/export_excel_fa', [FA_1CController::class, 'export_excel_fa']);
-    // Route::get('/cari_fa', [FA_1CController::class, 'cari_fa'])->name('fa_1c.cari_fa');
-    Route::delete('delete/{id}', [FA_1CController::class, 'destroy']);
-    Route::delete('DeleteAll_fa', [FA_1CController::class, 'deleteAll_fa']);
-    Route::post('reset_fa', [FA_1CController::class, 'reset_fa'])->name('reset_fa');
-    Route::get('edit_fa/{id}', [FA_1CController::class, 'edit'])->name('edit.fa_1c');
-    Route::get('/cari_fa', [FA_1CController::class, 'cari_fa'])->name('search.fa_1c');
-    Route::get('/get-count-fa-1c', [FA_1CController::class, 'getCount'])->name('get.count.fa_1c');
+    // AREA FINAL
+    Route::resource('area_final', AreaFinalController::class);
+    Route::post('/import_excel_fa', [AreaFinalController::class, 'import_excel_fa']);
+    Route::get('/export_excel_fa', [AreaFinalController::class, 'export_excel_fa']);
+    // Route::get('/cari_fa', [AreaFinalController::class, 'cari_fa'])->name('area_final.cari_fa');
+    Route::delete('delete/{id}', [AreaFinalController::class, 'destroy']);
+    Route::delete('DeleteAll_fa', [AreaFinalController::class, 'deleteAll_fa']);
+    Route::post('reset_fa', [AreaFinalController::class, 'reset_fa'])->name('reset_fa');
+    Route::get('edit_fa/{id}', [AreaFinalController::class, 'edit'])->name('edit.area_final');
+    Route::get('/cari_fa', [AreaFinalController::class, 'cari_fa'])->name('search.area_final');
+    Route::get('/get-count-fa-1c', [AreaFinalController::class, 'getCount'])->name('get.count.area_final');
 
     // PROSES FA
     Route::resource('proses', ProsesController::class);

@@ -41,7 +41,7 @@
             <div class="form-group col-12 d-flex flex-wrap align-items-center">
                 <button id="reset-fa-button" class="btn btn-danger mr-2">Reset</button>
 
-                <a href="{{ route('data-fa-841w.create') }}"
+                <a href="{{ route('area_final.create') }}"
                     class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
 
                 <button type="button" class="btn btn-default mr-2" data-toggle="modal"
@@ -87,7 +87,7 @@
                     data-url="{{ url('DeleteAll_fa') }}">Delete</button>
                 <button type="button" class="btn btn-default mr-2" onclick="handleEditClick()">Edit</button>
                 <a href="{{ url('proses') }}" class="btn btn-default mr-2">Proses</a>
-                <a href="{{ url('data-fa-841w') }}" class="btn btn-default mr-2">Refresh</a>
+                <a href="{{ url('area_final') }}" class="btn btn-default mr-2">Refresh</a>
             
                 
                 <input type="text" name="search" id="searchfa_1c" class="form-control w-25 mr-2"
@@ -102,15 +102,15 @@
                         <tr class="table-secondary" style=" position: sticky; top: 0;">
                             <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
                             <th scope="col">No</th>
-                            <th scope="col">Line</th>
+                            <th scope="col">Kav</th>
                             <th scope="col">Bagian</th>
                             <th scope="col">Area Store</th>
                             <th scope="col">Material</th>
                             <th scope="col">Warna</th>
                             <th scope="col">Qty Board</th>
-                            <th scope="col">Issue</th>
+                            <th scope="col">Publish</th>
                             <th scope="col">Total Qty</th>
-                            <th scope="col">Housing</th>
+                            <th scope="col">Plank</th>
                             <th scope="col">Month</th>
                             <th scope="col">Year</th>
                             <th scope="col">Factory</th>
@@ -118,23 +118,23 @@
                     </thead>
                     <tbody>
                         <?php $no=1 ?>
-                        @forelse ($fa_1c as $c)
+                        @forelse ($area_final as $c)
                         <tr id="tr_{{ $c->id }}">
                             <td><input type="checkbox" class="sub_chk" data-id="{{$c->id}}"
                                     onclick="handleCheckboxChange({{ $c->id }})"></td>
                             <td>{{$no++}}</td>
-                            <td>{{ $c->car_line }}</td>
-                            <td>{{ $c->conveyor }}</td>
-                            <td>{{ $c->addressing_store }}</td>
-                            <td>{{ $c->ctrl_no }}</td>
-                            <td>{{ $c->colour }}</td>
-                            <td>{{ $c->qty_kbn }}</td>
-                            <td>{{ $c->issue }}</td>
+                            <td>{{ $c->kav }}</td>
+                            <td>{{ $c->bagian }}</td>
+                            <td>{{ $c->area_store }}</td>
+                            <td>{{ $c->material }}</td>
+                            <td>{{ $c->warna }}</td>
+                            <td>{{ $c->qty_board }}</td>
+                            <td>{{ $c->publish }}</td>
                             <td>{{ $c->total_qty }}</td>
-                            <td>{{ $c->housing }}</td>
+                            <td>{{ $c->plank }}</td>
                             <td>{{ $c->month }}</td>
                             <td>{{ $c->year }}</td>
-                            <td>{{ $c->sai }}</td>
+                            <td>{{ $c->factory }}</td>
                         </tr>
                         @empty
                         <br>
@@ -153,13 +153,13 @@
     function cari_fa() {
         const selected = document.getElementById('searchfa_1c').value;
     
-        fetch(`{{ route('search.fa_1c') }}?fa_1c=${selected}`)
+        fetch(`{{ route('search.area_final') }}?area_final=${selected}`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('fa_1cTableBody').innerHTML = data;
 
                 // Memperbarui jumlah data langsung dari respons server
-                fetch(`{{ route('get.count.fa_1c') }}?fa_1c=${selected}`)
+                fetch(`{{ route('get.count.area_final') }}?area_final=${selected}`)
                     .then(response => response.text())
                     .then(countData => {
                         document.getElementById('count').innerText = 'Jumlah Data ' + countData;
