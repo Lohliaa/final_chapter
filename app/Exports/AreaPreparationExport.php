@@ -9,25 +9,26 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
-class FA_1AExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
+class AreaPreparationExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
     public function collection()
     {
         $user = Auth::id();
-        $type = DB::table('fa_1a')->select(
-            'car_line',
-            'conveyor',
-            'addressing_store',
-            'ctrl_no',
-            'colour',
-            'qty_kbn',
-            'issue',
+        $type = FacadesDB::table('area_preparation')->select(
+            'kav',
+            'bagian',
+            'area_store',
+            'material',
+            'warna',
+            'qty_board',
+            'publish',
             'total_qty',
-            'housing',
+            'plank',
             'month',
             'year',
-            'sai',
+            'factory',
         )
         ->where('user_id', $user)
         ->get();
@@ -36,15 +37,15 @@ class FA_1AExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
     public function headings(): array
     {
         return [
-            'Line',
+            'Kav',
             'Bagian',
             'Area Store',
             'Material',
             'Warna',
             'Qty Board',
-            'Issue',
+            'Publish',
             'Total Qty',
-            'Area',
+            'Plank',
             'Month',
             'Year',
             'Factory',

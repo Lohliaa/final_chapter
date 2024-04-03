@@ -20,16 +20,16 @@
                             </ul>
                         </div>
                         @endif
-                        <form action="{{ route('data-pa-841w.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('area_preparation.store') }}" method="POST" enctype="multipart/form-data">
 
                             @csrf
                             <div class="form-group">
-                                <label class="font-weight-bold">Line</label>
-                                <input type="text" class="form-control @error('car_line') is-invalid @enderror" name="car_line"
-                                    value="{{ old('car_line') }}" placeholder=" ">
+                                <label class="font-weight-bold">Kav</label>
+                                <input type="text" class="form-control @error('kav') is-invalid @enderror" name="kav"
+                                    value="{{ old('kav') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('car_line')
+                                @error('kav')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -38,11 +38,11 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Bagian</label>
-                                <input type="text" class="form-control @error('conveyor') is-invalid @enderror" name="conveyor"
-                                    value="{{ old('conveyor') }}" placeholder=" ">
+                                <input type="text" class="form-control @error('bagian') is-invalid @enderror" name="bagian"
+                                    value="{{ old('bagian') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('conveyor')
+                                @error('bagian')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -51,11 +51,11 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Area Store</label>
-                                <input type="text" class="form-control @error('addressing_store') is-invalid @enderror"
-                                    name="addressing_store" value="{{ old('addressing_store') }}" placeholder=" ">
+                                <input type="text" class="form-control @error('area_store') is-invalid @enderror"
+                                    name="area_store" value="{{ old('area_store') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('addressing_store')
+                                @error('area_store')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -63,11 +63,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Material</label>
-                                <input type="text" class="form-control @error('ctrl_no') is-invalid @enderror" name="ctrl_no"
-                                    value="{{ old('ctrl_no') }}" placeholder=" ">
+                                <input type="text" class="form-control @error('material') is-invalid @enderror" name="material"
+                                    value="{{ old('material') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('ctrl_no')
+                                @error('material')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -75,35 +75,35 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Warna</label>
-                                <input type="text" class="form-control @error('colour') is-invalid @enderror"
-                                    name="colour" value="{{ old('colour') }}" placeholder=" ">
+                                <input type="text" class="form-control @error('warna') is-invalid @enderror"
+                                    name="warna" value="{{ old('warna') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('colour')
+                                @error('warna')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">QTY Board</label>
-                                <input type="text" class="form-control @error('qty_kbn') is-invalid @enderror"
-                                    name="qty_kbn" value="{{ old('qty_kbn') }}" placeholder=" ">
+                                <label class="font-weight-bold">Qty Board</label>
+                                <input type="text" class="form-control @error('qty_board') is-invalid @enderror"
+                                    name="qty_board" value="{{ old('qty_board') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('qty_kbn')
+                                @error('qty_board')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Issue</label>
-                                <input type="text" class="form-control @error('issue') is-invalid @enderror"
-                                    name="issue" value="{{ old('issue') }}" placeholder=" ">
+                                <label class="font-weight-bold">Publish</label>
+                                <input type="text" class="form-control @error('publish') is-invalid @enderror"
+                                    name="publish" value="{{ old('publish') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('issue')
+                                @error('publish')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -122,12 +122,12 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Housing</label>
-                                <input type="text" class="form-control @error('housing') is-invalid @enderror" name="housing"
-                                    value="{{ old('housing') }}" placeholder=" ">
+                                <label class="font-weight-bold">Plank</label>
+                                <input type="text" class="form-control @error('plank') is-invalid @enderror" name="plank"
+                                    value="{{ old('plank') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('housing')
+                                @error('plank')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
@@ -159,18 +159,18 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Factory</label>
-                                <input type="text" class="form-control @error('sai') is-invalid @enderror" name="sai"
-                                    value="{{ old('sai') }}" placeholder=" ">
+                                <input type="text" class="form-control @error('factory') is-invalid @enderror" name="factory"
+                                    value="{{ old('factory') }}" placeholder=" ">
 
                                 <!-- error message untuk title -->
-                                @error('sai')
+                                @error('factory')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
                             <button type="submit" class="btn btn-md btn-success">SIMPAN</button>
-                            <a class="btn btn-md btn-primary" href="{{ route('data-pa-841w.index') }}"
+                            <a class="btn btn-md btn-primary" href="{{ route('area_preparation.index') }}"
                                 class="">KEMBALI</a>
                         </form>
                     </div>

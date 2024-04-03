@@ -105,8 +105,8 @@
           </ul>
         </li>
 
-        <li class="nav-item has-treeview {{ Request::is('area_final', 'data-pa-841w') ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link {{ Request::is('area_final', 'data-pa-841w') ? 'active' : '' }}">
+        <li class="nav-item has-treeview {{ Request::is('area_final', 'area_preparation') ? 'menu-open' : '' }}">
+          <a href="#" class="nav-link {{ Request::is('area_final', 'area_preparation') ? 'active' : '' }}">
             <i class="nav-icon fas fa-copy"></i>
             <p>
               Hasil STO
@@ -123,7 +123,7 @@
               </a>
             </li>
             <li class="nav-item has-treeview">
-              <a href="{{ url('data-pa-841w') }}" class="nav-link {{ Request::is('data-pa-841w') ? 'active' : '' }}">
+              <a href="{{ url('area_preparation') }}" class="nav-link {{ Request::is('area_preparation') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
                   Area Preparation

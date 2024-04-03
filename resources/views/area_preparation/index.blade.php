@@ -39,7 +39,7 @@
             @endif
             <div class="form-group col-12 d-flex flex-wrap align-items-center">
                 <button id="reset-pa-button" class="btn btn-danger mr-2">Reset</button>
-                <a href="{{ route('data-pa-841w.create') }}"
+                <a href="{{ route('area_preparation.create') }}"
                     class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
                 <button type="button" class="btn btn-default mr-2"
                     onclick="handleEditClick()">Edit</button>
@@ -85,7 +85,7 @@
                     data-url="{{ url('DeleteAll_pa') }}">Delete</button>
                 <a href="{{ url('proses-pa-841w') }}" class="btn btn-default mr-2">Proses</a>
 
-                <a href="{{ url('data-pa-841w') }}" class="btn btn-default mr-2">Refresh</a>
+                <a href="{{ url('area_preparation') }}" class="btn btn-default mr-2">Refresh</a>
 
                 <input type="text" name="search" id="searchfa_1a" class="form-control w-25 mr-2"
                     placeholder="Cari disini ...">
@@ -95,20 +95,20 @@
             </div>
 
             <div class="table-responsive" style="max-height: 800px; overflow-y: auto;">
-                <table class="table table-bordered" style="width: 100%;" id="fa_1aTableBody">
+                <table class="table table-bordered" style="width: 100%;" id="fa_1aTableBody">                    
                     <thead style="height:40px">
                         <tr class="table-secondary" style=" position: sticky; top: 0;">
                             <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
                             <th scope="col">No</th>
-                            <th scope="col">Line</th>
+                            <th scope="col">Kav</th>
                             <th scope="col">Bagian</th>
                             <th scope="col">Area Store</th>
                             <th scope="col">Material</th>
                             <th scope="col">Warna</th>
                             <th scope="col">Qty Board</th>
-                            <th scope="col">Issue</th>
+                            <th scope="col">Publish</th>
                             <th scope="col">Total Qty</th>
-                            <th scope="col">Housing</th>
+                            <th scope="col">Plank</th>
                             <th scope="col">Month</th>
                             <th scope="col">Year</th>
                             <th scope="col">Factory</th>
@@ -116,23 +116,23 @@
                     </thead>
                     <tbody>
                         <?php $no=1 ?>
-                        @forelse ($fa_1a as $c)
+                        @forelse ($area_preparation as $c)
                         <tr id="tr_{{ $c->id }}">
                             <td><input type="checkbox" class="sub_chk" data-id="{{$c->id}}"
                                     onclick="handleCheckboxChange({{ $c->id }})"></td>
                             <td>{{$no++}}</td>
-                            <td>{{ $c->car_line }}</td>
-                            <td>{{ $c->conveyor }}</td>
-                            <td>{{ $c->addressing_store }}</td>
-                            <td>{{ $c->ctrl_no }}</td>
-                            <td>{{ $c->colour }}</td>
-                            <td>{{ $c->qty_kbn }}</td>
-                            <td>{{ $c->issue }}</td>
+                            <td>{{ $c->kav }}</td>
+                            <td>{{ $c->bagian }}</td>
+                            <td>{{ $c->area_store }}</td>
+                            <td>{{ $c->material }}</td>
+                            <td>{{ $c->warna }}</td>
+                            <td>{{ $c->qty_board }}</td>
+                            <td>{{ $c->publish }}</td>
                             <td>{{ $c->total_qty }}</td>
-                            <td>{{ $c->housing }}</td>
+                            <td>{{ $c->plank }}</td>
                             <td>{{ $c->month }}</td>
                             <td>{{ $c->year }}</td>
-                            <td>{{ $c->sai }}</td>
+                            <td>{{ $c->factory }}</td>
                         </tr>
                         @empty
                         <br>
@@ -151,13 +151,13 @@
     function cari_pa() {
         const selected = document.getElementById('searchfa_1a').value;
     
-        fetch(`{{ route('search.fa_1a') }}?fa_1a=${selected}`)
+        fetch(`{{ route('search.area_preparation') }}?area_preparation=${selected}`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('fa_1aTableBody').innerHTML = data;
 
                 // Memperbarui jumlah data langsung dari respons server
-                fetch(`{{ route('get.count.fa_1a') }}?fa_1a=${selected}`)
+                fetch(`{{ route('get.count.area_preparation') }}?area_preparation=${selected}`)
                     .then(response => response.text())
                     .then(countData => {
                         document.getElementById('count').innerText = 'Jumlah Data ' + countData;

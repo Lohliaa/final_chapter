@@ -1,18 +1,16 @@
 <?php
 
 use App\Http\Controllers\AreaFinalController;
+use App\Http\Controllers\AreaPreparationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\FA_1AController;
-use App\Http\Controllers\FA_1CController;
 use App\Http\Controllers\HargaController;
 use App\Http\Controllers\itemController;
 use App\Http\Controllers\KonversiController;
-use App\Http\Controllers\MasterPriceController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\ProsesController;
 use App\Http\Controllers\Proses1AController;
@@ -128,24 +126,21 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/proses-data', [ProsesController::class, 'proses_fa']);
     Route::post('/import_excel_proses', [ProsesController::class, 'import_excel_proses']);
     Route::get('/export_excel_proses', [ProsesController::class, 'export_excel_proses']);
-    // Route::get('/pilih_proses', [ProsesController::class, 'pilih_proses'])->name('proses.pilih_proses');
     Route::delete('delete/{id}', [ProsesController::class, 'destroy']);
     Route::delete('DeleteAll_proses', [ProsesController::class, 'deleteAll_proses']);
-    // Route::get('/calculate', [ProsesController::class, 'calculate'])->name('proses.calculate');
     Route::get('/pilih_proses', [ProsesController::class, 'pilih_proses'])->name('search.proses');
     Route::get('/get-count-proses', [ProsesController::class, 'getCount'])->name('get.count.proses');
 
-    // PA-841W
-    Route::resource('data-pa-841w', FA_1AController::class);
-    Route::post('/import_excel_pa', [FA_1AController::class, 'import_excel_pa']);
-    Route::get('/export_excel_pa', [FA_1AController::class, 'export_excel_pa']);
-    // Route::get('/cari_pa', [FA_1AController::class, 'cari_pa'])->name('fa_1a.cari_pa');
-    Route::delete('delete/{id}', [FA_1AController::class, 'destroy']);
-    Route::delete('DeleteAll_pa', [FA_1AController::class, 'deleteAll_pa']);
-    Route::post('reset_pa', [FA_1AController::class, 'reset_pa'])->name('reset_pa');
-    Route::get('edit_pa/{id}', [FA_1AController::class, 'edit'])->name('edit.fa_1a');
-    Route::get('/cari_pa', [FA_1AController::class, 'cari_pa'])->name('search.fa_1a');
-    Route::get('/get-count-fa-1a', [FA_1AController::class, 'getCount'])->name('get.count.fa_1a');
+    // AREA PREPARATION
+    Route::resource('area_preparation', AreaPreparationController::class);
+    Route::post('/import_excel_pa', [AreaPreparationController::class, 'import_excel_pa']);
+    Route::get('/export_excel_pa', [AreaPreparationController::class, 'export_excel_pa']);
+    Route::delete('delete/{id}', [AreaPreparationController::class, 'destroy']);
+    Route::delete('DeleteAll_pa', [AreaPreparationController::class, 'deleteAll_pa']);
+    Route::post('reset_pa', [AreaPreparationController::class, 'reset_pa'])->name('reset_pa');
+    Route::get('edit_pa/{id}', [AreaPreparationController::class, 'edit'])->name('edit.area_preparation');
+    Route::get('/cari_pa', [AreaPreparationController::class, 'cari_pa'])->name('search.area_preparation');
+    Route::get('/get-count-fa-1a', [AreaPreparationController::class, 'getCount'])->name('get.count.area_preparation');
 
     // PROSES PA
     Route::resource('proses-pa-841w', Proses1AController::class);
