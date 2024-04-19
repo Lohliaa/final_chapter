@@ -4,7 +4,7 @@
 <body>
     <div class="card shadow mt-3">
         <div class="card-header py-6 mb-5">
-            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">REPORT</h2>
+            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">UNDUH REPORT</h2>
         </div>
         <div class="form-row" style="margin-left: 2%; margin-right: 2%;">
             <div class="form-group col-4">

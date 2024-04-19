@@ -98,7 +98,7 @@
               <a href="{{ url('material') }}" class="nav-link {{ Request::is('material') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
-                  Proses Material
+                  Material
                 </p>
               </a>
             </li>
@@ -136,7 +136,7 @@
         <li class="nav-item {{ Request::is('report') ? 'menu-open' : '' }}">
           <a href="{{ url('report') }}" class="nav-link {{ Request::is('report') ? 'active' : '' }}">
             <i class="fas fa-circle nav-icon"></i>
-            <p>Report</p>
+            <p>Unduh Report</p>
           </a>
         </li>
       
@@ -144,7 +144,7 @@
           @if (auth()->check() && auth()->user()->role == 'admin')
           <a href="{{ url('online-user') }}" class="nav-link {{ Request::is('online-user') ? 'active' : '' }}">
             <i class="fas fa-circle nav-icon"></i>
-            <p>Profile</p>
+            <p>Kelola Akun</p>
           </a>
           @endif
         </li>

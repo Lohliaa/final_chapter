@@ -19,12 +19,12 @@ class UMHImport implements ToModel, WithHeadingRow, WithBatchInserts
 
         return new UMH_Master([
             "kav" => $row['kav'],
-            "code_umh1" => $row['code_10'],
-            "code_umh2" => $row['code_20'],
-            "code_umh3" => $row['code_30'],
-            "kode_umh1" => $row['proses_10'],
-            "kode_umh2" => $row['proses_20'],
-            "kode_umh3" => $row['proses_30'],
+            "code_umh1" => $row['code_umh1'],
+            "code_umh2" => $row['code_umh2'],
+            "code_umh3" => $row['code_umh3'],
+            "kode_umh1" => $row['kode_umh1'],
+            "kode_umh2" => $row['kode_umh2'],
+            "kode_umh3" => $row['kode_umh3'],
             "charge" => $row['charge'],
             "user_id" => $userRole,
         ]);
