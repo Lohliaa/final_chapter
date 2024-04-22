@@ -17,7 +17,7 @@
 <body>
     <div class="card shadow mt-3">
         <div class="card-header py-6 mb-5">
-            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">DAFTAR HARGA</h2>
+            <h2 class="m-0 font-weight-bold text-primary" style="text-align: center">DATA HARGA</h2>
         </div>
         <div class="form-row" style="margin-left: 2%; margin-right: 2%;">
             {{-- notifikasi form validasi --}}

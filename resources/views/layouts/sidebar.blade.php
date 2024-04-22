@@ -62,7 +62,7 @@
               <a href="{{ url('harga') }}" class="nav-link {{ Request::is('harga') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
-                  Daftar Harga
+                  Data Harga
                 </p>
               </a>
             </li>
@@ -70,7 +70,7 @@
               <a href="{{ url('umh_master') }}" class="nav-link {{ Request::is('umh_master') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
-                  Daftar UMH
+                  Data UMH
                 </p>
               </a>
             </li>
