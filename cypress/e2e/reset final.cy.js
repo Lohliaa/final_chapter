@@ -17,7 +17,7 @@ context('Reset Area Final', () => {
     cy.url().should('include', '/home');
 
     // Setelah login berhasil, navigasi ke route 'area final'
-    cy.visit('http://localhost:8000/data-fa-841w'); 
+    cy.visit('http://localhost:8000/area_final'); 
 
     // Temukan tombol reset berdasarkan teks
     cy.get('button:contains("Reset")').click();

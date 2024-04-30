@@ -9,7 +9,8 @@ context('Area Preparation', () => {
   beforeEach(() => {
     const url = 'http://localhost:8000/home'; // Ganti dengan URL yang sesuai
     cy.log(`Visiting URL: ${url}`);
-    cy.visit(url); 
+    cy.visit(url);
+
   });
 
   it('Area Preparation', () => {
@@ -17,7 +18,7 @@ context('Area Preparation', () => {
     cy.url().should('include', '/home');
 
     // Setelah login berhasil, navigasi ke route 'area preparation'
-    cy.visit('http://localhost:8000/data-pa-841w'); 
+    cy.visit('http://localhost:8000/area_preparation'); 
   });
 });
  

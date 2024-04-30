@@ -15,7 +15,7 @@ context('Refresh Data Item', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/item_list');
+    cy.visit('http://localhost:8000/item');
 
     // Klik tombol "Refresh"
     cy.contains('Refresh').click();

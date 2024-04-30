@@ -22,7 +22,7 @@ context('Cari Proses Material', () => {
 
     cy.visit('http://localhost:8000/proses_material');
 
-    const searchText = 'SULVUS 0.5 La-Br';
+    const searchText = 'SULVUS 0.5 La Br ';
     cy.get('#searchpm').type(searchText); 
 
   });

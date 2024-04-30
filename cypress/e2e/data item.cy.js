@@ -16,7 +16,7 @@ context('Data Item', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    // Setelah login berhasil, navigasi ke route 'item_lis'
-    cy.visit('http://localhost:8000/item_list'); 
+    // Setelah login berhasil, navigasi ke route 'item'
+    cy.visit('http://localhost:8000/item'); 
   });
 });

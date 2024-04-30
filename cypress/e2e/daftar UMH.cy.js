@@ -9,7 +9,7 @@ context('Daftar UMH', () => {
   beforeEach(() => {
     const url = 'http://localhost:8000/home'; // Ganti dengan URL yang sesuai
     cy.log(`Visiting URL: ${url}`);
-    cy.visit(url); 
+    cy.visit(url);
   });
 
   it('Daftar UMH', () => {

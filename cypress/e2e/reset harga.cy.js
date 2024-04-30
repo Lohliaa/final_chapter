@@ -16,8 +16,8 @@ context('Reset Daftar Harga', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    // Setelah login berhasil, navigasi ke route 'master_price'
-    cy.visit('http://localhost:8000/master_price'); 
+    // Setelah login berhasil, navigasi ke route 'harga'
+    cy.visit('http://localhost:8000/harga'); 
 
     // Temukan tombol reset berdasarkan teks
     cy.get('button:contains("Reset")').click();

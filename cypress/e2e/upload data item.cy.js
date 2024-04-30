@@ -15,13 +15,13 @@ context('Upload Excel Data Item', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
   
-    cy.visit('http://localhost:8000/item_list');
+    cy.visit('http://localhost:8000/item');
     
     // Klik tombol "Upload Excel"
     cy.contains('Upload Excel').click(); 
   
     // Cari input file dan ubah nilai menggunakan fixture
-    cy.get('input[type="file"]').attachFile('Item list - Copy.xlsx');
+    cy.get('input[type="file"]').attachFile('Data Item.xlsx');
 
     cy.get('button[type="submit"]').click();
   }); 

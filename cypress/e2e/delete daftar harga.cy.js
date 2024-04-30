@@ -15,7 +15,7 @@ context('Delete Daftar Harga', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/master_price');
+    cy.visit('http://localhost:8000/harga');
 
     // Pilih checkbox pertama
     cy.get('.sub_chk').eq(1).check();

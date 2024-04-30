@@ -1,4 +1,4 @@
-context('Delete Circuit Non Single', () => {
+context('Delete Properti Non Single', () => {
   const loginUser = (email, password) => {
     cy.get('#email').type(email);
     cy.get('#password').type(password);
@@ -15,7 +15,7 @@ context('Delete Circuit Non Single', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/next_proses');
+    cy.visit('http://localhost:8000/properti_nonsingle');
 
     // Pilih checkbox pertama
     cy.get('.sub_chk').eq(1).check();

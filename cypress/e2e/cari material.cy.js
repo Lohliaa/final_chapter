@@ -18,7 +18,7 @@ context('Cari Data Material', () => {
     cy.visit('http://localhost:8000/material');
 
     // Pencarian data pada field search
-    const searchText = 'SULVUS 0.5 La-Br';
+    const searchText = 'SULVUS 0.5 La Br ';
     cy.get('#searchm').type(searchText); 
   });
 });

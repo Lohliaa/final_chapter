@@ -15,7 +15,7 @@ context('Refresh Area Preparation', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/data-pa-841w');
+    cy.visit('http://localhost:8000/area_preparation');
 
     // Klik tombol "Refresh"
     cy.contains('Refresh').click();

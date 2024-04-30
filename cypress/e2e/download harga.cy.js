@@ -15,7 +15,7 @@ context('Unduh Excel Daftar Harga', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/master_price');
+    cy.visit('http://localhost:8000/harga');
 
     // Klik tombol "Download Excel"
     cy.contains('Download Excel').click();

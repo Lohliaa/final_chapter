@@ -18,7 +18,7 @@ context('Cari Daftar UMH', () => {
     cy.visit('http://localhost:8000/umh_master');
 
     // Pencarian data pada field search
-    const searchText = '114A';
+    const searchText = '114C ';
     cy.get('#searchumh').type(searchText); 
   });
 });

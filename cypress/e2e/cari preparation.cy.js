@@ -15,10 +15,10 @@ context('Cari Data Preparation', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/data-pa-841w');
+    cy.visit('http://localhost:8000/area_preparation');
 
     // Pencarian data pada field search
-    const searchText = 'YY19';
+    const searchText = 'YY19 ';
     cy.get('#searchfa_1a').type(searchText); 
   });
 });

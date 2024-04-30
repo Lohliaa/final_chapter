@@ -1,4 +1,4 @@
-context('Unduh Excel Circuit Single', () => {
+context('Unduh Excel Properti Single', () => {
   const loginUser = (email, password) => {
     cy.get('#email').type(email);
     cy.get('#password').type(password);
@@ -15,7 +15,7 @@ context('Unduh Excel Circuit Single', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/konsep_commonize');
+    cy.visit('http://localhost:8000/properti_single');
 
     // Klik tombol "Download Excel"
     cy.contains('Download Excel').click();

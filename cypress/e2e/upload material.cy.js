@@ -21,7 +21,7 @@ context('Upload Excel Material', () => {
     cy.contains('Upload Excel').click(); 
   
     // Cari input file dan ubah nilai menggunakan fixture
-    cy.get('input[type="file"]').attachFile('TRIAL 2241B - Copy.xlsx');
+    cy.get('input[type="file"]').attachFile('Material.xlsx');
 
     cy.get('button[type="submit"]').click();
   }); 

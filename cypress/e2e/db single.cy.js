@@ -1,4 +1,4 @@
-context('Circuit Single', () => {
+context('Properti Single', () => {
   // untuk mengisi formulir login dan password lalu mengirim formulir
   const loginUser = (email, password) => {
     cy.get('#email').type(email);
@@ -12,11 +12,11 @@ context('Circuit Single', () => {
     cy.visit(url); 
   });
 
-  it('Success Login and Navigate to konsep_commonize Route', () => {
+  it('Properti Single', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    // Setelah login berhasil, navigasi ke route 'konsep_commonize'
-    cy.visit('http://localhost:8000/konsep_commonize'); 
+    // Setelah login berhasil, navigasi ke route 'properti single'
+    cy.visit('http://localhost:8000/properti_single'); 
   });
 });

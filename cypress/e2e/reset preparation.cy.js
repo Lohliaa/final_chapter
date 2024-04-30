@@ -17,10 +17,10 @@ context('Reset Area Preparation', () => {
     cy.url().should('include', '/home');
 
     // Setelah login berhasil, navigasi ke route 'area preparation'
-    cy.visit('http://localhost:8000/data-pa-841w'); 
+    cy.visit('http://localhost:8000/area_preparation'); 
 
     // Temukan tombol reset berdasarkan teks
     cy.get('button:contains("Reset")').click();
 
-  });
+  }); 
 });

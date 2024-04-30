@@ -1,4 +1,4 @@
-context('Upload Excel Circuit Single', () => {
+context('Upload Excel Properti Single', () => {
   const loginUser = (email, password) => {
     cy.get('#email').type(email);
     cy.get('#password').type(password);
@@ -15,13 +15,13 @@ context('Upload Excel Circuit Single', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
   
-    cy.visit('http://localhost:8000/konsep_commonize');
+    cy.visit('http://localhost:8000/properti_single');
     
     // Klik tombol "Upload Excel"
     cy.contains('Upload Excel').click(); 
   
     // Cari input file dan ubah nilai menggunakan fixture
-    cy.get('input[type="file"]').attachFile('114A db single - Copy.xlsx');
+    cy.get('input[type="file"]').attachFile('Properti Single.xlsx');
 
     cy.get('button[type="submit"]').click();
   }); 

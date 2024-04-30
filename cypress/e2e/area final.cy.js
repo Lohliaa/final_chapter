@@ -17,6 +17,6 @@ context('Area Final', () => {
     cy.url().should('include', '/home');
 
     // Setelah login berhasil, navigasi ke route 'area final'
-    cy.visit('http://localhost:8000/data-fa-841w'); 
+    cy.visit('http://localhost:8000/area_final'); 
   });
 });

@@ -15,10 +15,10 @@ context('Cari Data Final', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/data-fa-841w');
+    cy.visit('http://localhost:8000/area_final');
 
     // Pencarian data pada field search
-    const searchText = 'YY15';
+    const searchText = 'YY15 ';
     cy.get('#searchfa_1c').type(searchText); 
   });
 });

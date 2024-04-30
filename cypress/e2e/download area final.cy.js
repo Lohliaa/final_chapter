@@ -15,7 +15,7 @@ context('Unduh Excel Area Final', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/data-fa-841w');
+    cy.visit('http://localhost:8000/area_final');
 
     // Klik tombol "Download Excel"
     cy.contains('Download Excel').click();

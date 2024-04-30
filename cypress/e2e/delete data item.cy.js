@@ -15,7 +15,7 @@ context('Delete Data Item', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/item_list');
+    cy.visit('http://localhost:8000/item');
 
     // Pilih checkbox pertama
     cy.get('.sub_chk').eq(1).check();

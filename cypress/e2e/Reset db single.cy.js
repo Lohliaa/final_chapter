@@ -1,4 +1,4 @@
-context('Reset Circuit Single', () => {
+context('Reset Properti Single', () => {
   // untuk mengisi formulir login dan password lalu mengirim formulir
   const loginUser = (email, password) => {
     cy.get('#email').type(email);
@@ -12,12 +12,12 @@ context('Reset Circuit Single', () => {
     cy.visit(url); 
   });
 
-  it('Login Success, Route ke konsep_commonize, dan Akses Route Reset', () => {
+  it('Reset Properti Single', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    // Setelah login berhasil, navigasi ke route 'konsep_commonize'
-    cy.visit('http://localhost:8000/konsep_commonize'); 
+    // Setelah login berhasil, navigasi ke route 'properti single'
+    cy.visit('http://localhost:8000/properti_single'); 
 
     // Temukan tombol reset berdasarkan teks
     cy.get('button:contains("Reset")').click();

@@ -1,4 +1,4 @@
-context('Reset Circuit Non Single', () => {
+context('Reset Properti Non Single', () => {
   // untuk mengisi formulir login dan password lalu mengirim formulir
   const loginUser = (email, password) => {
     cy.get('#email').type(email);
@@ -12,12 +12,12 @@ context('Reset Circuit Non Single', () => {
     cy.visit(url); 
   });
 
-  it('Reset Circuit Non Single', () => {
+  it('Reset Properti Non Single', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    // Setelah login berhasil, navigasi ke route 'konsep_commonize'
-    cy.visit('http://localhost:8000/next_proses'); 
+    // Setelah login berhasil, navigasi ke route 'Properti Non Single'
+    cy.visit('http://localhost:8000/properti_nonsingle'); 
 
     // Temukan tombol reset berdasarkan teks
     cy.get('button:contains("Reset")').click();

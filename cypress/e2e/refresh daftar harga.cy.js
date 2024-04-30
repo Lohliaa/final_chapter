@@ -9,13 +9,14 @@ context('Refresh Daftar Harga', () => {
     const url = 'http://localhost:8000/home';
     cy.log(`Visiting URL: ${url}`);
     cy.visit(url);
+    
   });
 
   it('Refresh Halaman', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/master_price');
+    cy.visit('http://localhost:8000/harga');
 
     // Klik tombol "Refresh"
     cy.contains('Refresh').click();

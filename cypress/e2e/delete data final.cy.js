@@ -15,7 +15,7 @@ context('Delete Data Final', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/data-fa-841w');
+    cy.visit('http://localhost:8000/area_final');
 
     // Pilih checkbox pertama
     cy.get('.sub_chk').eq(1).check();

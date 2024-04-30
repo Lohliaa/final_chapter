@@ -1,4 +1,4 @@
-context('Unduh Excel Circuit Non Single', () => {
+context('Unduh Excel Properti Non Single', () => {
   const loginUser = (email, password) => {
     cy.get('#email').type(email);
     cy.get('#password').type(password);
@@ -15,7 +15,7 @@ context('Unduh Excel Circuit Non Single', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/next_proses');
+    cy.visit('http://localhost:8000/properti_nonsingle');
 
     // Klik tombol "Download Excel"
     cy.contains('Download Excel').click();

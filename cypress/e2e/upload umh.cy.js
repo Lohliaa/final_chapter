@@ -21,7 +21,7 @@ context('Upload Excel UMH', () => {
     cy.contains('Upload Excel').click(); 
   
     // Cari input file dan ubah nilai menggunakan fixture
-    cy.get('input[type="file"]').attachFile('Daftar UMH - Copy.xlsx');
+    cy.get('input[type="file"]').attachFile('Data UMH.xlsx');
 
     cy.get('button[type="submit"]').click();
   }); 

@@ -9,7 +9,7 @@ context('Manual Book', () => {
   const downloadManualBook = () => {
     cy.get('a[title="Manual Book"]').invoke('attr', 'href').then((manualBookUrl) => {
       cy.log(`Downloading Manual Book from URL: ${manualBookUrl}`);
-      cy.request(manualBookUrl).then((response) => { // cy.request  untuk memicu pengunduhan file.
+      cy.request(manualBookUrl).then((response) => { 
         cy.log(`Download successful!`);
       });
     });

@@ -1,4 +1,4 @@
-context('Circuit Non Single', () => {
+context('Properti Non Single', () => {
   // untuk mengisi formulir login dan password lalu mengirim formulir
   const loginUser = (email, password) => {
     cy.get('#email').type(email);
@@ -12,11 +12,11 @@ context('Circuit Non Single', () => {
     cy.visit(url); 
   });
 
-  it('Next Proses', () => {
+  it('Properti Non Single', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    // Setelah login berhasil, navigasi ke route 'next_proses'
-    cy.visit('http://localhost:8000/next_proses'); 
+    // Setelah login berhasil, navigasi ke route 'properti non single'
+    cy.visit('http://localhost:8000/properti_nonsingle'); 
   });
 });

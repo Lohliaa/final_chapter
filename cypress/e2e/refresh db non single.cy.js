@@ -1,4 +1,4 @@
-context('Refresh Circuit Non Single', () => {
+context('Refresh Properti Non Single', () => {
   const loginUser = (email, password) => {
     cy.get('#email').type(email);
     cy.get('#password').type(password);
@@ -15,7 +15,7 @@ context('Refresh Circuit Non Single', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/next_proses');
+    cy.visit('http://localhost:8000/properti_nonsingle');
 
     // Klik tombol "Refresh"
     cy.contains('Refresh').click();

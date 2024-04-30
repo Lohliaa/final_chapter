@@ -18,9 +18,6 @@ context('Download Report Amount', () => {
     cy.visit('http://localhost:8000/report');
 
     cy.contains('Download Report').click();
-
-    cy.visit('http://localhost:8000/export');
-
     
   });
   

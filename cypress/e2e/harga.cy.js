@@ -16,8 +16,8 @@ context('Daftar Harga', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
   
-    // Navigasi ke route 'master_price' setelah login berhasil
-    cy.visit('http://localhost:8000/master_price'); 
+    // Navigasi ke route 'harga' setelah login berhasil
+    cy.visit('http://localhost:8000/harga'); 
   });
   
 });

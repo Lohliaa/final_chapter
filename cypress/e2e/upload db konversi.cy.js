@@ -21,7 +21,7 @@ context('Upload Excel Database Konversi', () => {
     cy.contains('Upload Excel').click(); 
   
     // Cari input file dan ubah nilai menggunakan fixture
-    cy.get('input[type="file"]').attachFile('db konversi - Copy.xlsx');
+    cy.get('input[type="file"]').attachFile('Database Konversi.xlsx');
 
     cy.get('button[type="submit"]').click();
   }); 

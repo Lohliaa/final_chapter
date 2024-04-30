@@ -20,8 +20,6 @@ context('Refresh Proses Material', () => {
     // Klik tombol "Proses"
     cy.contains('Proses').click();
 
-    cy.visit('http://localhost:8000/proses_material');
-
     cy.contains('Refresh').click();
 
   });

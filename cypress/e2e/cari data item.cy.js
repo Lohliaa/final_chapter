@@ -15,10 +15,10 @@ context('Cari Data Item', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/item_list');
+    cy.visit('http://localhost:8000/item');
 
     // Pencarian data NBA 0.5 R pada field search
-    const searchText = 'NBA 0.5 R'; 
+    const searchText = 'NBA 0.5 R '; 
     cy.get('#searchil').type(searchText);
   });
 });

@@ -18,7 +18,7 @@ context('Cari Database Konversi', () => {
     cy.visit('http://localhost:8000/database_konversi');
 
     // Pencarian data pada field search
-    const searchText = 'BTNA-B 21';
+    const searchText = 'BTNA-B 21 ';
     cy.get('#searchdk').type(searchText); 
   });
 });
