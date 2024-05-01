@@ -23,9 +23,9 @@ context('Tambah Database Konversi', () => {
     cy.contains('Tambah').click();
 
     // Temukan elemen formulir dan isi dengan data yang diberikan
-    cy.get('label:contains("Part Number") + input').first().type('PATC-TR 13');
+    cy.get('label:contains("Nomor Komponen") + input').first().type('PATC-TR 13');
     cy.get('label:contains("Item") + input').first().type('430411041');
-    cy.get('label:contains("Part Name") + input').first().type('TAPE');
+    cy.get('label:contains("Nama Komponen") + input').first().type('PEREKAT');
     cy.get('label:contains("Satuan") + input').first().type('METER');
     cy.get('label:contains("Inner Packing") + input').first().type('11');
 

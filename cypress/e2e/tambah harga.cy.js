@@ -16,15 +16,15 @@ context('Tambah Daftar Harga', () => {
     loginUser("admin@gmail.com", "admin");
     cy.url().should('include', '/home');
 
-    cy.visit('http://localhost:8000/master_price');
+    cy.visit('http://localhost:8000/harga');
     cy.wait(1000);
 
     // Cari berdasarkan teks
     cy.contains('Tambah').click();
 
     // Temukan elemen formulir dan isi dengan data yang diberikan
-    cy.get('label:contains("Part Number Ori") + input').first().type('Z092-1153-15');
-    cy.get('label:contains("Part Number MPL") + input').first().type('-');
+    cy.get('label:contains("Component Number Ori") + input').first().type('Z092-1153-15');
+    cy.get('label:contains("Component Number MPL") + input').first().type(' -');
     cy.get('label:contains("Item") + input').first().type('-');
     cy.get('label:contains("Price Per Pcs") + input').first().type('0.1764');
 

@@ -23,7 +23,7 @@ context('Tambah Daftar UMH', () => {
     cy.contains('Tambah').click();
 
     // Temukan elemen formulir dan isi dengan data yang diberikan
-    cy.get('label:contains("Line") + input').first().type('214Y');
+    cy.get('label:contains("Kav") + input').first().type('214Y');
     cy.get('label:contains("Code 10") + input').first().type('0.0010');
     cy.get('label:contains("Code 20") + input').first().type('0.0021');
     cy.get('label:contains("Code 30") + input').first().type('0.0031');

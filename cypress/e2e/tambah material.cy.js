@@ -25,10 +25,10 @@ context('Tambah Material', () => {
     // Temukan elemen formulir dan isi dengan data yang diberikan
     cy.get('label:contains("Factory") + input').first().type('PT XXX');
     cy.get('label:contains("Code") + input').first().type('AREA 07');
-    cy.get('label:contains("Cavity") + input').first().type('AREA 07');
-    cy.get('label:contains("Area") + input').first().type('SH22L-10');
-    cy.get('label:contains("Part Number") + input').first().type('SULVUS 0.5 La');
-    cy.get('label:contains("Part Name") + input').first().type('-');
+    cy.get('label:contains("Area") + input').first().type('AREA 07');
+    cy.get('label:contains("Hole") + input').first().type('SH22L-10');
+    cy.get('label:contains("Component Number") + input').first().type('SULVUS 0.5 La');
+    cy.get('label:contains("Component Name") + input').first().type('-');
     cy.get('label:contains("QTY Total") + input').first().type('700');
 
     // Klik tombol SIMPAN
