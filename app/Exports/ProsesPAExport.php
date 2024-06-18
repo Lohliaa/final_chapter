@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -12,20 +13,17 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ProsesPAExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
-    protected $dataToExport;
-
-    public function __construct(Collection $dataToExport)
-    {
-        $this->dataToExport = $dataToExport;
-    }
-
     public function collection()
     {
         $user = Auth::id();
+        
+        // Ambil data dari join antara tabel area_preparation dan proses_pa
+        $data = DB::table('area_preparation')
+            ->join('proses_pa', 'area_preparation.id', '=', 'proses_pa.area_preparation_id')
+            ->where('area_preparation.user_id', $user)
+            ->get();
 
-        return $this->dataToExport
-            ->where('user_id', $user)
-            ->map(function ($data) {
+            return $data->map(function ($data) {
                 return [
                     'month' => $data->month,
                     'kav' => $data->kav,
@@ -57,14 +55,13 @@ class ProsesPAExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
                     'umh' => $data->umh,
                     'charge' => $data->charge,
                     'process_cost' => $data->process_cost,
-                    'process_cost_amount' => $data->process_cost_amount,
+                    'process_cost_amount' =>  $data->process_cost_amount,
                     'total_amount' => $data->total_amount,
                     'keterangan' => $data->keterangan,
+    
                 ];
             });
     }
-
-
     public function headings(): array
     {
         return [

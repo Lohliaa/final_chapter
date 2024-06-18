@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\Material;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -44,7 +45,7 @@ class ProsesMaterialExport implements FromCollection, WithHeadings, ShouldAutoSi
     {
         return [
             'Factory',
-            'Code',
+            'Kav',
             'Area',
             'Hole',
             'Component Number',
@@ -91,44 +92,37 @@ class ProsesMaterialSheet implements FromCollection, WithHeadings, ShouldAutoSiz
         $this->userId = $userId;
     }
 
+    // mengambil data dari db
     public function collection()
     {
-        $data = FacadesDB::table('proses_material')
+        $data = FacadesDB::table('material')
+            ->join('proses_material', 'material.id', '=', 'proses_material.material_id')
             ->select(
-                'factory',
-                'code',
-                'area',
-                'hole',
-                'component_number',
-                'component_name',
-                'qty_total',
-                'length',
-                'konversi',
-                'qty_after_konversi',
-                'cek',
-                'price',
-                'amount'
+                'material.factory',
+                'material.code',
+                'material.area',
+                'material.hole',
+                'material.component_number',
+                'material.component_name',
+                'material.qty_total',
+                'proses_material.length',
+                'proses_material.konversi',
+                'proses_material.qty_after_konversi',
+                'proses_material.cek',
+                'proses_material.price',
+                'proses_material.amount'
             )
-            ->where('user_id', $this->userId)
+            ->where('material.user_id', $this->userId)
             ->get();
-
-        // Manipulasi nilai cek menjadi 0 hanya jika nilainya 0
-        $data = $data->map(function ($item) {
-            if ($item->cek === 0) {
-                $item->cek = 0;
-            }
-            return $item;
-        });
-
+    
         return $data;
     }
-
-
+    
     public function headings(): array
     {
         return [
             'Factory',
-            'Code',
+            'Kav',
             'Area',
             'Hole',
             'Component Number',
@@ -165,19 +159,20 @@ class SummarySheet implements FromCollection, WithHeadings, ShouldAutoSize
     {
         return FacadesDB::table('proses_material')
             ->select(
-                'code',
-                FacadesDB::raw('SUM(qty_after_konversi) as total_qty_total'),
-                FacadesDB::raw('SUM(amount) as total_amount')
+                'material.code',
+                FacadesDB::raw('SUM(proses_material.qty_after_konversi) as total_qty_total'),
+                FacadesDB::raw('SUM(proses_material.amount) as total_amount')
             )
-            ->where('user_id', $this->userId)
-            ->groupBy('code')
+            ->join('material', 'proses_material.material_id', '=', 'material.id')
+            ->where('proses_material.user_id', $this->userId)
+            ->groupBy('material.code')
             ->get();
     }
 
     public function headings(): array
     {
         return [
-            'Code',
+            'Kav',
             'Total Qty Total',
             'Total Amount'
         ];
@@ -197,11 +192,12 @@ class PartNumberSummarySheet implements FromCollection, WithHeadings, ShouldAuto
     {
         return FacadesDB::table('proses_material')
             ->select(
-                'component_number',
-                FacadesDB::raw('SUM(qty_after_konversi) as total_qty_total')
+                'material.component_number',
+                FacadesDB::raw('SUM(proses_material.qty_after_konversi) as total_qty_total')
             )
-            ->where('user_id', $this->userId)
-            ->groupBy('component_number')
+            ->join('material', 'proses_material.material_id', '=', 'material.id')
+            ->where('proses_material.user_id', $this->userId)
+            ->groupBy('material.component_number')
             ->get();
     }
 
@@ -213,6 +209,7 @@ class PartNumberSummarySheet implements FromCollection, WithHeadings, ShouldAuto
         ];
     }
 }
+
 class PartNumberByCarcodeSummarySheet implements FromCollection, WithHeadings, ShouldAutoSize
 {
     private $userId;
@@ -226,20 +223,21 @@ class PartNumberByCarcodeSummarySheet implements FromCollection, WithHeadings, S
     {
         return FacadesDB::table('proses_material')
             ->select(
-                'code',
-                'component_number',
-                FacadesDB::raw('SUM(qty_after_konversi) as total_qty_total')
+                'material.code',
+                'material.component_number',
+                FacadesDB::raw('SUM(proses_material.qty_after_konversi) as total_qty_total')
             )
-            ->where('user_id', $this->userId)
-            ->groupBy('component_number', 'code')
-            ->orderBy('code')
+            ->join('material', 'proses_material.material_id', '=', 'material.id')
+            ->where('proses_material.user_id', $this->userId)
+            ->groupBy('material.component_number', 'material.code')
+            ->orderBy('material.code')
             ->get();
     }
 
     public function headings(): array
     {
         return [
-            'Code',
+            'Kav',
             'Component Number',
             'Total Qty Total'
         ];
