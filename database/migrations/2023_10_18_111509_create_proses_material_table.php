@@ -15,13 +15,8 @@ class CreateProsesMaterialTable extends Migration
     {
         Schema::create('proses_material', function (Blueprint $table) {
             $table->id();
-            $table->string('factory')->nullable();
-            $table->string('code')->nullable();
-            $table->string('area')->nullable();
-            $table->string('hole')->nullable();
-            $table->string('component_number')->nullable();
-            $table->string('component_name')->nullable();
-            $table->integer('qty_total')->nullable();
+            $table->unsignedBigInteger('material_id');
+            $table->foreign('material_id')->references('id')->on('material');
             $table->integer('length')->nullable();
             $table->integer('konversi')->nullable();
             $table->double('qty_after_konversi')->nullable();

@@ -6,20 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateProsesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('proses', function (Blueprint $table) {
             $table->id();
-            $table->string('month')->nullable();
-            $table->string('kav')->nullable();
-            $table->string('bagian')->nullable();
-            $table->string('area_store')->nullable();
-            $table->string('material')->nullable();
+            $table->unsignedBigInteger('area_final_id');
+            $table->foreign('area_final_id')->references('id')->on('area_final');
             $table->string('material_properties')->nullable();
             $table->string('model')->nullable();
             $table->string('ukuran')->nullable();
@@ -35,7 +28,6 @@ class CreateProsesTable extends Migration
             $table->string('acc_bag_a1')->nullable();
             $table->string('acc_bag_a2')->nullable();
             $table->string('tbe_a')->nullable();
-            $table->string('total_qty')->nullable();
             $table->double('price_sum')->nullable();
             $table->double('wire_cost')->nullable();
             $table->double('component_cost')->nullable();
@@ -53,11 +45,6 @@ class CreateProsesTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('proses');
