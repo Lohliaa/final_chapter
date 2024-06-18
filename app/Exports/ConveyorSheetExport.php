@@ -21,6 +21,7 @@ class ConveyorSheetExport implements FromCollection, WithHeadings, ShouldAutoSiz
         $this->conveyorData = $conveyorData;
     }
 
+    //metode yang disematkan (protected method) dalam sebuah kelas yang tidak dapat diakses dari luar kelas tersebut
     protected function convertMaterialToPartNo($material)
     {
         return ExportUtilities::convertMaterialToPartNo($material);
@@ -32,20 +33,23 @@ class ConveyorSheetExport implements FromCollection, WithHeadings, ShouldAutoSiz
 
         foreach ($this->conveyorData as $bagian) {
             $cl_sum_proses = DB::table('proses')
-                ->where('bagian', $bagian->bagian)
-                ->where('model_ukuran_warna', $bagian->model_ukuran_warna)
-                ->where('specific_component_number', $bagian->specific_component_number)
-                ->where('user_id', $user)
-                ->sum(DB::raw('(cl * total_qty) / 1000'));
+                ->join('area_final', 'proses.area_final_id', '=', 'area_final.id')
+                ->where('area_final.bagian', $bagian->bagian)
+                ->where('proses.model_ukuran_warna', $bagian->model_ukuran_warna)
+                ->where('proses.specific_component_number', $bagian->specific_component_number)
+                ->where('proses.user_id', $user)
+                ->sum(DB::raw('(proses.cl * area_final.total_qty) / 1000'));
 
-            $cl_sum_proses_fa1a = DB::table('proses_pa')
-                ->where('bagian', $bagian->bagian)
-                ->where('model_ukuran_warna', $bagian->model_ukuran_warna)
-                ->where('specific_component_number', $bagian->specific_component_number)
-                ->where('user_id', $user)
-                ->sum(DB::raw('(cl * total_qty) / 1000'));
+            $cl_sum_proses_pa = DB::table('proses_pa')
+                ->join('area_preparation', 'proses_pa.area_preparation_id', '=', 'area_preparation.id')
+                ->where('area_preparation.bagian', $bagian->bagian)
+                ->where('proses_pa.model_ukuran_warna', $bagian->model_ukuran_warna)
+                ->where('proses_pa.specific_component_number', $bagian->specific_component_number)
+                ->where('proses_pa.user_id', $user)
+                ->sum(DB::raw('(proses_pa.cl * area_preparation.total_qty) / 1000'));
 
-            $cl_sum_combined = $cl_sum_proses + $cl_sum_proses_fa1a;
+
+            $cl_sum_combined = $cl_sum_proses + $cl_sum_proses_pa;
 
             $rows[] = [
                 'Bagian' => $bagian->bagian,
@@ -64,24 +68,27 @@ class ConveyorSheetExport implements FromCollection, WithHeadings, ShouldAutoSiz
 
         foreach ($groups as $group) {
             $data_fa = DB::table('proses')
-                ->where('bagian', $bagian->bagian)
+                ->join('area_final', 'proses.area_final_id', '=', 'area_final.id')
+                ->where('area_final.bagian', $bagian->bagian)
                 ->select($group)
                 ->groupBy($group)
-                ->where('user_id', $user)
+                ->where('area_final.user_id', $user)
                 ->get();
 
             $data_pa = DB::table('proses_pa')
-                ->where('bagian', $bagian->bagian)
+                ->join('area_preparation', 'proses_pa.area_preparation_id', '=', 'area_preparation.id')
+                ->where('area_preparation.bagian', $bagian->bagian)
                 ->select($group)
                 ->groupBy($group)
-                ->where('user_id', $user)
+                ->where('area_preparation.user_id', $user)
                 ->get();
+
             $data = $data_fa->merge($data_pa);
             foreach ($data as $item) {
                 $key = $item->{$group};
-
+            
                 $numbers = explode('-', $key);
-
+            
                 $isNumeric = true;
                 foreach ($numbers as $number) {
                     if (!is_numeric($number)) {
@@ -91,22 +98,24 @@ class ConveyorSheetExport implements FromCollection, WithHeadings, ShouldAutoSiz
                 }
                 $containsHyphen = strpos($key, '-') !== false;
                 $containsLetter = preg_match('/[a-zA-Z]/', $key);
-
+            
                 if ($isNumeric) {
                     $qtySumProses = DB::table('proses')
-                        ->where('user_id', $user)
-                        ->where('bagian', $bagian->bagian)
+                        ->join('area_final', 'proses.area_final_id', '=', 'area_final.id')
+                        ->where('area_final.bagian', $bagian->bagian)
                         ->where($group, $key)
-                        ->sum('total_qty');
-
+                        ->where('area_final.user_id', $user)
+                        ->sum('area_final.total_qty');
+            
                     $qtySumProsesPa = DB::table('proses_pa')
-                        ->where('user_id', $user)
-                        ->where('bagian', $bagian->bagian)
+                        ->join('area_preparation', 'proses_pa.area_preparation_id', '=', 'area_preparation.id')
+                        ->where('area_preparation.bagian', $bagian->bagian)
                         ->where($group, $key)
-                        ->sum('total_qty');
-
+                        ->where('area_preparation.user_id', $user)
+                        ->sum('area_preparation.total_qty');
+            
                     $qtySumCombined = $qtySumProses + $qtySumProsesPa;
-
+            
                     if (!isset($results[$key])) {
                         $results[$key] = [
                             'bagian' => $bagian->bagian,
@@ -115,45 +124,47 @@ class ConveyorSheetExport implements FromCollection, WithHeadings, ShouldAutoSiz
                             'qty_sum_combined' => 0,
                         ];
                     }
-
+            
                     $results[$key]['qty_sum_combined'] += $qtySumCombined;
                 } elseif ($containsHyphen && $containsLetter) {
                     $qtySumProses = DB::table('proses')
-                        ->where('user_id', $user)
-                        ->where('bagian', $bagian->bagian)
+                        ->join('area_final', 'proses.area_final_id', '=', 'area_final.id')
+                        ->where('area_final.bagian', $bagian->bagian)
                         ->where($group, $key)
-                        ->sum('total_qty');
-
+                        ->where('area_final.user_id', $user)
+                        ->sum('area_final.total_qty');
+            
                     $qtySumProsesPa = DB::table('proses_pa')
-                        ->where('user_id', $user)
-                        ->where('bagian', $bagian->bagian)
+                        ->join('area_preparation', 'proses_pa.area_preparation_id', '=', 'area_preparation.id')
+                        ->where('area_preparation.bagian', $bagian->bagian)
                         ->where($group, $key)
-                        ->sum('total_qty');
-
+                        ->where('area_preparation.user_id', $user)
+                        ->sum('area_preparation.total_qty');
+            
                     $qtySumCombined = $qtySumProses + $qtySumProsesPa;
-
+            
                     $item = DB::table('item')
                         ->where('component_number', 'LIKE', '%' . $key . '%')
                         ->where('user_id', $user)
                         ->first();
-
+            
                     $material = $key;
                     $item = $key;
-
+            
+                    // mengecek nilai item
                     if ($item) {
                         $exportUtilities = new ExportUtilities();
                         // Check if $item is an object
                         if (is_object($item) && property_exists($item, 'component_number')) {
                             $formattedPartNo = $exportUtilities->convertMaterialToPartNo($item->component_number);
                             $item = $item->specific_component_number;
-                    
+            
                             if ($formattedPartNo == $material) {
                                 $item = $item->specific_component_number;
                             }
                         }
                     }
-                    
-
+            
                     if (!isset($results[$key])) {
                         $results[$key] = [
                             'bagian' => $bagian->bagian,
@@ -162,10 +173,11 @@ class ConveyorSheetExport implements FromCollection, WithHeadings, ShouldAutoSiz
                             'qty_sum_combined' => 0,
                         ];
                     }
-
+            
                     $results[$key]['qty_sum_combined'] += $qtySumCombined;
                 }
             }
+            
         }
         $combinedResults = [
             'rows' => $rows,
