@@ -37,28 +37,31 @@ class ReportQTYExport implements FromCollection, WithHeadings, ShouldAutoSize, W
 
         foreach ($combinedData as $data) {
             $cl_sum_proses = DB::table('proses')
+                ->join('area_final', 'proses.area_final_id', '=', 'area_final.id')
                 ->selectRaw('SUM(CASE 
-                WHEN model_ukuran_warna LIKE "%=%" THEN (SUBSTRING_INDEX(model_ukuran_warna, "=", -1) * total_qty) / 1000 
-                ELSE (cl * total_qty) / 1000 
+                WHEN proses.model_ukuran_warna LIKE "%=%" THEN (SUBSTRING_INDEX(proses.model_ukuran_warna, "=", -1) * area_final.total_qty) / 1000 
+                ELSE (proses.cl * area_final.total_qty) / 1000 
                 END) as total')
-                ->where('model_ukuran_warna', $data->model_ukuran_warna)
-                ->where('specific_component_number', $data->specific_component_number)
+                ->where('proses.model_ukuran_warna', $data->model_ukuran_warna)
+                ->where('proses.specific_component_number', $data->specific_component_number)
                 ->first();
 
             $total_fa = $cl_sum_proses->total;
 
             $cl_sum_proses_pa = DB::table('proses_pa')
+                ->join('area_preparation', 'proses_pa.area_preparation_id', '=', 'area_preparation.id')
                 ->selectRaw('SUM(CASE 
-                WHEN model_ukuran_warna LIKE "%=%" THEN (SUBSTRING_INDEX(model_ukuran_warna, "=", -1) * total_qty) / 1000 
-                ELSE (cl * total_qty) / 1000 
+                WHEN proses_pa.model_ukuran_warna LIKE "%=%" THEN (SUBSTRING_INDEX(proses_pa.model_ukuran_warna, "=", -1) * area_preparation.total_qty) / 1000 
+                ELSE (proses_pa.cl * area_preparation.total_qty) / 1000 
                 END) as total')
-                ->where('model_ukuran_warna', $data->model_ukuran_warna)
-                ->where('specific_component_number', $data->specific_component_number)
+                ->where('proses_pa.model_ukuran_warna', $data->model_ukuran_warna)
+                ->where('proses_pa.specific_component_number', $data->specific_component_number)
                 ->first();
 
             $total_pa = $cl_sum_proses_pa->total;
 
             $cl_sum_combined = $total_fa + $total_pa;
+
             $result[] = [
                 'model_ukuran_warna' => $data->model_ukuran_warna,
                 'specific_component_number' => $data->specific_component_number,
@@ -72,6 +75,8 @@ class ReportQTYExport implements FromCollection, WithHeadings, ShouldAutoSize, W
         ];
 
         $results = [];
+
+        // mengubah material menjadi nilai float
         function convertMaterialToPartNo($material)
         {
             $formattedMaterial = rtrim(sprintf('%.2f', floatval($material)), '0');
@@ -85,6 +90,7 @@ class ReportQTYExport implements FromCollection, WithHeadings, ShouldAutoSize, W
                 ->where('user_id', $user)
                 ->get();
 
+            // cek nilai sesuai kondisi numerik dan -
             foreach ($data as $item) {
                 $key = $item->{$group};
 
@@ -102,14 +108,16 @@ class ReportQTYExport implements FromCollection, WithHeadings, ShouldAutoSize, W
 
                 if ($isNumeric) {
                     $qtySumProses = DB::table('proses')
-                        ->where('user_id', $user)
+                        ->join('area_final', 'proses.area_final_id', '=', 'area_final.id')
+                        ->where('proses.user_id', $user)
                         ->where($group, $key)
-                        ->sum('total_qty');
+                        ->sum('area_final.total_qty');
 
                     $qtySumProsesPa = DB::table('proses_pa')
-                        ->where('user_id', $user)
+                        ->join('area_preparation', 'proses_pa.area_preparation_id', '=', 'area_preparation.id')
+                        ->where('proses_pa.user_id', $user)
                         ->where($group, $key)
-                        ->sum('total_qty');
+                        ->sum('area_preparation.total_qty');
 
                     $qtySumCombined = $qtySumProses + $qtySumProsesPa;
 
@@ -124,14 +132,16 @@ class ReportQTYExport implements FromCollection, WithHeadings, ShouldAutoSize, W
                     $results[$key]['qty_sum_combined'] += $qtySumCombined;
                 } elseif ($containsHyphen && $containsLetter) {
                     $qtySumProses = DB::table('proses')
-                        ->where('user_id', $user)
+                        ->join('area_final', 'proses.area_final_id', '=', 'area_final.id')
+                        ->where('proses.user_id', $user)
                         ->where($group, $key)
-                        ->sum('total_qty');
+                        ->sum('area_final.total_qty');
 
                     $qtySumProsesPa = DB::table('proses_pa')
-                        ->where('user_id', $user)
+                        ->join('area_preparation', 'proses_pa.area_preparation_id', '=', 'area_preparation.id')
+                        ->where('proses_pa.user_id', $user)
                         ->where($group, $key)
-                        ->sum('total_qty');
+                        ->sum('area_preparation.total_qty');
 
                     $qtySumCombined = $qtySumProses + $qtySumProsesPa;
 
@@ -143,6 +153,7 @@ class ReportQTYExport implements FromCollection, WithHeadings, ShouldAutoSize, W
                     $material = $key;
                     $item = $key;
 
+                    // untuk mengecek nilai di tabel item
                     if ($itemList) {
                         $formattedPartNo = convertMaterialToPartNo($itemList->component_number);
                         $item = $itemList->specific_component_number;
@@ -151,7 +162,8 @@ class ReportQTYExport implements FromCollection, WithHeadings, ShouldAutoSize, W
                             $item = $itemList->specific_component_number;
                         }
                     }
-
+                    
+                    // memeriksa key memiliki nilai
                     if (!isset($results[$key])) {
                         $results[$key] = [
                             'material' => $material,
