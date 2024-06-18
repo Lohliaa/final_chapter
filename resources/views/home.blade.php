@@ -4,7 +4,7 @@
 <body>
     <div class="card shadow mt-2">
         <div class="card-header py-3 bg-primary text-white">
-            <h2 class="m-0 font-weight-bold text-center">PT. XYZ</h2>
+            <h2 class="m-0 font-weight-bold text-center">SISTEM INFORMASI PERHITUNGAN WIP PADA PRODUCTION AMOUNT PT. XYZ</h2>
         </div>
         
         <ul>

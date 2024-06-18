@@ -43,11 +43,7 @@
                 <a href="{{ url('export-excel-proses-fa-1a') }}" class="btn btn-default mr-2"
                     target="_blank">Download Excel</a>
 
-                <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
-                    data-url="{{ url('deleteAll_proses_pa') }}">Delete</button>
                 <a href="{{ url('proses_pa') }}" class="btn btn-default mr-2">Refresh</a>
-                <input type="text" name="search" id="searchproses_pa" class="form-control w-25 mr-2"
-                placeholder="Cari disini ...">
 
             <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
 
@@ -100,11 +96,11 @@
                         <tr id="tr_{{ $data->id }}">
                             <td><input type="checkbox" class="sub_chk" data-id="{{$data->id}}"></td>
                             <td>{{$no++}}</td>
-                            <td>{{ $data->month }}</td>
-                            <td>{{ $data->kav }}</td>
-                            <td>{{ $data->bagian }}</td>
-                            <td>{{ $data->area_store }}</td>
-                            <td>{{ $data->material }}</td>
+                            <td>{{ $data->area_preparation->month }}</td>
+                            <td>{{ $data->area_preparation->kav }}</td>
+                            <td>{{ $data->area_preparation->bagian }}</td>
+                            <td>{{ $data->area_preparation->area_store }}</td>
+                            <td>{{ $data->area_preparation->material }}</td>
                             <td>{{ $data->material_properties }}</td>
                             <td>{{ $data->model }}</td>
                             <td>{{ $data->ukuran }}</td>
@@ -120,7 +116,7 @@
                             <td>{{ $data->acc_bag_a1 }}</td>
                             <td>{{ $data->acc_bag_a2 }}</td>
                             <td>{{ $data->tbe_a }}</td>
-                            <td>{{ $data->total_qty }}</td>
+                            <td>{{ $data->area_preparation->total_qty }}</td>
                             <td>{{ $data->price_sum }}</td>
                             <td>{{ number_format($data->wire_cost, 2, ',', '.') }}</td>
                             <td>{{ number_format($data->component_cost, 2, ',', '.') }}</td>

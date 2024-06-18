@@ -47,9 +47,6 @@
 
                 <a href="{{ url('proses_material') }}" class="btn btn-default mr-2">Refresh</a>
 
-                <input type="text" name="search" id="searchpm" class="form-control w-25 mr-2"
-                    placeholder="Cari disini ...">
-
                 <span class="ml-2" id="count">Jumlah Data {{ $count }}</span>
             </div>
 
@@ -57,8 +54,6 @@
                 <table class="table table-bordered" style="width: 100%;" id="pmTableBody">
                     <thead style="height:40px">
                         <tr class="table-secondary" style=" position: sticky; top: 0;">
-                            {{-- <th style="width: 50px; text-align:center" scope="col"><input
-                                    type="checkbox" class="sub_chk" id="master"></th> --}}
                             <th scope="col">No</th>
                             <th scope="col">Factory</th>
                             <th scope="col">Code</th>
@@ -73,7 +68,6 @@
                             <th scope="col">Cek</th>
                             <th scope="col">Harga</th>
                             <th scope="col">Total</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -83,13 +77,13 @@
                             {{-- <td><input type="checkbox" class="sub_chk" data-id="{{$data->id}}"
                                     onclick="handleCheckboxChange({{ $data->id }})"></td> --}}
                             <td>{{$no++}}</td>
-                            <td>{{ $data->factory }}</td>
-                            <td>{{ $data->code }}</td>
-                            <td>{{ $data->area }}</td>
-                            <td>{{ $data->hole }}</td>
-                            <td>{{ $data->component_number }}</td>
-                            <td>{{ $data->component_name }}</td>
-                            <td>{{ $data->qty_total }}</td>
+                            <td>{{ $data->material->factory }}</td>
+                            <td>{{ $data->material->code }}</td>
+                            <td>{{ $data->material->area }}</td>
+                            <td>{{ $data->material->hole }}</td>
+                            <td>{{ $data->material->component_number }}</td>
+                            <td>{{ $data->material->component_name }}</td>
+                            <td>{{ $data->material->qty_total }}</td>
                             <td>{{ $data->length }}</td>
                             <td>{{ $data->konversi }}</td>
                             <td>{{ $data->qty_after_konversi }}</td>
@@ -110,79 +104,6 @@
     </div>
 </body>
 
-<script>
-    function pilih_proses_material() {
-        const selected = document.getElementById('searchpm').value;
-    
-        fetch(`{{ route('search.proses_material') }}?proses_material=${selected}`)
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('pmTableBody').innerHTML = data;
-
-                // Memperbarui jumlah data langsung dari respons server
-                fetch(`{{ route('get.count.proses_material') }}?proses_material=${selected}`)
-                    .then(response => response.text())
-                    .then(countData => {
-                        document.getElementById('count').innerText = 'Jumlah Data ' + countData;
-                    });
-            });
-    }
-
-    // Menambahkan event listener untuk input pencarian
-    document.getElementById('searchpm').addEventListener('input', function() {
-        pilih_proses_material();
-    });
-
-    // Fungsi yang akan dipanggil ketika checkbox berubah
-    function handleCheckboxChange(id) {
-        // Tambahkan logika yang sesuai untuk menangani perubahan checkbox di sini
-        console.log('Checkbox with ID ' + id + ' changed.');
-    }
-</script>
-
-<script>
-    var itemsToEdit = [];
-
-    function handleCheckboxChange(id) {
-        var index = itemsToEdit.indexOf(id);
-        if (index > -1) {
-            itemsToEdit.splice(index, 1);
-        } else {
-            itemsToEdit.push(id);
-        }
-    }
-
-    function handleEditClick() {
-        if (itemsToEdit.length === 0) {
-            alert("Please select at least one item to edit.");
-        } else {
-            var editUrl = "{{ url('edit_prosesMaterial') }}/" + itemsToEdit.join(',');
-    
-            window.location.href = editUrl;
-        }
-    }
-
-</script>
-<script>
-    $(document).ready(function () {
-        $('#reset-prosesMaterial-button').click(function () {
-            if (confirm("Apakah anda yakin ingin menghapus semua data?")) {
-                $.ajax({
-                    url: '{{ route('reset_material') }}',
-                    type: 'POST',
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    success: function (data) {
-                        alert(data.success);
-                        location.reload(); // Muat ulang halaman setelah berhasil
-                    },
-                    error: function (data) {
-                        alert(data.error);
-                    }
-                });
-            }
-        });
-    });
-</script>
 <script type="text/javascript">
     $(document).ready(function () {
 

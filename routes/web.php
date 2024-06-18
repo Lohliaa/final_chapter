@@ -113,7 +113,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('area_final', AreaFinalController::class);
     Route::post('/import_excel_fa', [AreaFinalController::class, 'import_excel_fa']);
     Route::get('/export_excel_fa', [AreaFinalController::class, 'export_excel_fa']);
-    // Route::get('/cari_fa', [AreaFinalController::class, 'cari_fa'])->name('area_final.cari_fa');
     Route::delete('delete/{id}', [AreaFinalController::class, 'destroy']);
     Route::delete('DeleteAll_fa', [AreaFinalController::class, 'deleteAll_fa']);
     Route::post('reset_fa', [AreaFinalController::class, 'reset_fa'])->name('reset_fa');
@@ -124,11 +123,11 @@ Route::group(['middleware' => ['web']], function () {
     // PROSES FA
     Route::resource('proses', ProsesController::class);
     Route::get('/proses-data', [ProsesController::class, 'proses_fa']);
-    Route::post('/import_excel_proses', [ProsesController::class, 'import_excel_proses']);
     Route::get('/export_excel_proses', [ProsesController::class, 'export_excel_proses']);
     Route::delete('delete/{id}', [ProsesController::class, 'destroy']);
     Route::delete('DeleteAll_proses', [ProsesController::class, 'deleteAll_proses']);
     Route::get('/pilih_proses', [ProsesController::class, 'pilih_proses'])->name('search.proses');
+
     Route::get('/get-count-proses', [ProsesController::class, 'getCount'])->name('get.count.proses');
 
     // AREA PREPARATION
@@ -147,16 +146,16 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/proses-data-fa-1a', [Proses1AController::class, 'proses']);
     Route::get('/export-excel-proses-fa-1a', [Proses1AController::class, 'export_excel_proses_fa_1a']);
     Route::get('/export-proses-fa-1a', [Proses1AController::class, 'export_filtered_proses'])->name('export_filtered_proses');
-    Route::delete('delete/{id}', [Proses1AController::class, 'destroy']);
+        Route::delete('delete/{id}', [Proses1AController::class, 'destroy']);
     Route::delete('deleteAll_proses_pa', [Proses1AController::class, 'deleteAll_proses_pa']);
     Route::get('/pilih_proses_pa', [Proses1AController::class, 'pilih_proses_pa'])->name('search.proses_pa');
+
     Route::get('/get-count-proses-fa-1a', [Proses1AController::class, 'getCount'])->name('get.count.proses_pa');
 
     // UMH MASTER
     Route::resource('umh_master', UMHController::class);
     Route::post('/import_excel_umh', [UMHController::class, 'import_excel_umh']);
     Route::get('/export_excel_umh', [UMHController::class, 'export_excel_umh']);
-    // Route::get('/cari_umh', [UMHController::class, 'cari_umh'])->name('umh_master.cari_umh');
     Route::delete('delete/{id}', [UMHController::class, 'destroy']);
     Route::delete('DeleteAll_umh', [UMHController::class, 'deleteAll_umh']);
     Route::post('reset_umh', [UMHController::class, 'reset_umh'])->name('reset_umh');
@@ -169,13 +168,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/export', [ReportController::class, 'export'])->name('export');
     Route::get('/export_qty', [ReportController::class, 'export_qty'])->name('export_qty');
     Route::get('/export_cv', [ReportController::class, 'export_cv'])->name('export_cv');
-    // Route::get('/export_pa', [ReportController::class, 'export_pre_assy'])->name('export_pa');
 
     // MATERIAL
     Route::resource('material', MaterialController::class);
     Route::post('/import_excel_material', [MaterialController::class, 'import_excel_material']);
     Route::get('/export_excel_material', [MaterialController::class, 'export_excel_material']);
-    // Route::get('/cari_material', [MaterialController::class, 'cari_material'])->name('material.cari_material');
     Route::delete('delete/{id}', [MaterialController::class, 'destroy']);
     Route::delete('DeleteAll_material', [MaterialController::class, 'deleteAll_material']);
     Route::post('reset_material', [MaterialController::class, 'reset_material'])->name('reset_material');
@@ -185,12 +182,9 @@ Route::group(['middleware' => ['web']], function () {
 
     // PROSES MATERIAL
     Route::resource('proses_material', ProsesMaterialController::class);
-    // Route::get('/proses_material', [ProsesMaterialController::class, 'proses_material']);
     Route::get('/export_excel_prosesMaterial', [ProsesMaterialController::class, 'export_excel_prosesMaterial']);
-    // Route::get('/pilih_proses_material', [ProsesMaterialController::class, 'pilih_proses_material'])->name('proses_material.pilih_proses_material');
     Route::delete('delete/{id}', [ProsesMaterialController::class, 'destroy']);
     Route::delete('DeleteAll_prosesMaterial', [ProsesMaterialController::class, 'deleteAll_prosesMaterial']);
-    // Route::get('/calculate', [ProsesMaterialController::class, 'calculate'])->name('proses_material.calculate');
     Route::get('/pilih_proses_material', [ProsesMaterialController::class, 'pilih_proses_material'])->name('search.proses_material');
     Route::get('/get-count-proses-material', [ProsesMaterialController::class, 'getCount'])->name('get.count.proses_material');
 

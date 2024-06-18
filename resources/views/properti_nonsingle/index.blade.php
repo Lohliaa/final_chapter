@@ -99,11 +99,11 @@
                             <th scope="col">Model Ukuran Warna</th>
                             <th scope="col">No Item</th>
                             <th scope="col">CL</th>
-                            <th scope="col">TRM A</th>
+                            <th scope="col">TRM B</th>
                             <th scope="col">Acc bag b1</th>
                             <th scope="col">Acc bag b2</th>
                             <th scope="col">TBE B</th>
-                            <th scope="col">Terminal A</th>
+                            <th scope="col">TRM A</th>
                             <th scope="col">Acc bag a1</th>
                             <th scope="col">Acc bag a2</th>
                             <th scope="col">TBE A</th>

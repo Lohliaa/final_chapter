@@ -41,9 +41,9 @@
             @endif
             <div class="form-group col-12 d-flex flex-wrap align-items-center">
                 <button id="reset-material-button" class="btn btn-danger mr-2">Reset</button>
-
+{{--  
                 <a href="{{ route('material.create') }}"
-                    class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
+                    class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>  --}}
                 <button type="button" class="btn btn-default mr-2"
                     onclick="handleEditClick()">Edit</button>
 
@@ -254,6 +254,7 @@
                                     $(this).parents("tr").remove();
                                 });
                                 alert(data['success']);
+                                location.reload();
                             } else if (data['error']) {
                                 alert(data['error']);
                             } else {

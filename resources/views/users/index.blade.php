@@ -38,7 +38,7 @@
                         <button type="button" class="btn btn-warning" onclick="handleEditClick()">Edit</button>
                         <button style="margin-bottom: 0px" class="btn btn-danger delete_all"
                             data-url="{{ url('DeleteUser') }}">Delete</button>
-                        <a href="{{ url('online-user') }}" class="btn btn-default">Reset</a>
+                        {{--  <a href="{{ url('online-user') }}" class="btn btn-default">Reset</a>  --}}
                         <span style="margin-left: 5px;"> Jumlah Data: {{ $count }}</span>
                     </div>
 
@@ -54,7 +54,7 @@
                             <th scope="col">Email</th>
                             <th scope="col">Last Seen</th>
                             <th scope="col">Role</th>
-                            <th scope="col">Status</th>
+                            {{--  <th scope="col">Status</th>  --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -68,13 +68,13 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->last_seen }}</td>
                             <td>{{ $user->role }}</td>
-                            <td>
+                            {{--  <td>
                                 @if(Cache::has('user-is-online-' . $user->id))
                                 <span class="text-success">Online</span>
                                 @else
                                 <span class="text-secondary">Offline</span>
                                 @endif
-                            </td>
+                            </td>  --}}
                         </tr>
                         @endforeach
                     </tbody>

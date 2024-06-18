@@ -40,10 +40,6 @@
             @endif
             <div class="form-group col-12 d-flex flex-wrap align-items-center">
                 <button id="reset-fa-button" class="btn btn-danger mr-2">Reset</button>
-
-                <a href="{{ route('area_final.create') }}"
-                    class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
-
                 <button type="button" class="btn btn-default mr-2" data-toggle="modal"
                     data-target="#import_excel_fa">
                     Upload Excel

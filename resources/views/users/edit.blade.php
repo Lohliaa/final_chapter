@@ -61,7 +61,7 @@
                                     <option value="admin" {{ $users->role === 'admin' ? 'selected' : '' }}>Admin</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            {{--  <div class="form-group">
                                 <label class="font-weight-bold">Status</label>
                                 <span id="user-status" class="text-secondary">
                                     @if(Cache::has('user-is-online-' . $users->id))
@@ -70,7 +70,7 @@
                                         Offline
                                     @endif
                                 </span>
-                            </div>
+                            </div>  --}}
                             
                             <button type="submit" class="btn btn-md btn-success">SIMPAN</button>
                             <a class="btn btn-md btn-primary" href="{{ route('users.index') }}" class="">KEMBALI</a>

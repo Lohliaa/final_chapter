@@ -39,20 +39,15 @@
             @endif
             <div class="form-group col-12 d-flex flex-wrap align-items-center">
                 <button id="reset-pa-button" class="btn btn-danger mr-2">Reset</button>
-                <a href="{{ route('area_preparation.create') }}"
-                    class="btn btn-md btn-md btn-default mb-6 mr-2">Tambah</a>
-                <button type="button" class="btn btn-default mr-2"
-                    onclick="handleEditClick()">Edit</button>
-                <button type="button" class="btn btn-default mr-2" data-toggle="modal"
-                    data-target="#import_excel_pa">
+
+                <button type="button" class="btn btn-default mr-2" data-toggle="modal" data-target="#import_excel_pa">
                     Upload Excel
                 </button>
 
                 <div class="modal fade" id="import_excel_pa" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
-                        <form method="post" action="{{ url('import_excel_pa') }}"
-                            enctype="multipart/form-data">
+                        <form method="post" action="{{ url('import_excel_pa') }}" enctype="multipart/form-data">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Import</h5>
@@ -66,8 +61,7 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger"
-                                        data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-default ">Import</button>
                                     <br>
                                 </div>
@@ -77,12 +71,12 @@
                 </div>
 
                 <!-- Export Excel -->
-                <a href="{{ url('export_excel_pa') }}" class="btn btn-default mr-2"
-                    target="_blank">Download
+                <a href="{{ url('export_excel_pa') }}" class="btn btn-default mr-2" target="_blank">Download
                     Excel</a>
 
                 <button style="margin-bottom: 0px" class="btn btn-default delete_all mr-2"
                     data-url="{{ url('DeleteAll_pa') }}">Delete</button>
+                <button type="button" class="btn btn-default mr-2" onclick="handleEditClick()">Edit</button>
                 <a href="{{ url('proses_pa') }}" class="btn btn-default mr-2">Proses</a>
 
                 <a href="{{ url('area_preparation') }}" class="btn btn-default mr-2">Refresh</a>
@@ -95,7 +89,7 @@
             </div>
 
             <div class="table-responsive" style="max-height: 800px; overflow-y: auto;">
-                <table class="table table-bordered" style="width: 100%;" id="fa_1aTableBody">                    
+                <table class="table table-bordered" style="width: 100%;" id="fa_1aTableBody">
                     <thead style="height:40px">
                         <tr class="table-secondary" style=" position: sticky; top: 0;">
                             <th scope="col"><input type="checkbox" class="sub_chk" id="master"></th>
