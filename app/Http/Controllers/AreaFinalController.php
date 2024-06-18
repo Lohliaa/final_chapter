@@ -262,11 +262,19 @@ class AreaFinalController extends Controller
         Area_Final::where('user_id', $user)->whereIn('id', explode(",", $ids))->delete();
         return response()->json(['success' => " Deleted successfully."]);
     }
+
     public function reset_fa()
     {
         $user = Auth::id();
+    
+        // Menghapus data dari tabel 'proses' yang berelasi dengan pengguna
+        Proses::whereHas('area_final', function ($query) use ($user) {
+            $query->where('user_id', $user);
+        })->delete();
+    
+        // Menghapus data dari tabel 'area_final' yang dimiliki oleh pengguna
         Area_Final::where('user_id', $user)->delete();
-        Proses::where('user_id', $user)->delete();
+    
         return response()->json(['success' => "Deleted successfully."]);
     }
 }

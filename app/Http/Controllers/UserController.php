@@ -83,20 +83,20 @@ class UserController extends Controller
         }
     }
 
-    public function destroy($id)
-    {
-        User::delete($id);
-        return response()->json(['success' => " Deleted successfully.", 'tr' => 'tr_' . $id]);
-    }
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function deleteUser(Request $request)
     {
-        $ids = $request->ids;
-        User::whereIn('id', explode(",", $ids))->delete();
-        return response()->json(['success' => " Deleted successfully."]);
+        $ids = explode(",", $request->ids);
+    
+        // Memeriksa apakah ada pengguna dengan peran "Admin" di antara pengguna yang akan dihapus
+        $adminUsers = User::whereIn('id', $ids)->where('role', 'admin')->get();
+    
+        if ($adminUsers->count() > 0) {
+            return response()->json(['error' => "Tidak Dapat Menghapus Admin!"]);
+        }
+    
+        // Melanjutkan dengan penghapusan jika tidak ada pengguna dengan peran "Admin"
+        User::whereIn('id', $ids)->delete();
+        return response()->json(['success' => "Deleted successfully."]);
     }
+    
 }

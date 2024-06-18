@@ -125,22 +125,12 @@ class MaterialController extends Controller
 
         return back()->with('success', "Data berhasil diimport!");
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return view('material.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -174,36 +164,17 @@ class MaterialController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $material = Material::find($id);
         return view('material.edit', compact('material'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -238,12 +209,6 @@ class MaterialController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $user = Auth::id();
@@ -251,24 +216,36 @@ class MaterialController extends Controller
         Material::where('user_id', $user)->delete($id);
         return response()->json(['success' => " Deleted successfully.", 'tr' => 'tr_' . $id]);
     }
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function deleteAll_material(Request $request)
     {
         $ids = $request->ids;
         $user = Auth::id();
-
+    
+        // Hapus data terkait dari tabel 'proses_material'
+        ProsesMaterial::whereHas('material', function ($query) use ($user, $ids) {
+            $query->where('user_id', $user)->whereIn('id', explode(",", $ids));
+        })->delete();
+    
+        // Hapus data dari tabel 'material'
         Material::where('user_id', $user)->whereIn('id', explode(",", $ids))->delete();
-        return response()->json(['success' => " Deleted successfully."]);
-    }
+    
+        return response()->json(['success' => "Deleted successfully."]);
+    }    
+
     public function reset_material()
     {
         $user = Auth::id();
+    
+        // Menghapus data dari tabel 'proses_material' yang berelasi dengan pengguna
+        ProsesMaterial::whereHas('material', function ($query) use ($user) {
+            $query->where('user_id', $user);
+        })->delete();
+    
+        // Menghapus data dari tabel 'material' yang dimiliki oleh pengguna
         Material::where('user_id', $user)->delete();
-        ProsesMaterial::where('user_id', $user)->delete();
+    
         return response()->json(['success' => "Deleted successfully."]);
     }
+    
 }

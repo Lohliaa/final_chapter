@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\AreaPreparationExport;
 use App\Imports\AreaPreparationImport;
 use App\Models\Area_Preparation;
+use App\Models\Proses_PA;
 use App\Models\ProsesFa_1A;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -262,11 +263,19 @@ class AreaPreparationController extends Controller
         Area_Preparation::where('user_id', $user)->whereIn('id', explode(",", $ids))->delete();
         return response()->json(['success' => " Deleted successfully."]);
     }
+
     public function reset_pa()
     {
         $user = Auth::id();
+    
+        // Menghapus data dari tabel 'proses_pa' yang berelasi dengan pengguna
+        Proses_PA::whereHas('area_preparation', function ($query) use ($user) {
+            $query->where('user_id', $user);
+        })->delete();
+    
+        // Menghapus data dari tabel 'area_preparation' yang dimiliki oleh pengguna
         Area_Preparation::where('user_id', $user)->delete();
-        ProsesFa_1A::where('user_id', $user)->delete();
+    
         return response()->json(['success' => "Deleted successfully."]);
     }
 }
