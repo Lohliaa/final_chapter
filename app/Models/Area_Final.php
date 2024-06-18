@@ -11,7 +11,6 @@ class Area_Final extends Model
 
     protected $table = "area_final";
     protected $primaryKey = 'id';
-    // public $timestamps = false;
     protected $fillable = [
         'kav',
         'bagian',
@@ -27,4 +26,10 @@ class Area_Final extends Model
         'factory',
         'user_id',
     ];
+
+    public function proses()
+    {
+        return $this->hasMany(Proses::class, 'area_final_id');
+    }
+    
 }

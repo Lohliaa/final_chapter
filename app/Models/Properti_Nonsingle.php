@@ -34,8 +34,4 @@ class Properti_Nonsingle extends Model
         'user_id',
     ];
 
-    public function proses()
-    {
-        return $this->belongsTo(Proses::class, 'material', 'material');
-    } 
 }

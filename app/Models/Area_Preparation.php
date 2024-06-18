@@ -11,7 +11,6 @@ class Area_Preparation extends Model
 
     protected $table = "area_preparation";
     protected $primaryKey = 'id';
-    // public $timestamps = false;
     protected $fillable = [
         'kav',
         'bagian',
@@ -27,4 +26,9 @@ class Area_Preparation extends Model
         'factory',
         'user_id',
     ];
+
+    public function proses_pa()
+    {
+        return $this->hasMany(Proses_PA::class, 'area_preparation_id');
+    }
 }

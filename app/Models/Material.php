@@ -23,6 +23,6 @@ class Material extends Model
 
     public function proses_material()
     {
-        return $this->hasMany(ProsesMaterial::class, 'partnumber', 'partnumber');
+        return $this->hasMany(ProsesMaterial::class);
     }
 }

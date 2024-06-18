@@ -12,14 +12,12 @@ class Proses extends Model
     protected $table = "proses";
     protected $primaryKey = 'id';
     protected $fillable = [
-        'area_store',
-        'material',
         'material_properties',
         'model',
         'ukuran',
         'warna',
         'model_ukuran_warna',
-        'no_item',
+        'specific_component_number',
         'cl',
         'trm_b',
         'acc_bag_b1',
@@ -28,13 +26,12 @@ class Proses extends Model
         'trm_a',
         'acc_bag_a1',
         'acc_bag_a2',
-        'tbe_b',
-        'total_qty',
-        'kav',
+        'tbe_a',
         'price_sum',
         'wire_cost',
         'component_cost',
         'material_cost',
+        'material_cost_amount',
         'process',
         'umh',
         'charge',
@@ -47,21 +44,7 @@ class Proses extends Model
 
     public function area_final()
     {
-        return $this->belongsTo(Area_Final::class, 'material', 'material');
+        return $this->belongsTo(Area_Final::class);
     }
 
-    public function properti_nonsingle()
-    {
-        return $this->hasOne(Properti_Nonsingle::class, 'material', 'material');
-    }
-
-    public function properti_single()
-    {
-        return $this->hasOne(Properti_Single::class, 'material', 'material');
-    }
-
-    public function item()
-    {
-        return $this->hasOne(Item::class, 'component_number', 'model_ukuran_warna');
-    }
 }

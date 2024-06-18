@@ -12,14 +12,12 @@ class Proses_PA extends Model
     protected $table = "proses_pa";
     protected $primaryKey = 'id';
     protected $fillable = [
-        'area_store',
-        'material',
         'material_properties',
         'model',
         'ukuran',
         'warna',
         'model_ukuran_warna',
-        'no_item',
+        'specific_component_number',
         'cl',
         'trm_b',
         'acc_bag_b1',
@@ -29,8 +27,6 @@ class Proses_PA extends Model
         'acc_bag_a1',
         'acc_bag_a2',
         'tbe_b',
-        'total_qty',
-        'kav',
         'price_sum',
         'wire_cost',
         'component_cost',
@@ -44,4 +40,8 @@ class Proses_PA extends Model
         'keterangan',
         'user_id',
     ];
+    public function area_preparation()
+    {
+        return $this->belongsTo(Area_Preparation::class);
+    }
 }
